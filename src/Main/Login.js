@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import axios from "axios";
 
+const styles = {
+  content: {
+    paddingTop: "150px",
+  },
+};
 
-const styles =
-{
-  content :
-  {
-    paddingTop:"150px",
-  }
-}
-const Login = ({onFacultyLogin,onStudentLogin}) => {
+const Login = ({ onFacultyLogin, onStudentLogin }) => {
   const [rightPanelActive, setRightPanelActive] = useState(false);
   const [studentFormData, setStudentFormData] = useState({
     email: "",
@@ -22,11 +20,13 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
     password: "",
   });
 
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  // Separate message and error states for student and faculty
+  const [studentMessage, setStudentMessage] = useState("");
+  const [studentError, setStudentError] = useState("");
+  const [facultyMessage, setFacultyMessage] = useState("");
+  const [facultyError, setFacultyError] = useState("");
 
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleFacultySignInClick = () => {
     setRightPanelActive(true);
@@ -38,9 +38,15 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
 
   const handleChange = (e, formType) => {
     if (formType === "student") {
-      setStudentFormData((student) => ({ ...student, [e.target.name]: e.target.value }));
+      setStudentFormData((student) => ({
+        ...student,
+        [e.target.name]: e.target.value,
+      }));
     } else {
-      setFacultyFormData((faculty) => ({ ...faculty, [e.target.name]: e.target.value }));
+      setFacultyFormData((faculty) => ({
+        ...faculty,
+        [e.target.name]: e.target.value,
+      }));
     }
   };
 
@@ -52,26 +58,21 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
         `http://localhost:2025/checkstudentlogin?email=${studentFormData.email}&password=${studentFormData.password}`
       );
       console.log(response.data);
-      if (response.data != null) 
-      {
-        
-        onStudentLogin(); 
+      if (response.data != null && Object.keys(response.data).length > 0) {
+        onStudentLogin();
 
-        localStorage.setItem('student', JSON.stringify(response.data));
-        
+        localStorage.setItem("student", JSON.stringify(response.data));
+
         navigate("/studenthome");
-      } 
-      else 
-      {
-        setMessage("Login Failed");
-        setError("");
+      } else {
+        setStudentMessage("Login Failed");
+        setStudentError("");
       }
     } catch (error) {
-      setMessage("");
-      setError(error.message);
+      setStudentMessage("");
+      setStudentError(error.message);
     }
   };
-
 
   const handleFacultyLoginSubmit = async (e) => {
     e.preventDefault();
@@ -80,22 +81,19 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
         `http://localhost:2025/checkadminlogin?username=${facultyFormData.username}&password=${facultyFormData.password}`
       );
       console.log(response.data);
-      if (response.data != null) 
-      {
-        onFacultyLogin(); 
+      if (response.data != null && Object.keys(response.data).length > 0) {
+        onFacultyLogin();
 
-        localStorage.setItem('faculty', JSON.stringify(response.data));
-        
+        localStorage.setItem("faculty", JSON.stringify(response.data));
+
         navigate("/facultyhome");
-      } 
-      else 
-      {
-        setMessage("Login Failed");
-        setError("");
+      } else {
+        setFacultyMessage("Login Failed");
+        setFacultyError("");
       }
     } catch (error) {
-      setMessage("");
-      setError(error.message);
+      setFacultyMessage("");
+      setFacultyError(error.message);
     }
   };
 
@@ -112,26 +110,29 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
       >
         <div className="form-container sign-up-container">
           <form className="form" onSubmit={handleFacultyLoginSubmit}>
-
-    
-          <h2 style={{ color: "rgb(35, 74, 121)" }}>Faculty Login</h2>
-          {
-        message ? <h4 align="center">{message}</h4> : <h4 align="center" style={{color:"red"}}>{error}</h4>
-          }
+            <h2 style={{ color: "rgb(35, 74, 121)" }}>Faculty Login</h2>
+            {facultyMessage ? (
+              <h4  style={{ color: "red" }} align="center">{facultyMessage}</h4>
+            ) : (
+              <h4 align="center" style={{ color: "red" }}>
+                {facultyError}
+              </h4>
+            )}
             <input
               type="text"
               name="username"
               placeholder="Username"
               value={facultyFormData.username}
               onChange={(e) => handleChange(e, "faculty")}
+              required
             />
-            
             <input
               type="password"
               name="password"
               placeholder="Password"
               value={facultyFormData.password}
               onChange={(e) => handleChange(e, "faculty")}
+              required
             />
             <span>Forgot your password?</span>
             <button type="submit">Login</button>
@@ -139,16 +140,21 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
         </div>
         <div className="form-container sign-in-container">
           <form className="form" onSubmit={handleStudentLoginSubmit}>
-          <h2 style={{ color: "rgb(35, 74, 121)" }}>Student Login</h2>
-          {
-        message ? <h4 align="center">{message}</h4> : <h4 align="center" style={{color:"red"}}>{error}</h4>
-            } 
+            <h2 style={{ color: "rgb(35, 74, 121)" }}>Student Login</h2>
+            {studentMessage ? (
+              <h4  style={{ color: "red" }} align="center">{studentMessage}</h4>
+            ) : (
+              <h4 align="center" style={{ color: "red" }}>
+                {studentError}
+              </h4>
+            )}
             <input
               type="email"
               name="email"
               placeholder="Email"
               value={studentFormData.email}
               onChange={(e) => handleChange(e, "student")}
+              required
             />
             <input
               type="password"
@@ -156,6 +162,7 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
               placeholder="Password"
               value={studentFormData.password}
               onChange={(e) => handleChange(e, "student")}
+              required
             />
             <span>Forgot your password?</span>
             <button type="submit">Login</button>
@@ -188,7 +195,6 @@ const Login = ({onFacultyLogin,onStudentLogin}) => {
           </div>
         </div>
       </div>
-      {message && <div style={{ color: "red" }}>{message}</div>}
     </div>
   );
 };

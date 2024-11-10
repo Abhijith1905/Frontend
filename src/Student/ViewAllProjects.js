@@ -1,139 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 
+// function ViewAllProjects() {
+//     const [projects, setProjects] = useState([]);
+//     const [projectImages, setProjectImages] = useState({});
+//     const [error, setError] = useState('');
 
-export default  function ViewAllProjects() {
-    const [projects, setProjects] = useState([]);
-    const [projectFiles, setProjectFiles] = useState({});
-    const [error, setError] = useState('');
+//     // Function to fetch Project data
+//     const fetchProjects = async () => {
+//         try {
+//             const response = await axios.get('http://localhost:2025/viewallprojects');
+//             setProjects(response.data);
 
-    // Function to fetch project data
-    const fetchProjects = async () => {
-        try {
-            const response = await axios.get('http://localhost:2025/viewallprojects');
-            setProjects(response.data);
+//             // Fetch images for each project
+//             response.data.forEach(async (project) => {
+//                 try {
+//                     const imageResponse = await axios.get(
+//                         `http://localhost:2025/displayprojectimage?projectId=${project.projectId}`,
+//                         { responseType: 'arraybuffer' }
+//                     );
+//                     const imageBlob = new Blob([imageResponse.data], { type: 'image/png' });
+//                     const imageUrl = URL.createObjectURL(imageBlob);
 
-            // Fetch files for each project
-            response.data.forEach(async (project) => {
-                try {
-                    // Fetch image for each project
-                    const imageResponse = await axios.get(`http://localhost:2025/displayprojectimage?projectId=${project.id}`, {
-                        responseType: 'arraybuffer',
-                    });
-                    const imageBlob = new Blob([imageResponse.data], { type: 'image/png' });
-                    const imageUrl = URL.createObjectURL(imageBlob);
+//                     setProjectImages((prevImages) => ({
+//                         ...prevImages,
+//                         [project.projectId]: imageUrl,
+//                     }));
+//                 } catch (error) {
+//                     console.error(`Error loading image for Project ${project.projectId}:`, error);
+//                 }
+//             });
+//         } catch (err) {
+//             // Extract the error message if available, otherwise show a default message
+//             const errorMessage = err.response?.data?.message || "An error occurred while fetching projects.";
+//             setError(errorMessage);
+//         }
+//     };
 
-                    // Fetch PDF for each project
-                    const pdfResponse = await axios.get(`http://localhost:2025/displayprojectpdf?projectId=${project.id}`, {
-                        responseType: 'arraybuffer',
-                    });
-                    const pdfBlob = new Blob([pdfResponse.data], { type: 'application/pdf' });
-                    const pdfUrl = URL.createObjectURL(pdfBlob);
+//     // Fetch Projects on component mount
+//     useEffect(() => {
+//         fetchProjects();
+//     }, []);
 
-                    // Fetch ZIP for each project
-                    const zipResponse = await axios.get(`http://localhost:2025/displayprojectzip?projectId=${project.id}`, {
-                        responseType: 'arraybuffer',
-                    });
-                    const zipBlob = new Blob([zipResponse.data], { type: 'application/zip' });
-                    const zipUrl = URL.createObjectURL(zipBlob);
+//     return (
+//         <div>
+//             <h2>Project List</h2>
+//             {error ? (
+//                 <p style={{ color: 'red' }}>{error}</p> // Display error message in red if there's an error
+//             ) : (
+//                 <table>
+//                     <thead>
+//                         <tr>
+//                             <th>Project ID</th>
+//                             <th>Name</th>
+//                             <th>Description</th>
+//                             <th>Image</th>
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         {projects.map((project) => (
+//                             <tr key={project.projectId}>
+//                                 <td>{project.projectId}</td>
+//                                 <td>{project.name}</td>
+//                                 <td>{project.description}</td>
+//                                 <td>
+//                                     {projectImages[project.projectId] ? (
+//                                         <img
+//                                             src={projectImages[project.projectId]}
+//                                             alt={project.name}
+//                                             style={{ width: "100px", height: "100px" }}
+//                                         />
+//                                     ) : (
+//                                         <p>Loading...</p>
+//                                     )}
+//                                 </td>
+//                             </tr>
+//                         ))}
+//                     </tbody>
+//                 </table>
+//             )}
+//         </div>
+//     );
+// }
 
-                    setProjectFiles((prevFiles) => ({
-                        ...prevFiles,
-                        [project.id]: { imageUrl, pdfUrl, zipUrl },
-                    }));
-                } catch (fileError) {
-                    console.error(`Error loading files for project ${project.id}:`, fileError);
-                }
-            });
-        } catch (err) {
-            setError(err.message);
-        }
-    };
-
-    // Fetch projects on component mount
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    // Function to handle viewing files in new tabs
-    const handleViewFile = (fileUrl) => {
-        if (fileUrl) {
-            window.open(fileUrl, '_blank');
-        }
-    };
-
-    // Function to handle downloading files
-    const handleDownloadFile = (fileUrl, fileName) => {
-        if (fileUrl) {
-            const link = document.createElement('a');
-            link.href = fileUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    };
-
-    return (
-        <div>
-            
-            <h2>Project List</h2>
-            {error ? (
-                <p>{error}</p>
-            ) : (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Project ID</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>PDF</th>
-                            <th>ZIP</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {projects.map((project) => (
-                            <tr key={project.id}>
-                                <td>{project.id}</td>
-                                <td>{project.title}</td>
-                                <td>{project.description}</td>
-                                <td>
-                                    {projectFiles[project.id]?.imageUrl ? (
-                                        <img
-                                            src={projectFiles[project.id].imageUrl}
-                                            alt="Project Image"
-                                            style={{ width: "100px", height: "100px" }}
-                                        />
-                                    ) : (
-                                        <p>Loading...</p>
-                                    )}
-                                </td>
-                                <td>
-                                    {projectFiles[project.id]?.pdfUrl ? (
-                                        <button onClick={() => handleViewFile(projectFiles[project.id].pdfUrl)}>
-                                            View PDF
-                                        </button>
-                                    ) : (
-                                        <p>Loading...</p>
-                                    )}
-                                </td>
-                                <td>
-                                    {projectFiles[project.id]?.zipUrl ? (
-                                        <button onClick={() => handleDownloadFile(projectFiles[project.id].zipUrl, `${project.title}.zip`)}>
-                                            Download ZIP
-                                        </button>
-                                    ) : (
-                                        <p>Loading...</p>
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
-    );
-}
-
-
+// export default ViewAllProjects;

@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 
 export default function StudentProfile() {
-  const [studentData, setStudentData] = useState(null);
+  const [studentData, setStudentData] = useState({
+    id: "",
+    fullName: "",
+    gender: "",
+    department: "",
+    program: "",
+    semester: "",
+    year: "",
+    dateOfBirth: "",
+    email: "",
+    contact: "",
+    photo: null, // Default photo field
+  });
 
   useEffect(() => {
     const storedStudentData = localStorage.getItem("student");
     if (storedStudentData) {
-      const parsedStudentData = JSON.parse(storedStudentData);
-      setStudentData(parsedStudentData);
+      setStudentData(JSON.parse(storedStudentData));
     }
   }, []);
 
@@ -23,140 +34,121 @@ export default function StudentProfile() {
     alert("Profile updated successfully!");
   };
 
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setStudentData((prevData) => ({
+          ...prevData,
+          photo: reader.result, // Set the photo to the base64 string
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
-      <div>
-        <div style={{ paddingTop: "130px" }}>
-          <h2 style={{ color: "white" }}>My Profile</h2>
+      <div style={{ paddingTop: "130px" }}>
+        <h2 style={{ color: "white" }}>My Profile</h2>
+        <div
+          className="profile-card"
+          style={{
+            padding: "20px",
+            backgroundColor: "white",
+            borderRadius: "8px",
+            margin: "20px",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          {/* Profile Picture Section */}
           <div
-            className="profile-card"
             style={{
-              padding: "20px",
-              backgroundColor: "white",
-              borderRadius: "8px",
-              margin: "20px",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              marginBottom: "20px",
             }}
           >
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                border: "1px solid #ddd",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Field
-                  </th>
-                  <th style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Details
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Id
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.id}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Name
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    <input
-                      type="text"
-                      value={studentData?.fullName || ""}
-                      onChange={(e) => handleInputChange(e, "fullName")}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Gender
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.gender}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Department
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.department}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Program
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.program}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Semester
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.semester}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Year
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {studentData?.year}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Date of Birth
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    {new Date(studentData?.dateOfBirth).toLocaleDateString()}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Email
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    <input
-                      type="email"
-                      value={studentData?.email || ""}
-                      onChange={(e) => handleInputChange(e, "email")}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    Contact
-                  </td>
-                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                    <input
-                      type="tel"
-                      value={studentData?.contact || ""}
-                      onChange={(e) => handleInputChange(e, "contact")}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button
-              onClick={handleSave}
-              style={{ marginTop: "20px", padding: "10px 20px" }}
-            >
-              Update
-            </button>
+            <div>
+              <img
+                src={
+                  studentData.photo ||
+                  "https://via.placeholder.com/150?text=Upload+Photo"
+                }
+                alt="Profile"
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  objectFit: "cover",
+                }}
+                onClick={() => document.getElementById("photo-upload").click()}
+              />
+            </div>
+            <input
+              type="file"
+              id="photo-upload"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handlePhotoUpload}
+            />
           </div>
+
+          {/* Profile Info Table */}
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              border: "1px solid #ddd",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ padding: "10px", color: "black" }}>Field</th>
+                <th style={{ padding: "10px", color: "black" }}>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { label: "Id", value: studentData.id, field: "id", editable: false },
+                { label: "Name", value: studentData.fullName, field: "fullName", editable: true },
+                { label: "Gender", value: studentData.gender, field: "gender", editable: false },
+                { label: "Department", value: studentData.department, field: "department", editable: false },
+                { label: "Program", value: studentData.program, field: "program", editable: false },
+                { label: "Semester", value: studentData.semester, field: "semester", editable: false },
+                { label: "Year", value: studentData.year, field: "year", editable: false },
+                { label: "Date of Birth", value: new Date(studentData.dateOfBirth).toLocaleDateString(), field: "dateOfBirth", editable: false },
+                { label: "Email", value: studentData.email, field: "email", editable: true },
+                { label: "Contact", value: studentData.contact, field: "contact", editable: true },
+              ].map(({ label, value, field, editable }) => (
+                <tr key={field}>
+                  <td style={{ padding: "10px", color: "black" }}>{label}</td>
+                  <td style={{ padding: "10px", color: "black" }}>
+                    {editable ? (
+                      <input
+                        type={field === "email" ? "email" : "text"}
+                        value={value || ""}
+                        onChange={(e) => handleInputChange(e, field)}
+                      />
+                    ) : (
+                      value
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <button
+            onClick={handleSave}
+            style={{ marginTop: "20px", padding: "10px 20px" }}
+          >
+            Update
+          </button>
         </div>
       </div>
     </div>

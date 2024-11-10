@@ -55,6 +55,13 @@ export default function StudentNavBar() {
               &nbsp;&nbsp;
             </td>
             <td>
+              <button>
+                {" "}
+                <Link to="/viewallprojects"> View ALL Projects</Link>
+              </button>
+              &nbsp;&nbsp;
+            </td>
+            <td>
               <button onClick={handleLogout}>Logout</button>
             </td>
           </table>

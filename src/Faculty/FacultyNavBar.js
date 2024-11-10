@@ -26,6 +26,8 @@ export default function FacultyNavBar() {
     navigate("/login");
     window.location.reload();
   };
+
+
   return (
     <div>
       <nav>
