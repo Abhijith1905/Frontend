@@ -1,20 +1,14 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+
 
 const UploadProjectFurther = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("isStudentLoggedIn");
-    localStorage.removeItem("student");
-    navigate("/login");
-    window.location.reload();
-  };
-
-
-
+  
 
   const styles = {
+    content:
+    {
+      paddingTop:"150px",
+    },
     page: {
       fontFamily: "Arial, sans-serif",
       backgroundColor: "#1e3d6b",
@@ -61,47 +55,9 @@ const UploadProjectFurther = () => {
     },
   };
   return (
-    <div style={styles.page}>
-      <div>
-        <nav>
-          <div className="navbar">
-            <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-              EduSupport
-            </h3>
-            <table className="menu">
-              <td>
-                <button>
-                  <Link to="/studenthome">Home</Link>
-                </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button>
-                  {" "}
-                  <Link to="/studentprofile">Profile</Link>
-                </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button>
-                  {" "}
-                  <Link to="/portfolio">Portfolio</Link>
-                </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button>
-                  {" "}
-                  <Link to="/projects">Projects</Link>
-                </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button onClick={handleLogout}>Logout</button>
-              </td>
-            </table>
-          </div>
-        </nav>
+    <div style={styles.content}>
+      <div style={styles.page}>
+       
         <div style={styles.uploadSection}>
           <h2>UPLOAD</h2>
           <div style={styles.uploadBox}>

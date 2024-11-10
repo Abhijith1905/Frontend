@@ -1,21 +1,32 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import "./login.css"; // Assuming your CSS is in this file
+import { useNavigate } from "react-router-dom";
+import "./login.css";
+import axios from "axios";
 
-const Login = () => {
+
+const styles =
+{
+  content :
+  {
+    paddingTop:"150px",
+  }
+}
+const Login = ({onFacultyLogin,onStudentLogin}) => {
   const [rightPanelActive, setRightPanelActive] = useState(false);
   const [studentFormData, setStudentFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
   const [facultyFormData, setFacultyFormData] = useState({
     username: "",
-    email: "",
     password: "",
   });
+
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Initialize the navigation hook
+  const [error, setError] = useState("");
+
+
+  const navigate = useNavigate(); 
 
   const handleFacultySignInClick = () => {
     setRightPanelActive(true);
@@ -25,57 +36,71 @@ const Login = () => {
     setRightPanelActive(false);
   };
 
-  const handleInputChange = (e, formType) => {
-    const { name, value } = e.target;
+  const handleChange = (e, formType) => {
     if (formType === "student") {
-      setStudentFormData((prev) => ({ ...prev, [name]: value }));
+      setStudentFormData((student) => ({ ...student, [e.target.name]: e.target.value }));
     } else {
-      setFacultyFormData((prev) => ({ ...prev, [name]: value }));
+      setFacultyFormData((faculty) => ({ ...faculty, [e.target.name]: e.target.value }));
     }
   };
 
-  const handleStudentLoginSubmit = (e) => {
+  const handleStudentLoginSubmit = async (e) => {
     e.preventDefault();
+    try {
+      console.log(studentFormData);
+      const response = await axios.post(
+        `http://localhost:2025/checkstudentlogin?email=${studentFormData.email}&password=${studentFormData.password}`
+      );
+      console.log(response.data);
+      if (response.data != null) 
+      {
+        
+        onStudentLogin(); 
 
-    const { email, username, password } = studentFormData;
-
-    // Check if any input is not empty for student login
-    if (email && username && password) {
-      const studentData = {
-        email: email,
-        username: username,
-        role: "student",
-      };
-
-      localStorage.setItem("student", JSON.stringify(studentData));
-      navigate("/studenthome");
-    } else {
-      setMessage("Login Failed: Please fill in all fields for Student Login");
+        localStorage.setItem('student', JSON.stringify(response.data));
+        
+        navigate("/studenthome");
+      } 
+      else 
+      {
+        setMessage("Login Failed");
+        setError("");
+      }
+    } catch (error) {
+      setMessage("");
+      setError(error.message);
     }
   };
 
-  const handleFacultyLoginSubmit = (e) => {
+
+  const handleFacultyLoginSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://localhost:2025/checkadminlogin?username=${facultyFormData.username}&password=${facultyFormData.password}`
+      );
+      console.log(response.data);
+      if (response.data != null) 
+      {
+        onFacultyLogin(); 
 
-    const { email, username, password } = facultyFormData;
-
-    // Check if any input is not empty for faculty login
-    if (email && username && password) {
-      const facultyData = {
-        email: email,
-        username: username,
-        role: "faculty",
-      };
-
-      localStorage.setItem("faculty", JSON.stringify(facultyData));
-      navigate("/facultyhome");
-    } else {
-      setMessage("Login Failed: Please fill in all fields for Faculty Login");
+        localStorage.setItem('faculty', JSON.stringify(response.data));
+        
+        navigate("/facultyhome");
+      } 
+      else 
+      {
+        setMessage("Login Failed");
+        setError("");
+      }
+    } catch (error) {
+      setMessage("");
+      setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div style={styles.content}>
       <center>
         <h1 style={{ color: "white" }}>Login</h1>
       </center>
@@ -86,58 +111,51 @@ const Login = () => {
         id="container"
       >
         <div className="form-container sign-up-container">
-          <form onSubmit={handleFacultyLoginSubmit}>
+          <form className="form" onSubmit={handleFacultyLoginSubmit}>
+
+    
           <h2 style={{ color: "rgb(35, 74, 121)" }}>Faculty Login</h2>
+          {
+        message ? <h4 align="center">{message}</h4> : <h4 align="center" style={{color:"red"}}>{error}</h4>
+          }
             <input
               type="text"
               name="username"
               placeholder="Username"
               value={facultyFormData.username}
-              onChange={(e) => handleInputChange(e, "faculty")}
+              onChange={(e) => handleChange(e, "faculty")}
             />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={facultyFormData.email}
-              onChange={(e) => handleInputChange(e, "faculty")}
-            />
+            
             <input
               type="password"
               name="password"
               placeholder="Password"
               value={facultyFormData.password}
-              onChange={(e) => handleInputChange(e, "faculty")}
+              onChange={(e) => handleChange(e, "faculty")}
             />
             <span>Forgot your password?</span>
             <button type="submit">Login</button>
           </form>
         </div>
         <div className="form-container sign-in-container">
-          <form onSubmit={handleStudentLoginSubmit}>
+          <form className="form" onSubmit={handleStudentLoginSubmit}>
           <h2 style={{ color: "rgb(35, 74, 121)" }}>Student Login</h2>
-
-
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={studentFormData.username}
-              onChange={(e) => handleInputChange(e, "student")}
-            />
+          {
+        message ? <h4 align="center">{message}</h4> : <h4 align="center" style={{color:"red"}}>{error}</h4>
+            } 
             <input
               type="email"
               name="email"
               placeholder="Email"
               value={studentFormData.email}
-              onChange={(e) => handleInputChange(e, "student")}
+              onChange={(e) => handleChange(e, "student")}
             />
             <input
               type="password"
               name="password"
               placeholder="Password"
               value={studentFormData.password}
-              onChange={(e) => handleInputChange(e, "student")}
+              onChange={(e) => handleChange(e, "student")}
             />
             <span>Forgot your password?</span>
             <button type="submit">Login</button>

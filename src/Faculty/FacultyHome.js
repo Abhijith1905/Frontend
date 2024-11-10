@@ -1,53 +1,24 @@
 import React from "react";
-import { Link,  useNavigate } from "react-router-dom";
+
 //import profile from './logo.svg'
 import "./facultynavbar.css";
 
 
+
 export default function FacultyHome() {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("isFacultyLoggedIn");
-    localStorage.removeItem("faculty");
+  const styles = {
+    content: {
+      paddingTop: "100px",
+    }
+  }
 
-    navigate("/login");
-    window.location.reload();
-  };
+
   return (
     <div>
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <td>
-              <button>
-                <Link to="/facultyhome">Home</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/facultydashboard">Feedback</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                {" "}
-                <Link to="/facultydashboard">Students</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button onClick={handleLogout}>Logout</button>
-            </td>
-          </table>
-        </div>
-      </nav>
+      
 
+      <div style={styles.content}>
       <div className="content-container">
         <div className="text-content">
           <h2>A GOAL</h2>
@@ -67,6 +38,7 @@ export default function FacultyHome() {
         </div>
         <img src="now.png" alt="Illustration" className="illustration1" />
       </div>
+      </div>
       <footer className="footer">
         <div className="footer-content">
           <span>© 2024 EduSupport. All rights reserved.</span>
@@ -76,7 +48,9 @@ export default function FacultyHome() {
             <span className="footer-link">Contact Us</span>
           </div>
         </div>
+        
       </footer>
+     
     </div>
   );
 }

@@ -2,8 +2,14 @@ import * as React from "react";
 import "./../App.css"; // Ensure the correct path to your CSS file
 
 export default function Home() {
+
+  const styles = {
+    content: {
+      paddingTop: "100px",
+    }
+  }
   return (
-    <div>
+    <div style={styles.content}>
       <div className="content-container">
         <div className="text-content">
           <h2>A GOAL</h2>

@@ -1,200 +1,105 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./facultynavbar.css"; // Import your CSS file here
+import { useState } from 'react';
+import axios from 'axios';
+import "./form.css"
 
-// I have addstudent logic here , change it
+export default function UpdateStudent() {
+  const [student, setStudent] = useState({
+    id: '',
+    name: '',
+    gender: '',
+    department: '',
+    program: '',
+    semester: '',
+    year: '',
+    dob: '',
+    email: '',
+    contact: ''
+  });
+  const [message, setMessage] = useState('');
 
-const UpdateStudent = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("isFacultyLoggedIn");
-    localStorage.removeItem("faculty");
-    navigate("/login");
-    window.location.reload();
+  const handleChange = (e) => {
+    setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const studentData = {
-      studentID: e.target.studentID.value,
-      studentName: e.target.studentName.value,
-      studentGender: e.target.studentGender.value,
-      studentDepartment: e.target.studentDepartment.value,
-      studentProgram: e.target.studentProgram.value,
-      studentEmail: e.target.studentEmail.value,
-      studentAddress: e.target.studentAddress.value,
-      studentContact: e.target.studentContact.value,
-    };
-
-    console.log(studentData); // You can send this data to your backend or handle it as needed
-
-    e.target.reset(); // Resetting the form
-  };
-
-  // Increased width for the form container
-  const formStyle = {
-    maxWidth: "800px", // Increased width
-    margin: "20px auto",
-    padding: "20px",
-    backgroundColor: "#ecf0f1", // Light grey background
-    borderRadius: "10px",
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)", // Subtle shadow
-  };
-
-  const inputStyle = {
-    margin: "10px 0",
-    padding: "10px",
-    border: "1px solid #bdc3c7", // Light grey border
-    borderRadius: "5px",
-    fontSize: "16px",
-    transition: "border-color 0.3s ease",
-  };
-
-  const buttonStyle = {
-    backgroundColor: "#3498db", // Light blue background
-    color: "white",
-    border: "none",
-    padding: "10px 15px",
-    borderRadius: "5px",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-    marginTop: "10px",
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: "#2980b9", // Darker blue on hover
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // to avoid page reloading
+    try {
+      const response = await axios.put('http://localhost:2025/updatestudent', student);
+      if (response.status === 200) { // if successfully updated
+        setMessage(response.data);
+        setStudent({
+          id: '',
+          name: '',
+          gender: '',
+          department: '',
+          program: '',
+          semester: '',
+          year: '',
+          dob: '',
+          email: '',
+          contact: ''
+        });
+      }
+    } catch (error) {
+      console.log(error.message); // for debugging purpose
+      setMessage(error.message);
+    }
   };
 
   return (
-    <div>
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <tbody>
-              <tr>
-                <td>
-                  <button>
-                    <Link to="/facultyhome">Home</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button>
-                    <Link to="/facultydashboard">Feedback</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button>
-                    <Link to="/facultydashboard">Students</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button onClick={handleLogout}>Logout</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </nav>
-
-      <div className="main" style={formStyle}>
-        {/* Add Student heading with black color, moved down by 1.5 inches */}
-        <h2
-          style={{
-            textAlign: "center",
-            margin: "48px 0 20px 0",
-            color: "black",
-          }}
-        >
-          Update Student
-        </h2>
-
-        <form id="createStudentForm" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            id="studentID"
-            placeholder="Student ID"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="text"
-            id="studentName"
-            placeholder="Student Name"
-            style={inputStyle}
-            required
-          />
-          <select id="studentGender" style={inputStyle} required>
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-          <input
-            type="text"
-            id="studentDepartment"
-            placeholder="Department"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="text"
-            id="studentProgram"
-            placeholder="Program"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="email"
-            id="studentEmail"
-            placeholder="Email Address"
-            style={inputStyle}
-            required
-          />
-          <textarea
-            id="studentAddress"
-            placeholder="Address"
-            rows="3"
-            style={{
-              ...inputStyle,
-              resize: "none", // Prevents resizing
-              width: "100%", // Ensures it takes the full width of the container
-            }}
-            required
-            readOnly // Make it non-editable
-          ></textarea>
-          <input
-            type="text"
-            id="studentContact"
-            placeholder="Contact Number"
-            style={inputStyle}
-            required
-          />
-          <button
-            type="submit"
-            className="btn"
-            style={buttonStyle}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor =
-                buttonHoverStyle.backgroundColor)
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor =
-                buttonStyle.backgroundColor)
-            }
-          >
-            Update Student
-          </button>
-        </form>
+    <div className="content">
+        {message ? (
+          <p style={{ color: "red", fontWeight: "bolder" }}>{message}</p>
+        ) : (
+          <p></p>
+        )}
+        <h2 className="ul">Update Student</h2>
+        <div className="design">
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input type="number" name="id" value={student.id} onChange={handleChange} placeholder="ID" required />
+            </div>
+            <div>
+              <input type="text" name="name" value={student.name} onChange={handleChange} placeholder="Full Name" required />
+            </div>
+            <div>
+              <select name="gender" value={student.gender} onChange={handleChange} required>
+                <option value="">---Select Gender---</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHERS">Others</option>
+              </select>
+            </div>
+            <div>
+              <select name="department" value={student.department} onChange={handleChange} required>
+                <option value="">---Select Department---</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="CS&I">CS&IT</option>
+              </select>
+            </div>
+            <div>
+              <input type="text" name="program" value={student.program} onChange={handleChange} placeholder="Program" required />
+            </div>
+            <div>
+              <input type="text" name="semester" value={student.semester} onChange={handleChange} placeholder="Semester" required />
+            </div>
+            <div>
+              <input type="text" name="year" value={student.year} onChange={handleChange} placeholder="Year" required />
+            </div>
+            <div>
+              <input type="date" name="dob" value={student.dob} onChange={handleChange} required />
+            </div>
+            <div>
+              <input type="email" name="email" value={student.email} onChange={handleChange} placeholder="Email" required />
+            </div>
+            <div>
+              <input type="number" name="contact" value={student.contact} onChange={handleChange} placeholder="Contact" required />
+            </div>
+            <button type="submit">Update</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="reset">Clear</button>
+          </form>
       </div>
     </div>
   );
-};
-
-export default UpdateStudent;
+}

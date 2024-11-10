@@ -1,172 +1,198 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./facultynavbar.css"; // Import your CSS file here
+import { useState } from 'react';
+import axios from 'axios';
+// import "./form.css"
+import "./facultynavbar.css"
 
-const AddStudent = () => {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("isFacultyLoggedIn");
-    localStorage.removeItem("faculty");
-    navigate("/login");
-    window.location.reload();
+
+export default function AddStudent() {
+  const [student, setStudent] = useState({
+    fullName: '',
+    gender: '',
+    department: '',
+    program: '',
+    semester: '',
+    year: '',
+    dateOfBirth: '',
+    password: '',
+    email: '',
+    contact: ''
+  });
+  
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const studentData = {
-      studentID: e.target.studentID.value,
-      studentName: e.target.studentName.value,
-      studentGender: e.target.studentGender.value,
-      studentDepartment: e.target.studentDepartment.value,
-      studentProgram: e.target.studentProgram.value,
-      studentEmail: e.target.studentEmail.value,
-      studentAddress: e.target.studentAddress.value,
-      studentContact: e.target.studentContact.value,
-    };
-
-    console.log(studentData); // You can send this data to your backend or handle it as needed
-
-    e.target.reset(); // Resetting the form
-  };
-
-  // Increased width for the form container
-  const formStyle = {
-    maxWidth: "800px", // Increased width
-    margin: "20px auto",
-    padding: "20px",
-    backgroundColor: "#ecf0f1", // Light grey background
-    borderRadius: "10px",
-    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)", // Subtle shadow
-  };
-
-  const inputStyle = {
-    margin: "10px 0",
-    padding: "10px",
-    border: "1px solid #bdc3c7", // Light grey border
-    borderRadius: "5px",
-    fontSize: "16px",
-    transition: "border-color 0.3s ease",
-  };
-
-  const buttonStyle = {
-    backgroundColor: "#3498db", // Light blue background
-    color: "white",
-    border: "none",
-    padding: "10px 15px",
-    borderRadius: "5px",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-    marginTop: "10px",
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: "#2980b9", // Darker blue on hover
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // to avoid page reloading
+    try {
+      const response = await axios.post('http://localhost:2025/addstudent', student);
+      if (response.status === 200) {
+        setMessage(response.data);
+        setStudent({
+          fullName: '',
+          gender: '',
+          department: '',
+          program: '',
+          semester: '',
+          year: '',
+          dateOfBirth: '',
+          password: '',
+          email: '',
+          contact: ''
+        });
+      }
+    } catch (error) {
+      console.log(error.message); // for debugging purpose
+      setMessage(error.message);
+    }
   };
 
   return (
     <div>
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <tbody>
-              <tr>
-                <td>
-                  <button>
-                    <Link to="/facultyhome">Home</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button>
-                    <Link to="/facultydashboard">Feedback</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button>
-                    <Link to="/facultydashboard">Students</Link>
-                  </button>
-                  &nbsp;&nbsp;
-                </td>
-                <td>
-                  <button onClick={handleLogout}>Logout</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </nav>
+     
+      <div className="content">
+        {message && <p>{message}</p>}
+        <h2 className='ul'>Add New Student</h2>
+        <div className = 'design' >
+          <form onSubmit={handleSubmit}>
+            {/* Full Name */}
+            <div className="form-group">
+              <input
+                type="text"
+                name="fullName"
+                value={student.fullName}
+                onChange={handleChange}
+                placeholder="Enter Full Name"
+                required
+              />
+            </div>
+            
+            {/* Gender */}
+            <div className="form-group">
+              <select
+                name="gender"
+                value={student.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="">---Select Gender---</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHERS">Others</option>
+              </select>
+            </div>
 
-      <div className="main" style={formStyle}>
-        {/* Add Student heading with black color, moved down by 1.5 inches */}
-        <h2 style={{ textAlign: "center", margin: "48px 0 20px 0", color: "black" }}>Add Student</h2>
-        
-        <form id="createStudentForm" onSubmit={handleSubmit}>
-          <input type="text" id="studentID" placeholder="Student ID" style={inputStyle} required />
-          <input
-            type="text"
-            id="studentName"
-            placeholder="Student Name"
-            style={inputStyle}
-            required
-          />
-          <select id="studentGender" style={inputStyle} required>
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-          <input
-            type="text"
-            id="studentDepartment"
-            placeholder="Department"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="text"
-            id="studentProgram"
-            placeholder="Program"
-            style={inputStyle}
-            required
-          />
-          <input
-            type="email"
-            id="studentEmail"
-            placeholder="Email Address"
-            style={inputStyle}
-            required
-          />
-          <textarea
-            id="studentAddress"
-            placeholder="Address"
-            rows="3"
-            style={{
-              ...inputStyle,
-              resize: "none", // Prevents resizing
-              width: "100%", // Ensures it takes the full width of the container
-            }}
-            required
-            readOnly // Make it non-editable
-          ></textarea>
-          <input
-            type="text"
-            id="studentContact"
-            placeholder="Contact Number"
-            style={inputStyle}
-            required
-          />
-          <button type="submit" className="btn" style={buttonStyle} onMouseOver={(e) => (e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor)} onMouseOut={(e) => (e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor)}>
-            Add Student
-          </button>
-        </form>
+            {/* Department */}
+            <div className="form-group">
+              <select
+                name="department"
+                value={student.department}
+                onChange={handleChange}
+                required
+              >
+                <option value="">---Select Department---</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="CSIT">CS&IT</option>
+              </select>
+            </div>
+
+            {/* Program */}
+            <div className="form-group">
+              <input
+                type="text"
+                name="program"
+                value={student.program}
+                onChange={handleChange}
+                placeholder="Enter Program"
+                required
+              />
+            </div>
+
+            {/* Semester */}
+            <div className="form-group">
+              <input
+                type="text"
+                name="semester"
+                value={student.semester}
+                onChange={handleChange}
+                placeholder="Enter Semester"
+                required
+              />
+            </div>
+
+            {/* Year */}
+            <div className="form-group">
+              <input
+                type="number"
+                name="year"
+                value={student.year}
+                onChange={handleChange}
+                placeholder="Enter Year"
+                required
+              />
+            </div>
+
+            {/* Date of Birth */}
+            <div className="form-group">
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={student.dateOfBirth}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                value={student.password}
+                onChange={handleChange}
+                placeholder="Enter Password"
+                required
+              />
+            </div>
+
+            {/* Email */}
+            <div className="form-group">
+              <input
+                type="email"
+                name="email"
+                value={student.email}
+                onChange={handleChange}
+                placeholder="Enter Email"
+                required
+              />
+            </div>
+
+            {/* Contact */}
+            <div className="form-group">
+              <input
+                type="text"
+                name="contact"
+                value={student.contact}
+                onChange={handleChange}
+                placeholder="Enter Contact Number"
+                required
+              />
+            </div>
+
+            {/* Submit and Reset Buttons */}
+            <div className="button-group">
+              <button type="submit">Add Student</button>
+              <button type="reset">Clear</button>
+            </div>
+          </form>
+        </div>
       </div>
+
+     
     </div>
   );
-};
-
-export default AddStudent;
+}

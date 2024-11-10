@@ -4,24 +4,9 @@ import Login from "./Login";
 import Home from "./Home";
 import About from "./About";
 import Contact from "./Contact";
-import FacultyHome from "./../Faculty/FacultyHome";
-import StudentHome from "./../Student/StudentHome";
-import "./navbar.css";
-import StudentProfile from "../Student/StudentProfile";
-import StudentPortfolio from "../Student/StudentPortfolio";
-import StudentProject from "./../Student/StudentProjects";
-import CreateProject from "./../Student/CreateProject";
-import UploadProjectFurther from "./../Student/UploadProjectFurther"; 
 
-import FacultyDashboard from "../Faculty/FacultyDashboard";
-import PortfolioCheck from "./../Faculty/PortfolioCheck";
-import PortfolioCheck2 from "./../Faculty/PortfolioCheck2";
-import ProjectCheck from "./../Faculty/ProjectCheck";
-import AddStudent from "../Faculty/AddStudent";
-import UpdateStudent from "../Faculty/UpdateStudents";
-import ViewStudents from "../Faculty/ViewStudents";
-import MileStones from "../Student/MilesStones";
-import Review from "../Faculty/Review";
+import "./navbar.css";
+
 
 export default function MainNavBar({ onStudentLogin, onFacultyLogin }) {
   return (
@@ -74,25 +59,8 @@ export default function MainNavBar({ onStudentLogin, onFacultyLogin }) {
           }
           exact
         />
-
-        <Route path="/studenthome" element={<StudentHome />} exact />
-        <Route path="/studentprofile" element={<StudentProfile />} exact />
-        <Route path="/portfolio" element={<StudentPortfolio />} exact />
-        <Route path="/projects" element={<StudentProject />} exact />
-        <Route path="/milestone" element={<MileStones />} exact />
-        <Route path="/createproject" element={<CreateProject />} exact />
-        <Route path="/uploadprojectfurther" element={<UploadProjectFurther />} exact />
-
-        <Route path="/facultyhome" element={<FacultyHome />} exact />
-        <Route path="/facultydashboard" element={<FacultyDashboard />} exact />
-
-        <Route path="student/add" element={<AddStudent />} exact />
-        <Route path="student/view" element={<ViewStudents />} exact />
-        <Route path="student/update" element={<UpdateStudent />} exact />
-        <Route path="/portfoliocheck" element={<PortfolioCheck />} exact />
-        <Route path="/projectscheck" element={<ProjectCheck />} exact />
-        <Route path="/portfoliocheck2" element={<PortfolioCheck2 />} exact />
-        <Route path="/review" element={<Review/>} exact />
+ 
+       
       </Routes>
     </div>
   );

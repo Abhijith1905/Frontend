@@ -1,59 +1,22 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+
 import "./studentnavbar.css";
 
-export default function StudentHome() {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("isStudentLoggedIn");
-    localStorage.removeItem("student");
-    navigate("/login");
-    window.location.reload();
-  };
+export default function StudentHome() {
+
+  const styles = {
+    content: {
+      paddingTop: "100px",
+    }
+  }
 
   return (
     <div>
-      {/* Navbar */}
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <td>
-              <button>
-                <Link to="/studenthome">Home</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/studentprofile">Profile</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/portfolio">Portfolio</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                {" "}
-                <Link to="/projects">Projects</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button onClick={handleLogout}>Logout</button>
-            </td>
-          </table>
-        </div>
-      </nav>
+     
 
       {/* Content */}
+      <div style={styles.content}>
       <div className="content-container">
         <div className="text-content">
           <h2>A GOAL</h2>
@@ -73,7 +36,7 @@ export default function StudentHome() {
         </div>
         <img src="now.png" alt="Illustration" className="illustration1" />
       </div>
-
+      </div>
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
@@ -85,6 +48,7 @@ export default function StudentHome() {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }

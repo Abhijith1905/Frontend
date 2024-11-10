@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import MainNavBar from "./Main/MainNavBar";
-import StudentHome from "./Student/StudentHome";
-import FacultyHome from "./Faculty/FacultyHome";
+import StudentNavBar from "./Student/StudentNavBar";
+import FacultyNavBar from "./Faculty/FacultyNavBar";
 
 function App() {
   const [isStudentLoggedIn, setIsStudentLoggedIn] = useState(false);
@@ -34,9 +34,9 @@ function App() {
     <div className="App">
       <Router>
         {isStudentLoggedIn ? (
-          <StudentHome />
+          <StudentNavBar />
         ) : isFacultyLoggedIn ? (
-          <FacultyHome />
+          <FacultyNavBar />
         ) : (
           <MainNavBar
             onStudentLogin={onStudentLogin}

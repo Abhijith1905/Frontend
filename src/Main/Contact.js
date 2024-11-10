@@ -109,6 +109,7 @@ const Contact = () => {
   };
 
   return (
+    <div className="content">
     <div style={styles.container}>
       <div style={styles.innerContainer}>
         {/* Left section (contact info) */}
@@ -186,6 +187,7 @@ const Contact = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

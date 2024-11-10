@@ -3,9 +3,9 @@ import "./../App.css"; // Ensure the correct path to your CSS file
 
 export default function Home() {
   return (
-    <>
+    <div className="content">
       <h2 style={{ fontWeight: "500" }}>About Us</h2>
-      <br></br>
+
       <center>
         <span style={{ fontSize: "15px" }}>
           Plans are only good intentions unless they immediately degenerate into
@@ -37,6 +37,6 @@ export default function Home() {
         <img src="A.png" alt="Illustration" className="illustration2" />
         <img src="B.png" alt="Illustration" className="illustration2" />
       </div>
-    </>
+    </div>
   );
 }

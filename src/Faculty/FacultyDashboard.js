@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+
+  
 import "./facultynavbar.css";
 
 const FacultyDashboard = () => {
@@ -86,126 +88,67 @@ const FacultyDashboard = () => {
 
   return (
     <div>
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <td>
-              <button>
-                <Link to="/facultyhome">Home</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/">Feedback</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                {" "}
-                <Link to="/facultydashboard">Students</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button onClick={handleLogout}>Logout</button>
-            </td>
-          </table>
-        </div>
-      </nav>
-    <div style={styles.body}>
-      <div style={styles.outerContainer}>
-        <nav>
-          <div className="navbar">
-            <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-              EduSupport
-            </h3>
-            <table className="menu">
-              <td>
-                <button>
-                  <Link to="/facultyhome">Home</Link>
+      
+      <div style={styles.body}>
+        <div style={styles.outerContainer}>
+          <main style={styles.main}>
+            <h2 style={styles.heading}>MANAGEMENT</h2>
+            <p style={styles.paragraph}>
+              Challenges are what make life interesting, and overcoming them is what makes life meaningful.
+            </p>
+            <div style={styles.managementOptions}>
+              <div style={styles.option}>
+                <h3 style={styles.heading}>Student Management</h3>
+                <p style={styles.paragraph}>
+                  A comprehensive platform for managing flight operations, bookings,
+                  and customer services within the airline industry.
+                </p>
+                <div 
+                  style={styles.linkContainer}
+                  onMouseEnter={() => setShowLinks(true)} // Show links on hover
+                  onMouseLeave={() => setShowLinks(false)} // Hide links on mouse leave
+                >
+                  <button style={styles.button}>Enter</button>
+                  {showLinks && (
+                    <div style={styles.links}>
+                      <Link to="student/add" style={styles.link}>Add Student</Link>
+                      <Link to="student/viewall" style={styles.link}>View Students</Link>
+                      <Link to="student/update" style={styles.link}>Update Student</Link>
+                      <Link to="student/delete" style={styles.link}>Delete Student</Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div style={{ ...styles.option, ...styles.highlighted }}>
+                <h3 style={styles.heading}>Portfolios</h3>
+                <p style={styles.paragraph}>
+                  A dynamic solution for overseeing project planning, execution, and
+                  performance across various portfolios in an organization.
+                </p>
+                <button style={styles.button}>
+                  <Link to="/portfoliocheck" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Provide Feedback
+                  </Link>
                 </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button>
-                  <Link to="/facultydashboard">Feedback</Link>
+              </div>
+              <div style={styles.option}>
+                <h3 style={styles.heading}>Projects</h3>
+                <p style={styles.paragraph}>
+                  A centralized system that streamlines course enrollment, tracking
+                  academic progress, and managing student information.
+                </p>
+                <button style={styles.button}>
+                  <Link to="/projectscheck" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Provide Feedback
+                  </Link>
                 </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button>
-                  <Link to="/facultydashboard">Students</Link>
-                </button>
-                &nbsp;&nbsp;
-              </td>
-              <td>
-                <button onClick={handleLogout}>Logout</button>
-              </td>
-            </table>
-          </div>
-        </nav>
-        <main style={styles.main}>
-          <h2 style={styles.heading}>MANAGEMENT</h2>
-          <p style={styles.paragraph}>
-            Challenges are what make life interesting, and overcoming them is what
-            makes life meaningful.
-          </p>
-          <div style={styles.managementOptions}>
-            <div style={styles.option}>
-              <h3 style={styles.heading}>Student Management</h3>
-              <p style={styles.paragraph}>
-                A comprehensive platform for managing flight operations, bookings,
-                and customer services within the airline industry.
-              </p>
-              <div 
-                style={styles.linkContainer}
-                onMouseEnter={() => setShowLinks(true)} // Show links on hover
-                onMouseLeave={() => setShowLinks(false)} // Hide links on mouse leave
-              >
-                <button style={styles.button}>Enter</button>
-                {showLinks && (
-                  <div style={styles.links}>
-                    <Link to="/student/add" style={styles.link}>Add Student</Link>
-                    <Link to="/student/view" style={styles.link}>View Students</Link>
-                    <Link to="/student/update" style={styles.link}>Update Student</Link>
-                    <Link to="/student/delete" style={styles.link}>Delete Student</Link>
-                  </div>
-                )}
               </div>
             </div>
-            <div style={{ ...styles.option, ...styles.highlighted }}>
-              <h3 style={styles.heading}>Portfolios</h3>
-              <p style={styles.paragraph}>
-                A dynamic solution for overseeing project planning, execution, and
-                performance across various portfolios in an organization.
-              </p>
-              <button style={styles.button}>
-                <Link to="/portfoliocheck" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  Provide Feedback
-                </Link>
-              </button>
-            </div>
-            <div style={styles.option}>
-              <h3 style={styles.heading}>Projects</h3>
-              <p style={styles.paragraph}>
-                A centralized system that streamlines course enrollment, tracking
-                academic progress, and managing student information.
-              </p>
-              <button style={styles.button}>
-                <Link to="/projectscheck" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  Provide Feedback
-                </Link>
-              </button>
-            </div>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
-    </div>
+
+    
     </div>
   );
 };
