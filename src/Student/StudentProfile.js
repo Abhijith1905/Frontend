@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 export default function StudentProfile() {
   const [studentData, setStudentData] = useState(null);
 
   useEffect(() => {
-    const storedStudentData = localStorage.getItem('student');
+    const storedStudentData = localStorage.getItem("student");
     if (storedStudentData) {
       const parsedStudentData = JSON.parse(storedStudentData);
       setStudentData(parsedStudentData);
     }
   }, []);
+
+  const handleInputChange = (e, field) => {
+    setStudentData((prevData) => ({
+      ...prevData,
+      [field]: e.target.value,
+    }));
+  };
+
+  const handleSave = () => {
+    localStorage.setItem("student", JSON.stringify(studentData));
+    alert("Profile updated successfully!");
+  };
 
   return (
     <div>
@@ -45,87 +57,105 @@ export default function StudentProfile() {
               </thead>
               <tbody>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Id:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Id
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.id}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Name:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Name
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    {studentData?.fullName}
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    <input
+                      type="text"
+                      value={studentData?.fullName || ""}
+                      onChange={(e) => handleInputChange(e, "fullName")}
+                    />
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Gender:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Gender
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.gender}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Department:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Department
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.department}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Program:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Program
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.program}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Semester:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Semester
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.semester}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Year:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Year
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
                     {studentData?.year}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Date of Birth:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Date of Birth
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {new Date(studentData?.dateOfBirth).toLocaleDateString()}
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Email:</strong>
-                  </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    {studentData?.email}
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    {new Date(studentData?.dateOfBirth).toLocaleDateString()}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    <strong>Contact:</strong>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Email
                   </td>
-                  <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                    {studentData?.contact}
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    <input
+                      type="email"
+                      value={studentData?.email || ""}
+                      onChange={(e) => handleInputChange(e, "email")}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    Contact
+                  </td>
+                  <td style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
+                    <input
+                      type="tel"
+                      value={studentData?.contact || ""}
+                      onChange={(e) => handleInputChange(e, "contact")}
+                    />
                   </td>
                 </tr>
               </tbody>
             </table>
+            <button
+              onClick={handleSave}
+              style={{ marginTop: "20px", padding: "10px 20px" }}
+            >
+              Update
+            </button>
           </div>
         </div>
       </div>

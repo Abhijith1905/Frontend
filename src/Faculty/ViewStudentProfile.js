@@ -3,14 +3,13 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export default function ViewStudentProfile() {
-  const [studentData, setStudentData] = useState(null);
+  const [studentData, setStudentData] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(`http://localhost:2025/displaystudentbyid?id=${id}`);
-        console.log(response.data.dateOfBirth);
         setStudentData(response.data);
       } catch (error) {
         console.error(error.message);
@@ -22,9 +21,21 @@ export default function ViewStudentProfile() {
     }
   }, [id]);
 
-  if (!id) {
-    return null;
-  }
+  const handleInputChange = (e, field) => {
+    setStudentData((prevData) => ({
+      ...prevData,
+      [field]: e.target.value,
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      await axios.put(`http://localhost:2025/updatestudent`, studentData); // Assuming a PUT endpoint for updating
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile:', error.message);
+    }
+  };
 
   return (
     <div>
@@ -47,16 +58,6 @@ export default function ViewStudentProfile() {
               border: "1px solid #ddd",
             }}
           >
-            <thead>
-              <tr>
-                <th style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                  Field
-                </th>
-                <th style={{ border: "1px solid #ddd", padding: "10px", color: "black" }}>
-                  Details
-                </th>
-              </tr>
-            </thead>
             <tbody>
               <tr>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
@@ -71,7 +72,11 @@ export default function ViewStudentProfile() {
                   <strong>Name:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {studentData?.fullName}
+                  <input
+                      type="text"
+                      value={studentData?.fullName || ''}
+                      onChange={(e) => handleInputChange(e, 'fullName')}
+                    />
                 </td>
               </tr>
               <tr>
@@ -87,7 +92,11 @@ export default function ViewStudentProfile() {
                   <strong>Department:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {studentData?.department}
+                <input
+                      type="text"
+                      value={studentData?.department || ''}
+                      onChange={(e) => handleInputChange(e, 'department')}
+                    />
                 </td>
               </tr>
               <tr>
@@ -95,7 +104,11 @@ export default function ViewStudentProfile() {
                   <strong>Program:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {studentData?.program}
+                <input
+                      type="text"
+                      value={studentData?.program || ''}
+                      onChange={(e) => handleInputChange(e, 'program')}
+                    />
                 </td>
               </tr>
               <tr>
@@ -103,7 +116,11 @@ export default function ViewStudentProfile() {
                   <strong>Semester:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {studentData?.semester}
+                <input
+                      type="text"
+                      value={studentData?.semester || ''}
+                      onChange={(e) => handleInputChange(e, 'semester')}
+                    />
                 </td>
               </tr>
               <tr>
@@ -111,7 +128,11 @@ export default function ViewStudentProfile() {
                   <strong>Year:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                  {studentData?.year}
+                <input
+                      type="text"
+                      value={studentData?.year || ''}
+                      onChange={(e) => handleInputChange(e, 'year')}
+                    />
                 </td>
               </tr>
               <tr>
@@ -119,7 +140,7 @@ export default function ViewStudentProfile() {
                   <strong>Date of Birth:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                <td>{new Date(studentData?.dateOfBirth).toLocaleDateString()}</td>
+                  {studentData?.dateOfBirth && new Date(studentData.dateOfBirth).toLocaleDateString()}
                 </td>
               </tr>
               <tr>
@@ -140,6 +161,9 @@ export default function ViewStudentProfile() {
               </tr>
             </tbody>
           </table>
+          <button onClick={handleSave} style={{ marginTop: "20px", padding: "10px 20px" }}>
+            Update
+          </button>
         </div>
       </div>
     </div>
