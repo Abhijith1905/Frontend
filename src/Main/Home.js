@@ -12,10 +12,10 @@ export default function Home() {
     <div style={styles.content}>
       <div className="content-container">
         <div className="text-content">
-          <h2>A GOAL</h2>
-          <h2>WITHOUT A PLAN</h2>
-          <h2>IS JUST A WISH</h2>
-          <p>
+          <h2 style={{ color: "#4a4a75" }}>A GOAL</h2>
+          <h2 style={{ color: "#4a4a75" }}>WITHOUT A PLAN</h2>
+          <h2 style={{ color: "#4a4a75" }}>IS JUST A WISH</h2>
+          <p style={{ color: "#4d4d4d" }}>
             EduSupport is a Portfolio and Project Management System which will
             enhance the academic experience of students by enabling them to
             showcase their projects and portfolios. The platform allows students

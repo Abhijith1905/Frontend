@@ -21,7 +21,7 @@ nav {
     left: 0;
     width: 100%;
     height: 75px; /* Height of navbar */
-    background: rgb(39, 82, 139);
+    background: #B0D0D3;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000; /* Stay above content */
   }
@@ -32,7 +32,7 @@ nav .navbar{
  justify-content: space-between;
  height: 100%;
  max-width: 90%;
- background-color: rgb(39, 82, 139);
+ background-color:#B0D0D3;
  margin: auto;
 }
 nav .navbar .logo a{
@@ -97,4 +97,132 @@ i{
     text-decoration: none; /* Remove underline from links */
     color: black; /* Ensure link text color is black */
   }
-  
+
+  /* Beautiful Container with Updated Text Colors */
+.beautiful-container {
+  background-color: #f5f3ff; /* Soft lavender background for the entire container */
+  border-radius: 20px;
+  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  margin-top: 40px;
+  width: 120%;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.beautiful-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Style for each certification card */
+.card {
+  background-color: #e9d8fd; /* Soft purple background for the card */
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Certification Name */
+.card h3 {
+  color: #4a00b4; /* Darker purple text for the certification name */
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+/* Certification Issuer */
+.card p {
+  color: #2d3748; /* Dark gray for issuer */
+  margin-bottom: 12px;
+  font-size: 1.125rem;
+}
+
+/* Issued and Expiration Dates */
+.card .mt-4 p {
+  color: #6b7280; /* Lighter gray for the dates */
+  font-size: 1.125rem;
+}
+
+/* Text inside the container */
+.beautiful-container .col-span-full h2 {
+  color: #6b46c1; /* Purple text for the section heading */
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* New Text Color Inside Container (Light Teal) */
+.beautiful-container p, .beautiful-container h3, .beautiful-container h2 {
+  color: #4fd1c5; /* Light teal color for content */
+}
+
+.beautiful-container .col-span-full {
+  margin-bottom: 35px;
+}
+
+.custom-button-spacing {
+  display: flex;
+  justify-content: center; /* Ensures buttons are centered */
+  gap: 16px; /* Adds spacing between buttons */
+}
+
+.custom-button-spacing button {
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-button-spacing button:last-child {
+  margin-right: 0; /* Ensures no extra margin after the last button */
+}
+
+/* Navbar Background Color */
+.navbar {
+  background-color: #6A8EAE; /* Soft Slate Blue */
+  padding: 10px 20px;  /* Adjust the padding as needed */
+}
+
+/* Navbar Links Text Color */
+.navbar a {
+  color: #FFFFFF;  /* White text color */
+  text-decoration: none;  /* Removes underline */
+  padding: 10px 15px;  /* Adjust padding for link spacing */
+}
+
+/* Hover Effect on Links */
+.navbar a:hover {
+  background-color: #D4C2E3;  /* Light Lavender on hover */
+  border-radius: 5px;  /* Optional: adds rounded corners on hover */
+}
+
+/* Active Link Style */
+.navbar a.active {
+  background-color: #E0E0E0;  /* Light Gray background for active links */
+  color: #2C3E50;  /* Darker text color for contrast */
+}
+
+/* Navbar Links (Optional: Centering links within navbar) */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Make sure the navbar looks good on smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;  /* Stack links vertically on smaller screens */
+      text-align: center;
+  }
+}

@@ -78,7 +78,7 @@ const Login = ({ onFacultyLogin, onStudentLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:2025/checkadminlogin?username=${facultyFormData.username}&password=${facultyFormData.password}`
+        `http://localhost:2025/checkfacultylogin?username=${facultyFormData.username}&password=${facultyFormData.password}`
       );
       console.log(response.data);
       if (response.data != null && Object.keys(response.data).length > 0) {
@@ -100,7 +100,7 @@ const Login = ({ onFacultyLogin, onStudentLogin }) => {
   return (
     <div style={styles.content}>
       <center>
-        <h1 style={{ color: "white" }}>Login</h1>
+        <h1 style={{ color: "#4a4a75" }}>Login</h1>
       </center>
       <br />
       <br />
@@ -112,7 +112,9 @@ const Login = ({ onFacultyLogin, onStudentLogin }) => {
           <form className="form" onSubmit={handleFacultyLoginSubmit}>
             <h2 style={{ color: "rgb(35, 74, 121)" }}>Faculty Login</h2>
             {facultyMessage ? (
-              <h4  style={{ color: "red" }} align="center">{facultyMessage}</h4>
+              <h4 style={{ color: "red" }} align="center">
+                {facultyMessage}
+              </h4>
             ) : (
               <h4 align="center" style={{ color: "red" }}>
                 {facultyError}
@@ -142,7 +144,9 @@ const Login = ({ onFacultyLogin, onStudentLogin }) => {
           <form className="form" onSubmit={handleStudentLoginSubmit}>
             <h2 style={{ color: "rgb(35, 74, 121)" }}>Student Login</h2>
             {studentMessage ? (
-              <h4  style={{ color: "red" }} align="center">{studentMessage}</h4>
+              <h4 style={{ color: "red" }} align="center">
+                {studentMessage}
+              </h4>
             ) : (
               <h4 align="center" style={{ color: "red" }}>
                 {studentError}

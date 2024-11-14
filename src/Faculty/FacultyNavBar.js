@@ -13,6 +13,7 @@ import AddStudent from "./AddStudent";
 import ViewStudents from "./ViewStudents";
 import UpdateStudent from "./UpdateStudents";
 import ViewStudentProfile from './ViewStudentProfile';
+import ProjectCheck2 from "./ProjectCheck2";
 
 export default function FacultyNavBar() {
 
@@ -70,13 +71,16 @@ export default function FacultyNavBar() {
         <Route path="/portfoliocheck" element={<PortfolioCheck/>} exact />
         <Route path="/projectscheck" element={<ProjectCheck />} exact />
         <Route path="/portfoliocheck2" element={<PortfolioCheck2 />} exact />
-        <Route path="/review" element={<Review/>} exact />
+        <Route path="/review/:id" element={<Review/>} exact />
 
        
       <Route path="facultydashboard/student/add" element={<AddStudent/>} exact />
         <Route path="facultydashboard/student/viewall" element={<ViewStudents />} exact />
         <Route path="displaystudent/:id" element={<ViewStudentProfile/>} />
         <Route path="facultydashboard/student/update" element={<UpdateStudent />} exact />
+
+
+        <Route path="viewprojectbyfaculty/:id" element={<ProjectCheck2 />} />
        
       </Routes>
     </div>

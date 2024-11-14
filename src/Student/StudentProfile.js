@@ -50,8 +50,8 @@ export default function StudentProfile() {
 
   return (
     <div>
-      <div style={{ paddingTop: "130px" }}>
-        <h2 style={{ color: "white" }}>My Profile</h2>
+      <div style={{ paddingTop: "100px" }}>
+        <h2 style={{color: "#4a4a75" }}>My Profile</h2>
         <div
           className="profile-card"
           style={{

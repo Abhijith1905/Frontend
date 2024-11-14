@@ -23,8 +23,8 @@ const Contact = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
-      backgroundColor: "#234a79", // Full background color without white padding
+     
+      // backgroundColor: "#F0F4F8 ", // Full background color without white padding
     },
     innerContainer: {
       display: "flex",
@@ -41,7 +41,7 @@ const Contact = () => {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      backgroundColor: "#234a79",
+      backgroundColor: "#517D92",
       color: "#fff",
     },
     rightSection: {
@@ -110,6 +110,7 @@ const Contact = () => {
 
   return (
     <div className="content">
+     <h2 style={{ color: "#4a4a75" , fontWeight: "500" }}>Contact Us</h2>
     <div style={styles.container}>
       <div style={styles.innerContainer}>
         {/* Left section (contact info) */}

@@ -1,62 +1,92 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./facultynavbar.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import "./../Student/studentnavbar.css"
 
 const Review = () => {
+  const { id } = useParams(); // Retrieve project ID from URL
   const navigate = useNavigate();
+
+  
+  const facultyData = JSON.parse(localStorage.getItem("faculty"));
+   
+  // console.log(facultyData.id);
+  const fid = facultyData ? facultyData.id : null; // Ensure fid is available
+
+  const [formData, setFormData] = useState({
+    rating: "",
+    comments: "",
+  });
+  const [message, setMessage] = useState(""); // For displaying messages
+
+  // Handle change for rating and comments
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+
+     console.log(id);
+    const projectFeedback = {
+      facultyId: fid,                // Faculty ID
+     projectid : Number(id),// Convert id to a number using unary plus
+// Project ID
+      rating: parseInt(formData.rating), // Rating (converted to int)
+      comments: formData.comments,     // Comments
+      dateSubmitted: new Date(),      // Current date
+    };
+    console.log(projectFeedback.projectid);
+    try {
+      const response = await axios.post("http://localhost:2025/gradeproject", projectFeedback);
+      if (response.status === 200) {
+        setMessage("Feedback submitted successfully!");
+        // Reset the form data after successful submission
+        setFormData({
+          rating: "",
+          comments: "",
+        });
+        
+      }
+    } catch (error) {
+      console.log(error.message); // For debugging purpose
+      setMessage("Error submitting feedback. Please try again.");
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("isFacultyLoggedIn");
     localStorage.removeItem("faculty");
-
     navigate("/login");
     window.location.reload();
   };
 
-  const [rating, setRating] = useState("");
-  const [comments, setComments] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic
-    console.log("Rating: ", rating);
-    console.log("Comments: ", comments);
-  };
-
-  // Inline CSS styles
   const styles = {
-    body: {
-      fontFamily: "Arial, sans-serif",
-
-      color: "white",
-      margin: 0,
-      padding: 0,
-      textAlign: "center",
-    },
-
-    container: {
-      padding: "20px",
-      textAlign: "center",
-    },
-    form: {
+    
+    card: {
       backgroundColor: "#ffffff",
-      borderRadius: "8px", // Added rounded edges
-      padding: "50px",
+      borderRadius: "8px",
+      padding: "40px",
       width: "500px",
-      margin: "40px auto",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      textAlign: "center",
     },
     label: {
-        display: "block",
-        marginBottom: "10px",
-        color: "black",
-        fontWeight: "bold", // Added font weight for bold text
-      },
-      
+      display: "block",
+      marginBottom: "10px",
+      color: "black",
+      fontWeight: "bold",
+    },
     input: {
       width: "100%",
       padding: "10px",
       marginBottom: "15px",
-      borderRadius: "8px", // Added rounded edges
+      borderRadius: "8px",
       border: "1px solid #ccc",
       backgroundColor: "#003366",
       color: "white",
@@ -66,127 +96,83 @@ const Review = () => {
       padding: "10px",
       height: "120px",
       marginBottom: "15px",
-      borderRadius: "8px", // Added rounded edges
+      borderRadius: "8px",
       border: "1px solid #ccc",
       resize: "none",
       backgroundColor: "#003366",
       color: "white",
     },
-
-    placeholder: {
-      color: "#fffff" /* Change the placeholder color to white */,
-    },
-
     submitButton: {
-      backgroundColor: "#d2b48c", // Light brown color
+      backgroundColor: "#d2b48c",
       color: "black",
       border: "none",
       padding: "10px 20px",
-      borderRadius: "8px", // Added rounded edges
+      borderRadius: "8px",
       cursor: "pointer",
       fontSize: "16px",
+      marginTop: "10px",
     },
     submitButtonHover: {
       backgroundColor: "#c19a6b",
     },
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "20px",
+      color: "white",
+    },
   };
 
   return (
-    <div style={styles.body}>
-      <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <td>
-              <button>
-                <Link to="/facultyhome" style={styles.navLink}>
-                  Home
-                </Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/facultydashboard" style={styles.navLink}>
-                  Feedback
-                </Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/facultydashboard" style={styles.navLink}>
-                  Students
-                </Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button onClick={handleLogout} style={{ color: "black" }}>
-                Logout
-              </button>
-            </td>
-          </table>
-        </div>
-      </nav>
+    <div className="content">
+      
+      <div style={styles.card} >
+        <h2>Project Feedback</h2>
+        {message && <div style={{color:"red"}}>{message}</div>} {/* Display message */}
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="rating" style={styles.label}>
+            Rating (out of 5)
+          </label>
+          <select
+            id="rating"
+            name="rating"
+            value={formData.rating}
+            onChange={handleChange}
+            style={styles.input}
+          >
+            <option value="" disabled>Select a rating</option>
+            {[1, 2, 3, 4, 5].map((val) => (
+              <option key={val} value={val}>{val}</option>
+            ))}
+          </select>
 
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <label htmlFor="rating" style={styles.label}>
-          Rating (out of 5)
-        </label>
-        <select
-          id="rating"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          style={styles.input}
-        >
-          <option value="" disabled>
-            Select a rating
-          </option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
+          <label htmlFor="comments" style={styles.label}>
+            Comments
+          </label>
+          <textarea
+            id="comments"
+            name="comments"
+            value={formData.comments}
+            onChange={handleChange}
+            placeholder="Enter your comments here"
+            style={styles.textarea}
+          ></textarea>
 
-        <label htmlFor="comments" style={styles.label}>
-          Comments
-        </label>
-        <textarea
-          id="comments"
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
-          placeholder="Enter your comments here"
-          style={styles.textarea}
-        ></textarea>
-
-  {/* Adding styles for placeholder color */}
-  <style>
-          {`
-            textarea::placeholder {
-              color: white; /* Placeholder color */
+          <button
+            type="submit"
+            style={styles.submitButton}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.backgroundColor = styles.submitButtonHover.backgroundColor)
             }
-          `}
-        </style>
-        
-        <button
-          type="submit"
-          style={styles.submitButton}
-          onMouseOver={(e) =>
-            (e.currentTarget.style.backgroundColor =
-              styles.submitButtonHover.backgroundColor)
-          }
-          onMouseOut={(e) =>
-            (e.currentTarget.style.backgroundColor =
-              styles.submitButton.backgroundColor)
-          }
-        >
-          Submit Review
-        </button>
-      </form>
+            onMouseOut={(e) =>
+              (e.currentTarget.style.backgroundColor = styles.submitButton.backgroundColor)
+            }
+          >
+            Submit Review
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

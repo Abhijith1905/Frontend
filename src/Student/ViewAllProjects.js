@@ -1,86 +1,183 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {  useNavigate } from "react-router-dom";
 
-// function ViewAllProjects() {
-//     const [projects, setProjects] = useState([]);
-//     const [projectImages, setProjectImages] = useState({});
-//     const [error, setError] = useState('');
+export default function ViewProjects() {
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-//     // Function to fetch Project data
-//     const fetchProjects = async () => {
-//         try {
-//             const response = await axios.get('http://localhost:2025/viewallprojects');
-//             setProjects(response.data);
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
 
-//             // Fetch images for each project
-//             response.data.forEach(async (project) => {
-//                 try {
-//                     const imageResponse = await axios.get(
-//                         `http://localhost:2025/displayprojectimage?projectId=${project.projectId}`,
-//                         { responseType: 'arraybuffer' }
-//                     );
-//                     const imageBlob = new Blob([imageResponse.data], { type: 'image/png' });
-//                     const imageUrl = URL.createObjectURL(imageBlob);
+  // Fetch projects for the logged-in student
+  const fetchProjects = async (studentId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:2025/viewallprojects?studentId=${studentId}`
+      );
+      console.log(response.data);
+      setProjects(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-//                     setProjectImages((prevImages) => ({
-//                         ...prevImages,
-//                         [project.projectId]: imageUrl,
-//                     }));
-//                 } catch (error) {
-//                     console.error(`Error loading image for Project ${project.projectId}:`, error);
-//                 }
-//             });
-//         } catch (err) {
-//             // Extract the error message if available, otherwise show a default message
-//             const errorMessage = err.response?.data?.message || "An error occurred while fetching projects.";
-//             setError(errorMessage);
-//         }
-//     };
+  // Delete a project by ID
+  const deleteProject = async (id) => {
+    try {
+      await axios.delete(`http://localhost:2025/deleteproject?id=${id}`);
+      fetchProjects(storedStudentData.id); // Refresh project list after deletion
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-//     // Fetch Projects on component mount
-//     useEffect(() => {
-//         fetchProjects();
-//     }, []);
+  // Navigate to project details page
+  const viewProject = (id) => {
+     navigate(`/viewproject/${id}`);
+  };
 
-//     return (
-//         <div>
-//             <h2>Project List</h2>
-//             {error ? (
-//                 <p style={{ color: 'red' }}>{error}</p> // Display error message in red if there's an error
-//             ) : (
-//                 <table>
-//                     <thead>
-//                         <tr>
-//                             <th>Project ID</th>
-//                             <th>Name</th>
-//                             <th>Description</th>
-//                             <th>Image</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody>
-//                         {projects.map((project) => (
-//                             <tr key={project.projectId}>
-//                                 <td>{project.projectId}</td>
-//                                 <td>{project.name}</td>
-//                                 <td>{project.description}</td>
-//                                 <td>
-//                                     {projectImages[project.projectId] ? (
-//                                         <img
-//                                             src={projectImages[project.projectId]}
-//                                             alt={project.name}
-//                                             style={{ width: "100px", height: "100px" }}
-//                                         />
-//                                     ) : (
-//                                         <p>Loading...</p>
-//                                     )}
-//                                 </td>
-//                             </tr>
-//                         ))}
-//                     </tbody>
-//                 </table>
-//             )}
-//         </div>
-//     );
-// }
+  useEffect(() => {
+    fetchProjects(storedStudentData.id);
+  }, []); // Run only once when the component mounts
 
-// export default ViewAllProjects;
+  return (
+    <div className="content">
+      <div className="view-projects-container">
+        <h2 style={{ color: "#4a4a75" }} className="title">
+          View / Delete Projects
+        </h2>
+
+        {projects.length > 0 ? (
+          <table
+            style={{ border: "2px solid black" }}
+            className="projects-table"
+          >
+            <thead>
+              <tr>
+                <th style={{ color: "#4a4a75" }}>Project ID</th>
+                <th style={{ color: "#4a4a75" }}>Title</th>
+                <th style={{ color: "#4a4a75" }}>Description</th>
+                <th style={{ color: "#4a4a75" }}>Phase</th>
+                <th style={{ color: "#4a4a75" }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projects.map((project) => (
+                <tr key={project.projectId}>
+                  <td style={{ color: "#4a4a75" }}>{project.projectId}</td>
+                  <td style={{ color: "#4a4a75" }}>{project.title}</td>
+                  <td style={{ color: "#4a4a75" }}>{project.description}</td>
+                  <td style={{ color: "#4a4a75" }}>{project.phase}</td>
+                  <td style={{ color: "#4a4a75" }}>
+                    <button
+                      className="view-button"
+                      onClick={() => viewProject(project.projectId)}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="delete-button"
+                      onClick={() => deleteProject(project.projectId)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : error ? (
+          <p className="error-message">{error}</p>
+        ) : (
+          <p className="no-projects-message">No projects found</p>
+        )}
+      </div>
+      <style>{`
+        .view-projects-container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background-color: #f9f9fc;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+          text-align: center;
+          margin-bottom: 20px;
+          font-size: 1.5em;
+          color: #4a4a75;
+        }
+
+        .projects-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+
+        .projects-table th,
+        .projects-table td {
+          padding: 12px 15px;
+          text-align: left;
+          color: #4a4a75;
+        }
+
+        .projects-table th {
+          background-color: #e8eaf6;
+          font-weight: bold;
+        }
+
+        .projects-table tr:nth-child(even) {
+          background-color: #f3f4f8;
+        }
+
+        .projects-table tr:hover {
+          background-color: #e1e5f2;
+        }
+
+        .projects-table,
+        .projects-table th,
+        .projects-table td {
+          border: 2px solid #4a4a75;
+        }
+
+        .view-button,
+        .delete-button {
+          padding: 8px 12px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 0.9em;
+        }
+
+        .view-button {
+          background-color: #4a90e2;
+          color: white;
+          margin-right: 8px;
+        }
+
+        .view-button:hover {
+          background-color: #357abf;
+        }
+
+        .delete-button {
+          background-color: #e74c3c;
+          color: white;
+        }
+
+        .delete-button:hover {
+          background-color: #c0392b;
+        }
+
+        .error-message,
+        .no-projects-message {
+          color: #e74c3c;
+          text-align: center;
+          font-size: 1.1em;
+          margin-top: 20px;
+        }
+      `}</style>
+    </div>
+  );
+}
