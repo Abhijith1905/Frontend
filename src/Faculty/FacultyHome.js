@@ -16,7 +16,7 @@ export default function FacultyHome() {
 
   return (
     <div>
-      
+       <nav> </nav>
 
       <div style={styles.content}>
       <div className="content-container">

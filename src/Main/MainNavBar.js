@@ -59,6 +59,7 @@ export default function MainNavBar({ onStudentLogin, onFacultyLogin }) {
           }
           exact
         />
+         <Route path="*" element={<h2>Page Not found</h2>}/>
  
        
       </Routes>

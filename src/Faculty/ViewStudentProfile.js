@@ -39,8 +39,9 @@ export default function ViewStudentProfile() {
 
   return (
     <div>
+      <nav> </nav>
       <div style={{ paddingTop: "130px" }}>
-        <h2 style={{ color: "white" }}>Student Profile</h2>
+        <h2 style={{ color: "black" }}>Student Profile</h2>
         <div
           className="profile-card"
           style={{

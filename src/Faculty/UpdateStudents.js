@@ -47,13 +47,14 @@ export default function UpdateStudent() {
   };
 
   return (
-    <div className="content">
+    <div >
+      <nav> </nav>
         {message ? (
           <p style={{ color: "red", fontWeight: "bolder" }}>{message}</p>
         ) : (
           <p></p>
         )}
-        <h2 className="ul">Update Student</h2>
+        <h2 style={{paddingTop:"120px"}} className="ul">Update Student</h2>
         <div className="design">
           <form onSubmit={handleSubmit}>
             <div>

@@ -71,7 +71,7 @@ export default function UploadMedia() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px" , color:"black"}}>
       <h2>Upload Media for Project {id}</h2>
       <form onSubmit={handleSubmit}>
         <div>

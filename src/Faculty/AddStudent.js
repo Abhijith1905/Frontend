@@ -52,7 +52,7 @@ export default function AddStudent() {
 
   return (
     <div>
-     
+      <nav> </nav>
       <div className="content">
         {message && <p>{message}</p>}
         <h2 className='ul'>Add New Student</h2>

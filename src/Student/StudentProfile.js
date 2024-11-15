@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 export default function StudentProfile() {
   const [studentData, setStudentData] = useState({
     id: "",
@@ -29,9 +29,13 @@ export default function StudentProfile() {
     }));
   };
 
-  const handleSave = () => {
-    localStorage.setItem("student", JSON.stringify(studentData));
-    alert("Profile updated successfully!");
+  const handleSave = async () => {
+    try {
+      await axios.put(`http://localhost:2025/updatestudent`, studentData); // Assuming a PUT endpoint for updating
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating profile:', error.message);
+    }
   };
 
   const handlePhotoUpload = (e) => {
@@ -72,7 +76,7 @@ export default function StudentProfile() {
               marginBottom: "20px",
             }}
           >
-            <div>
+            {/* <div>
               <img
                 src={
                   studentData.photo ||
@@ -95,7 +99,7 @@ export default function StudentProfile() {
               accept="image/*"
               style={{ display: "none" }}
               onChange={handlePhotoUpload}
-            />
+            /> */}
           </div>
 
           {/* Profile Info Table */}

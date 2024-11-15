@@ -63,7 +63,7 @@ export default function CreatePortfolio() {
   const buttonStyle = {
     padding: "8px 16px",
     margin: "10px 5px",
-    backgroundColor: "#007bff",
+    backgroundColor: "#4a4a75",
     color: "white",
     border: "none",
     borderRadius: "5px",
@@ -138,14 +138,14 @@ export default function CreatePortfolio() {
       <button
         type="button"
         onClick={() => addItem(setSkills, { skillName: "", skillLevel: "", studentId })}
-        style={buttonStyle}
+      style={buttonStyle}
       >
         Add Skill
       </button>
       <button
         type="button"
         onClick={() => removeItem(setSkills, index)}
-        style={buttonStyle}
+       style={buttonStyle}
         disabled={skills.length === 1}
       >
         Remove Skill
@@ -210,14 +210,14 @@ export default function CreatePortfolio() {
                 onClick={() =>
                   addItem(setCertifications, { certificationName: "", certificationIssuer: "", certificationDate: "", expirationDate: "" })
                 }
-                style={buttonStyle}
+              style={buttonStyle}
               >
                 Add Certification
               </button>
               <button
                 type="button"
                 onClick={() => removeItem(setCertifications, index)}
-                style={buttonStyle}
+              style={buttonStyle}
                 disabled={certifications.length === 1}
               >
                 Remove Certification
@@ -301,6 +301,7 @@ export default function CreatePortfolio() {
             educationEndDate: "",
           })
         }
+        style={buttonStyle}
       >
         Add Education
       </button>
@@ -308,6 +309,7 @@ export default function CreatePortfolio() {
         type="button"
         onClick={() => removeItem(setEducation, index)}
         disabled={education.length === 1}
+       style={buttonStyle}
       >
         Remove Education
       </button>
@@ -382,6 +384,7 @@ export default function CreatePortfolio() {
             endDate: "",
           })
         }
+        style={buttonStyle}
       >
         Add Internship
       </button>
@@ -389,6 +392,7 @@ export default function CreatePortfolio() {
         type="button"
         onClick={() => removeItem(setInternships, index)}
         disabled={internships.length === 1}
+        style={buttonStyle}
       >
         Remove Internship
       </button>
@@ -434,6 +438,7 @@ export default function CreatePortfolio() {
         onClick={() =>
           addItem(setTestimonials, { testimonialText: "", giverName: "" })
         }
+        style={buttonStyle }  
       >
         Add Testimonial
       </button>
@@ -441,6 +446,7 @@ export default function CreatePortfolio() {
         type="button"
         onClick={() => removeItem(setTestimonials, index)}
         disabled={testimonials.length === 1}
+        style={buttonStyle }
       >
         Remove Testimonial
       </button>

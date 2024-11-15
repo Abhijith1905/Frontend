@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ViewProject = () => {
@@ -13,6 +14,7 @@ const ViewProject = () => {
   const [modalType, setModalType] = useState("");
   const [zipUrl, setZipUrl] = useState(null);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
@@ -146,7 +148,7 @@ const ViewProject = () => {
             alt="Project Media"
             style={{
               width: "100%",
-              height: "auto",
+              height: "150px",
               borderRadius: "8px",
             }}
           />
@@ -187,106 +189,105 @@ const ViewProject = () => {
       {/* Project Details Table - Vertical Layout */}
       <h2 style={{ color: "#4a4a75", textAlign: "center" }}>Project Details</h2>
       <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          marginBottom: "20px",
-          backgroundColor: "#e6e6e6",
-          color: "#4a4a75",
-        }}
-      >
-        <tbody>
-          <tr>
-            <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Title</td>
-            <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-              <input
-                type="text"
-                value={projectData.title || ""}
-                onChange={(e) => handleInputChange(e, "title")}
-                style={{ width: "100%", padding: "8px" }}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Idea of Project</td>
-            <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-              <textarea
-                value={projectData.description || ""}
-                onChange={(e) => handleInputChange(e, "description")}
-                style={{ width: "100%", padding: "8px" }}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Phase</td>
-            <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-              <select
-                value={projectData.phase || ""}
-                onChange={(e) => handleInputChange(e, "phase")}
-                style={{ width: "100%", padding: "8px" }}
-              >
-                <option value="NOT_STARTED">Not Started</option>
-                <option value="ACTIVE">Active</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Project Icon</td>
-            <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-              {projectImage && (
-                <center>
-                <button
-                  onClick={() => openModal(projectImage, "image")}
-                  style={{
-                    padding: "10px 20px",
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                  }}
-                >
-                  View
-                </button>
-                </center>
-              )}
-            </td>
-          </tr>
-          <tr>
-  <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Description</td>
-  <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-    {projectFile && (
-      <center>
-      <button
-        onClick={() => openModal(projectFile, "text")}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-        }} >
-      
-        View
-      </button>
-      </center>
-    )}
-  </td>
-</tr>
-
-        { (
-      <tr>
-        <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>
-          Download ZIP
-        </td>
-        <td style={{ border: "1px solid #ddd", padding: "12px", textAlign: "center" }}>
+  style={{
+    width: "100%",
+    borderCollapse: "collapse",
+    marginBottom: "20px",
+    backgroundColor: "#e6e6e6",
+    color: "#4a4a75",
+  }}
+>
+  <tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Title</td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        <input
+          type="text"
+          value={projectData.title || ""}
+          onChange={(e) => handleInputChange(e, "title")}
+          style={{ width: "100%", padding: "8px" }}
+        />
+      </td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Idea of Project</td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        <textarea
+          value={projectData.description || ""}
+          onChange={(e) => handleInputChange(e, "description")}
+          style={{ width: "100%", padding: "8px" }}
+        />
+      </td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Phase</td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        <select
+          value={projectData.phase || ""}
+          onChange={(e) => handleInputChange(e, "phase")}
+          style={{ width: "100%", padding: "8px" }}
+        >
+          <option value="NOT_STARTED">Not Started</option>
+          <option value="ACTIVE">Active</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Project Icon</td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        {projectImage && (
           <center>
+            <button
+              onClick={() => openModal(projectImage, "image")}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#d2b48c",
+                color: "black",
+                border: "none",
+                borderRadius: "8px",
+              }}
+            >
+              View
+            </button>
+          </center>
+        )}
+      </td>
+    </tr>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>Description</td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        {projectFile && (
+          <center>
+            <button
+              onClick={() => openModal(projectFile, "text")}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#d2b48c",
+                color: "black",
+                border: "none",
+                borderRadius: "8px",
+              }}
+            >
+              View
+            </button>
+          </center>
+        )}
+      </td>
+    </tr>
+
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>
+        Download ZIP
+      </td>
+      <td style={{ border: "1px solid #ddd", padding: "12px", textAlign: "center" }}>
+        <center>
           <button
             onClick={() => window.location.href = zipUrl}
             style={{
               padding: "10px 20px",
-              backgroundColor: "#4CAF50",
-              color: "white",
+              backgroundColor: "#d2b48c",
+              color: "black",
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
@@ -294,66 +295,78 @@ const ViewProject = () => {
           >
             Download
           </button>
-          </center>
-        </td>
-      </tr>
-      
-    )}
+        </center>
+      </td>
+    </tr>
 
-<tr>
-          <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>
-            Submit for Review
-          </td>
-          <td style={{ border: "1px solid #ddd", padding: "12px" }}>
-            <label>
-              <input
-                type="checkbox"
-                checked={projectData.checkStatus}
-                onChange={handleCheckStatusChange}
-                style={{ marginRight: "10px" }}
-              />
-              Check to submit for review
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan="2" style={{ padding: "12px" }}>
-            <button
-              onClick={handleSubmitForReview}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-              }}
-            >
-              Submit for Review
-            </button>
-          </td>
-        </tr>
-        
-      
-</tbody>
+    <tr>
+      <td style={{ border: "1px solid #ddd", padding: "12px", fontWeight: "bold" }}>
+        Submit for Review
+      </td>
+      <td style={{ border: "1px solid #ddd", padding: "12px" }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={projectData.checkStatus}
+            onChange={handleCheckStatusChange}
+            style={{ marginRight: "10px" }}
+          />
+          Check to submit for review
+        </label>
+      </td>
+    </tr>
+
+    {/* Buttons side by side */}
+    <tr>
+      <td colSpan="2" style={{ padding: "12px", textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+          <button
+            onClick={handleUpdateProject}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#d2b48c",
+              color: "black",
+              border: "none",
+              borderRadius: "8px",
+            }}
+          >
+            Save Changes
+          </button>
+          <button
+            onClick={handleSubmitForReview}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#d2b48c",
+              color: "black",
+              border: "none",
+              borderRadius: "8px",
+            }}
+          >
+            Submit Review
+          </button>
+          <button
+        onClick={() => navigate(`/uploadmedia/${id}`)}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#d2b48c",
+          color: "black",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+        }}
+      >
+        Upload Media
+      </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
 </table>
-<center>
-<button
-  onClick={handleUpdateProject}
-  style={{
-    padding: "10px 20px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  }}
->
-  Save Changes
-</button>
-</center>
+
+
 
 {/* Media Section for Images */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{  color:"#4a4a75" ,marginBottom: "20px", textAlign: "center" }}>
   <h3>Project Images</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&
@@ -371,7 +384,7 @@ const ViewProject = () => {
 </div>
 
 {/* Media Section for Documents */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{ marginBottom: "20px", textAlign: "center", color:"#4a4a75"}}>
   <h3>Project Documents</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&
@@ -389,7 +402,7 @@ const ViewProject = () => {
 </div>
 
 {/* Media Section for Text Files */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{ marginBottom: "20px", textAlign: "center" , color:"#4a4a75"}}>
   <h3>Project Text Files</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&

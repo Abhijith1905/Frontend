@@ -88,7 +88,7 @@ const FacultyDashboard = () => {
 
   return (
     <div>
-      
+       <nav> </nav>
       <div style={styles.body}>
         <div style={styles.outerContainer}>
           <main style={styles.main}>
@@ -114,7 +114,7 @@ const FacultyDashboard = () => {
                       <Link to="student/add" style={styles.link}>Add Student</Link>
                       <Link to="student/viewall" style={styles.link}>View Students</Link>
                       <Link to="student/update" style={styles.link}>Update Student</Link>
-                      <Link to="student/delete" style={styles.link}>Delete Student</Link>
+                     
                     </div>
                   )}
                 </div>

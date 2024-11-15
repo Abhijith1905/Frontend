@@ -18,6 +18,8 @@ import ViewProject from "./ViewProject";
 import CreatePortfolio from "./CreatePortfolio";
 import ViewPortfolio from "./ViewPortfolio";
 import UploadMedia from "./UploadMedia";
+import DeleteProject from "./DeleteProject";
+import ViewFeedback from "./ViewFeedback";
 
 export default function StudentNavBar() {
   const navigate = useNavigate();
@@ -214,8 +216,8 @@ export default function StudentNavBar() {
               <Link to="/viewallprojects" className="submenu-item">
                 View All Projects
               </Link>
-              <Link to="/updateproject" className="submenu-item">
-                Update Project
+              <Link to="/viewmyfeedback" className="submenu-item">
+                View Projects Feedback
               </Link>
               <Link to="/deleteproject" className="submenu-item">
                 Delete Project
@@ -241,6 +243,9 @@ export default function StudentNavBar() {
         <Route path="/uploadmedia/:id" element={<UploadMedia/>} />
         <Route path="/createportfolio" element={<CreatePortfolio />} exact />
         <Route path="/viewportfolio" element={<ViewPortfolio />} exact />
+        <Route path="/deleteproject" element={<DeleteProject/>} exact />
+        <Route path="/viewmyfeedback" element={<ViewFeedback />} exact />
+        <Route path="*" element={<h2>Page Not found</h2>}/>
       </Routes>
     </div>
   );

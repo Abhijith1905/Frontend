@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./../Student/studentnavbar.css"
+import "./../Student/studentnavbar.css";
 
 const Review = () => {
   const { id } = useParams(); // Retrieve project ID from URL
   const navigate = useNavigate();
 
-  
   const facultyData = JSON.parse(localStorage.getItem("faculty"));
-   
-  // console.log(facultyData.id);
   const fid = facultyData ? facultyData.id : null; // Ensure fid is available
 
   const [formData, setFormData] = useState({
@@ -32,42 +29,55 @@ const Review = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
 
-     console.log(id);
     const projectFeedback = {
-      facultyId: fid,                // Faculty ID
-     projectid : Number(id),// Convert id to a number using unary plus
-// Project ID
+      facultyId: fid, // Faculty ID
+      projectid: Number(id), // Project ID
       rating: parseInt(formData.rating), // Rating (converted to int)
-      comments: formData.comments,     // Comments
-      dateSubmitted: new Date(),      // Current date
+      comments: formData.comments, // Comments
+      dateSubmitted: new Date(), // Current date
     };
-    console.log(projectFeedback.projectid);
+
     try {
-      const response = await axios.post("http://localhost:2025/gradeproject", projectFeedback);
-      if (response.status === 200) {
+      // Submit feedback
+      const feedbackResponse = await axios.post("http://localhost:2025/gradeproject", projectFeedback);
+
+      if (feedbackResponse.status === 200) {
         setMessage("Feedback submitted successfully!");
-        // Reset the form data after successful submission
+
+        // Reset form data
         setFormData({
           rating: "",
           comments: "",
         });
-        
+
+        // Fetch project by ID
+        const projectResponse = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
+        if (projectResponse.status === 200 && projectResponse.data) {
+          const projectData = projectResponse.data;
+
+          // Update the checkStatus directly in the fetched project data
+          projectData.checkStatus = false;
+
+          // Call updateProject API with the modified projectData
+          const updateResponse = await axios.put("http://localhost:2025/updateproject", projectData);
+
+          if (updateResponse.status === 200) {
+            console.log("Project status updated successfully!");
+            setMessage("Feedback is Provided!");
+          } else {
+            setMessage("Failed to update project status.");
+          }
+        } else {
+          setMessage("Failed to retrieve project data.");
+        }
       }
     } catch (error) {
-      console.log(error.message); // For debugging purpose
-      setMessage("Error submitting feedback. Please try again.");
+      console.error("Error:", error.message); // For debugging
+      setMessage("Error submitting feedback or updating project. Please try again.");
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("isFacultyLoggedIn");
-    localStorage.removeItem("faculty");
-    navigate("/login");
-    window.location.reload();
-  };
-
   const styles = {
-    
     card: {
       backgroundColor: "#ffffff",
       borderRadius: "8px",
@@ -115,21 +125,15 @@ const Review = () => {
     submitButtonHover: {
       backgroundColor: "#c19a6b",
     },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "20px",
-      color: "white",
-    },
   };
 
   return (
-    <div className="content">
-      
-      <div style={styles.card} >
-        <h2>Project Feedback</h2>
-        {message && <div style={{color:"red"}}>{message}</div>} {/* Display message */}
+    <div >
+      <nav> </nav>
+      <h2 style={{paddingTop:"110px"}}>Project Feedback</h2>
+      <div style={styles.card}>
+       
+        {message && <div style={{ color: "red" }}>{message}</div>} {/* Display message */}
         <form onSubmit={handleSubmit}>
           <label htmlFor="rating" style={styles.label}>
             Rating (out of 5)

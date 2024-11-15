@@ -22,15 +22,7 @@ export default function ViewProjects() {
     }
   };
 
-  // Delete a project by ID
-  const deleteProject = async (id) => {
-    try {
-      await axios.delete(`http://localhost:2025/deleteproject?id=${id}`);
-      fetchProjects(storedStudentData.id); // Refresh project list after deletion
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+ 
 
   // Navigate to project details page
   const viewProject = (id) => {
@@ -45,7 +37,7 @@ export default function ViewProjects() {
     <div className="content">
       <div className="view-projects-container">
         <h2 style={{ color: "#4a4a75" }} className="title">
-          View / Delete Projects
+          View  Projects
         </h2>
 
         {projects.length > 0 ? (
@@ -76,12 +68,7 @@ export default function ViewProjects() {
                     >
                       View
                     </button>
-                    <button
-                      className="delete-button"
-                      onClick={() => deleteProject(project.projectId)}
-                    >
-                      Delete
-                    </button>
+                  
                   </td>
                 </tr>
               ))}

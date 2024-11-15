@@ -1,43 +1,50 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
-export default function ViewProjects() {
+export default function DeleteProject() {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Fetch all projects with status = true
-  const fetchProjects = async () => {
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
+
+  // Fetch projects for the logged-in student
+  const fetchProjects = async (studentId) => {
     try {
-      const response = await axios.get(`http://localhost:2025/viewallprojectsbyadmin`);
+      const response = await axios.get(
+        `http://localhost:2025/viewallprojects?studentId=${studentId}`
+      );
       console.log(response.data);
-      // Filter projects where status is true
-      const filteredProjects = response.data.filter((project) => project.checkStatus === true);
-      setProjects(filteredProjects);
+      setProjects(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  // Delete a project by ID
+  const deleteProject = async (id) => {
+    try {
+      await axios.delete(`http://localhost:2025/deleteproject?id=${id}`);
+      fetchProjects(storedStudentData.id); // Refresh project list after deletion
     } catch (error) {
       setError(error.message);
     }
   };
 
   // Navigate to project details page
-  const viewProject = (id) => {
-    navigate(`/viewprojectbyfaculty/${id}`);
-  };
 
   useEffect(() => {
-    fetchProjects();
+    fetchProjects(storedStudentData.id);
   }, []); // Run only once when the component mounts
 
   return (
-   
-    <div>
-       <nav> </nav>
-      
-        <h2 style={{ color: "#4a4a75" ,paddingTop:"110px" }} className="title">
-          View Projects
+    <div className="content">
+      <div className="view-projects-container">
+        <h2 style={{ color: "#4a4a75" }} className="title">
+           Delete Project
         </h2>
-        <div  className="view-projects-container">
+
         {projects.length > 0 ? (
           <table
             style={{ border: "2px solid black" }}
@@ -60,11 +67,12 @@ export default function ViewProjects() {
                   <td style={{ color: "#4a4a75" }}>{project.description}</td>
                   <td style={{ color: "#4a4a75" }}>{project.phase}</td>
                   <td style={{ color: "#4a4a75" }}>
+                   
                     <button
-                      className="view-button"
-                      onClick={() => viewProject(project.projectId)}
+                      className="delete-button"
+                      onClick={() => deleteProject(project.projectId)}
                     >
-                      Review
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -126,18 +134,32 @@ export default function ViewProjects() {
           border: 2px solid #4a4a75;
         }
 
-        .view-button {
+        .view-button,
+        .delete-button {
           padding: 8px 12px;
           border: none;
           border-radius: 4px;
           cursor: pointer;
           font-size: 0.9em;
+        }
+
+        .view-button {
           background-color: #4a90e2;
           color: white;
+          margin-right: 8px;
         }
 
         .view-button:hover {
           background-color: #357abf;
+        }
+
+        .delete-button {
+          background-color: #e74c3c;
+          color: white;
+        }
+
+        .delete-button:hover {
+          background-color: #c0392b;
         }
 
         .error-message,

@@ -42,8 +42,9 @@ export default function ViewStudents() {
 
   return (
     <div>
+      <nav> </nav>
       <div className="content">
-        <h2 className="ul">View / Delete Student</h2>
+        <h2 className="ul">View Students</h2>
 
         {students.length > 0 ? (
           <table className="table" style={styles.table}>

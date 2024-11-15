@@ -116,7 +116,7 @@ const ProjectCheck2 = () => {
             alt="Project Media"
             style={{
               width: "100%",
-              height: "auto",
+              height: "150px",
               borderRadius: "8px",
             }}
           />
@@ -153,9 +153,11 @@ const ProjectCheck2 = () => {
   if (!projectData) return <p>Loading...</p>;
 
   return (
-    <div className="content">
+    
+    <div>
+    <nav> </nav>
       {/* Project Details Table - Vertical Layout */}
-      <h2 style={{ color: "#4a4a75", textAlign: "center" }}>Project Details</h2>
+      <h2 style={{ color: "#4a4a75", textAlign: "center" ,paddingTop:"110px" }}>Project Details</h2>
       <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "20px", backgroundColor: "#e6e6e6", color: "#4a4a75" }}>
         <tbody>
           <tr>
@@ -261,7 +263,7 @@ const ProjectCheck2 = () => {
       </center>
 
 {/* Media Section for Images */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{ color: "#4a4a75" , marginBottom: "20px", textAlign: "center" }}>
   <h3>Project Images</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&
@@ -279,7 +281,7 @@ const ProjectCheck2 = () => {
 </div>
 
 {/* Media Section for Documents */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{ color: "#4a4a75" ,marginBottom: "20px", textAlign: "center" }}>
   <h3>Project Documents</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&
@@ -297,7 +299,7 @@ const ProjectCheck2 = () => {
 </div>
 
 {/* Media Section for Text Files */}
-<div style={{ marginBottom: "20px", textAlign: "center" }}>
+<div style={{ color: "#4a4a75" ,marginBottom: "20px", textAlign: "center" }}>
   <h3>Project Text Files</h3>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
     {projectData.mediaList &&

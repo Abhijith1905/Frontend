@@ -126,35 +126,6 @@ const handleLogout = () => {
   return (
     <div>
       <nav>
-        <div className="navbar">
-          <h3 style={{ fontSize: "20pt", color: "White", marginLeft: 0 }}>
-            EduSupport
-          </h3>
-          <table className="menu">
-            <td>
-              <button>
-                <Link to="/facultyhome">Home</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                <Link to="/facultydashboard">Feedback</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button>
-                {" "}
-                <Link to="/facultydashboard">Students</Link>
-              </button>
-              &nbsp;&nbsp;
-            </td>
-            <td>
-              <button onClick={handleLogout}>Logout</button>
-            </td>
-          </table>
-        </div>
       </nav>
       <div style={styles.body}>
         <div style={styles.outerContainer}>
