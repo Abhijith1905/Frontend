@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+	/* background: #f6f5f7; */
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	
+}
+
+/* Navbar Container */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  background:#2C3E50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Navbar Logo */
+.navbar-logo {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+/* Navbar Menu */
+.navbar-menu {
+  display: flex;
+  gap: 20px; /* Space between items */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Items */
+.navbar-item a {
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar-item a:hover {
+  color: white; /* Change text color on hover */
+}
+
+
+section{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #96c7e8;
+  font-size: 70px;
+}
+
+.button a{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+  background: #2980b9;
+  padding: 7px 12px;;
+  font-size: 18px;
+  border-radius: 6px;
+}
+i{
+  color: white
+}
+
+.menu td button {
+    background-color: white;  /* Light gray background */
+    color: black; /* White text color */
+   
+    padding: 10px 20px; /* Padding around the text */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 20px; /* More rounded edges */
+    margin-top: 20px; /* Space above the button */
+    font-size: 14px; /* Font size for the button text */
+  }
+  
+  .menu td button:hover {
+    background-color: lightgray; /* Darken button on hover */
+  }
+  
+  .menu td a {
+    text-decoration: none; /* Remove underline from links */
+    color: black; /* Ensure link text color is black */
+  }
+
+  /* Beautiful Container with Updated Text Colors */
+.beautiful-container {
+  background-color: #f5f3ff; /* Soft lavender background for the entire container */
+  border-radius: 20px;
+  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  margin-top: 40px;
+  width: 120%;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.beautiful-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Style for each certification card */
+.card {
+  background-color: #e9d8fd; /* Soft purple background for the card */
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Certification Name */
+.card h3 {
+  color: #4a00b4; /* Darker purple text for the certification name */
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+/* Certification Issuer */
+.card p {
+  color: #2d3748; /* Dark gray for issuer */
+  margin-bottom: 12px;
+  font-size: 1.125rem;
+}
+
+/* Issued and Expiration Dates */
+.card .mt-4 p {
+  color: #6b7280; /* Lighter gray for the dates */
+  font-size: 1.125rem;
+}
+
+/* Text inside the container */
+.beautiful-container .col-span-full h2 {
+  color: #6b46c1; /* Purple text for the section heading */
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* New Text Color Inside Container (Light Teal) */
+.beautiful-container p, .beautiful-container h3, .beautiful-container h2 {
+  color: #4fd1c5; /* Light teal color for content */
+}
+
+.beautiful-container .col-span-full {
+  margin-bottom: 35px;
+}
+
+.custom-button-spacing {
+  display: flex;
+  justify-content: center; /* Ensures buttons are centered */
+  gap: 16px; /* Adds spacing between buttons */
+}
+
+.custom-button-spacing button {
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-button-spacing button:last-child {
+  margin-right: 0; /* Ensures no extra margin after the last button */
+}
+
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px; /* Height of navbar */
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Stay above content */
+}
+/* Make sure the navbar looks good on smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;  /* Stack links vertically on smaller screens */
+      text-align: center;
+  }
+}
