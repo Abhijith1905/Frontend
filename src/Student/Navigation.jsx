@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { GraduationCap, Award, Briefcase, Code2, MessageSquare, FileText, ArrowLeft, LogOut } from 'lucide-react';
+import { GraduationCap, Award, Briefcase, Code2, MessageSquare, FileText, ArrowLeft, LogOut, Rocket } from 'lucide-react'; // Import Rocket icon
 import PortfolioPDF from './PortfolioPDF';
 
 const sections = [
@@ -8,7 +8,8 @@ const sections = [
   { key: 'certifications', icon: <Award className="w-5 h-5" />, title: 'Certifications', color: 'purple' },
   { key: 'internships', icon: <Briefcase className="w-5 h-5" />, title: 'Internships', color: 'green' },
   { key: 'skills', icon: <Code2 className="w-5 h-5" />, title: 'Skills', color: 'orange' },
-  { key: 'testimonials', icon: <MessageSquare className="w-5 h-5" />, title: 'Testimonials', color: 'rose' }
+  { key: 'testimonials', icon: <MessageSquare className="w-5 h-5" />, title: 'Testimonials', color: 'rose' },
+  { key: 'projects', icon: <Rocket className="w-5 h-5" />, title: 'Projects', color: 'cyan' } // New Projects section
 ];
 
 export default function Navigation({ activeSection, setActiveSection, portfolioData, onLogout }) {
@@ -16,11 +17,11 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
   const [showPDF, setShowPDF] = useState(false);
 
   const handleLogout = () => {
-    onLogout(); // Clear login data
-    navigate("/login");
+    onLogout();
+    navigate('/login');
     setTimeout(() => {
-      navigate('/login');  // Redirect after a short delay
-    }, 200);  
+      navigate('/login');
+    }, 200);
   };
 
   const handleBackFromPDF = () => {

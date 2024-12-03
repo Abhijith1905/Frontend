@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../Main/form.css"
+import "../Main/form.css";
 import UpdateState from "./UpdateState";
 
 export default function CreatePortfolio() {
   const storedStudentData = JSON.parse(localStorage.getItem("student"));
   const studentId = storedStudentData ? storedStudentData.id : "";
   const [portfolioData, setPortfolioData] = useState(null);
+  const [projects, setProjects] = useState([]); // Holds the student's projects
+  const [selectedProjectIds, setSelectedProjectIds] = useState([]); // Track selected project IDs
 
+  const navigate = useNavigate();
 
-
-  const navigate = useNavigate()
   const [certifications, setCertifications] = useState([
     {
       certificationName: "",
@@ -22,57 +22,56 @@ export default function CreatePortfolio() {
       verificationLink: "",
       description: "",
       marksScored: "",
-      honors: ""
+      honors: "",
     },
   ]);
-  
+
   const [education, setEducation] = useState([
     {
       educationInstitution: "",
       educationDegree: "",
-      fieldOfStudy: "", // New field
-      grade: "", // New field
-      location: "", // New field
+      fieldOfStudy: "",
+      grade: "",
+      location: "",
       educationStartDate: "",
       educationEndDate: "",
     },
   ]);
-  
+
   const [internships, setInternships] = useState([
     {
       companyName: "",
       role: "",
       startDate: "",
       endDate: "",
-      about: "", // A brief description of the internship
-      technologiesUsed: "", // Technologies/tools used during the internship
-      achievements: "", // Key achievements during the internship
-      skillsGained: "", // Skills gained during the internship
-      location: "", // Internship location (remote, office, etc.)
+      about: "",
+      technologiesUsed: "",
+      achievements: "",
+      skillsGained: "",
+      location: "",
     },
   ]);
-  
+
   const [portfolios, setPortfolios] = useState([{ summary: "" }]);
-  
+
   const [skills, setSkills] = useState([
     {
       skillName: "",
       skillLevel: "",
-      skillCategory: "", // New field (e.g., Programming, Soft Skills)
-      // yearsOfExperience: 5 // If you want to include years of experience
+      skillCategory: "",
     },
   ]);
-  
+
   const [testimonials, setTestimonials] = useState([
     {
       testimonialText: "",
       giverName: "",
-      giverRole: "", // New field
-      giverCompany: "", // New field
+      giverRole: "",
+      giverCompany: "",
     },
   ]);
-  
 
+  // Fetch existing portfolio data and projects
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
@@ -80,19 +79,30 @@ export default function CreatePortfolio() {
           `http://localhost:2025/displayportfolio?studentId=${studentId}`
         );
         setPortfolioData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching portfolio data:", error);
-        setPortfolioData(null); // Set null in case of error
+        setPortfolioData(null);
+      }
+    };
+
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:2025/viewallprojects?studentId=${studentId}`
+        );
+        setProjects(response.data); // Save fetched projects to state
+      } catch (error) {
+        console.error("Error fetching projects:", error);
       }
     };
 
     if (studentId) {
       fetchPortfolioData();
+      fetchProjects();
     }
   }, [studentId]);
 
-
+  // Update states with studentId
   useEffect(() => {
     setCertifications((prev) => prev.map((cert) => ({ ...cert, studentId })));
     setEducation((prev) => prev.map((edu) => ({ ...edu, studentId })));
@@ -102,98 +112,111 @@ export default function CreatePortfolio() {
     setTestimonials((prev) => prev.map((test) => ({ ...test, studentId })));
   }, [studentId]);
 
-  const handleSubmit = async (e) => {
-    console.log("hi")
-    e.preventDefault();
+  // Handle project selection (store only projectId)
+  const handleProjectSelection = (project) => {
+    setSelectedProjectIds((prevSelectedIds) => {
+      // Check if the projectId is already selected
+      if (prevSelectedIds.includes(project.projectId)) {
+        // If selected, remove it
+        return prevSelectedIds.filter((id) => id !== project.projectId);
+      } else {
+        // If not selected, add it
+        return [...prevSelectedIds, project.projectId];
+      }
+    });
+  };
 
-     // Function to filter out empty entries
-     const removeEmptyFields = (array, Fields) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Helper function to remove empty entries
+    const removeEmptyFields = (array, fields) => {
       return array.filter((item) =>
-        Fields.some((field) => typeof item[field] === 'string' && item[field]?.trim())
+        fields.some((field) => typeof item[field] === "string" && item[field]?.trim())
       );
     };
-    
   
-    // Preprocess data to exclude empty entries
-   // Preprocess data to exclude empty entries
-const filteredCertifications = removeEmptyFields(certifications, [
-  "certificationName",
-  "certificationIssuer",
-  "certificationDate",
-  "expirationDate",
-  "verificationLink", // New field
-  "description", // New field
-  "marksScored", // New field
-  "honors", // New field
-]);
-
-const filteredEducation = removeEmptyFields(education, [
-  "educationInstitution",
-  "educationDegree",
-  "fieldOfStudy", // New field
-  "grade", // New field
-  "location", // New field
-  "educationStartDate",
-  "educationEndDate",
-]);
-
-const filteredInternships = removeEmptyFields(internships, [
-  "companyName",
-  "role",
-  "startDate",
-  "endDate",
-  "about", // New field
-  "technologiesUsed", // New field
-  "achievements", // New field
-  "skillsGained", // New field
-  "location", // New field
-
-]);
-
-const filteredPortfolios = removeEmptyFields(portfolios, ["summary"]);
-
-const filteredSkills = removeEmptyFields(skills, [
-  "skillName",
-  "skillLevel",
-  "skillCategory", // New field
-  // "yearsOfExperience", // Uncomment if needed
-]);
-
-const filteredTestimonials = removeEmptyFields(testimonials, [
-  "testimonialText",
-  "giverName",
-  "giverRole", // New field
-  "giverCompany", // New field
-]);
-
+    const filteredCertifications = removeEmptyFields(certifications, [
+      "certificationName",
+      "certificationIssuer",
+      "certificationDate",
+      "expirationDate",
+      "verificationLink",
+      "description",
+      "marksScored",
+      "honors",
+    ]);
   
-console.log( internships);
-
+    const filteredEducation = removeEmptyFields(education, [
+      "educationInstitution",
+      "educationDegree",
+      "fieldOfStudy",
+      "grade",
+      "location",
+      "educationStartDate",
+      "educationEndDate",
+    ]);
+  
+    const filteredInternships = removeEmptyFields(internships, [
+      "companyName",
+      "role",
+      "startDate",
+      "endDate",
+      "about",
+      "technologiesUsed",
+      "achievements",
+      "skillsGained",
+      "location",
+    ]);
+  
+    const filteredPortfolios = removeEmptyFields(portfolios, ["summary"]);
+  
+    const filteredSkills = removeEmptyFields(skills, [
+      "skillName",
+      "skillLevel",
+      "skillCategory",
+    ]);
+  
+    const filteredTestimonials = removeEmptyFields(testimonials, [
+      "testimonialText",
+      "giverName",
+      "giverRole",
+      "giverCompany",
+    ]);
+  
     try {
+      // Convert selectedProjectIds to integers
+      const selectedProjectIdsAsIntegers = selectedProjectIds.map(id => parseInt(id, 10));
+  
+      console.log("Selected Project IDs (as integers):", selectedProjectIdsAsIntegers);
+  
       const response = await axios.post("http://localhost:2025/createportfolio", {
-          certifications: filteredCertifications,
-          education: filteredEducation,
-          internships: filteredInternships,
-          portfolios: filteredPortfolios,
-          skills: filteredSkills,
-          testimonials: filteredTestimonials,
+        certifications: filteredCertifications,
+        education: filteredEducation,
+        internships: filteredInternships,
+        portfolios: filteredPortfolios,
+        skills: filteredSkills,
+        testimonials: filteredTestimonials,
+        projectIds: selectedProjectIdsAsIntegers, // Send project IDs as integers
       });
-
-      console.log(internships);
+  
       console.log("Response:", response.data);
-
-      // navigate("/viewportfolio");
-     
+      navigate("/viewportfolio");
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  
+  const formStyle = {
+    maxWidth: "800px",
+    margin: "auto",
+    paddingTop: "2450px",
+    borderRadius: "10px",
+  };
 
-  const addItem = (setFunction, template) =>
-    setFunction((prev) => [...prev, { ...template, studentId }]);
-
-  const removeItem = (setFunction, index) =>
-    setFunction((prev) => prev.filter((_, i) => i !== index));
+  const sectionStyle = {
+    marginBottom: "20px",
+  };
 
   const inputStyle = {
     padding: "10px",
@@ -201,18 +224,12 @@ console.log( internships);
     borderRadius: "5px",
     border: "1px solid #ddd",
     width: "100%",
-    
-      backgroundColor: "#f0f0f0", // Light gray background
-      color: "#000", // Black text for readability
-      border: "1px solid #ccc", // Consistent border
-      padding: "10px",
-      borderRadius: "5px", // For rounded edges (optional)
-      width: "100%",
-   
-  };
-
-  const sectionStyle = {
-    marginBottom: "20px",
+    backgroundColor: "#f0f0f0",
+    color: "#000",
+    border: "1px solid #ccc",
+    padding: "10px",
+    borderRadius: "5px",
+    width: "100%",
   };
 
   const buttonStyle = {
@@ -225,27 +242,11 @@ console.log( internships);
     cursor: "pointer",
   };
 
-  const formStyle = {
-    maxWidth: "800px",
-    margin: "auto",
-   paddingTop:"2300px",
-    
-    borderRadius: "10px",
-   
-  };
-  const isPortfolioEmpty = 
-  !portfolioData || 
-  (portfolioData.education.length === 0 &&
-  portfolioData.certifications.length === 0 &&
-  portfolioData.internships.length === 0 &&
-  portfolioData.skills.length === 0 &&
-  portfolioData.testimonials.length === 0);
+  if (!portfolioData) {
+    return <UpdateState />;
+  }
 
-if (!isPortfolioEmpty) {
-  return (
-   <UpdateState/>
-  );
-}
+
   return (
   <div style={formStyle}>
   <form className="custom-form" onSubmit={handleSubmit}>
@@ -279,6 +280,7 @@ if (!isPortfolioEmpty) {
             fontSize: "16px", // Adjust font size for readability
             padding: "10px", // Add padding for better aesthetics
           }}
+          required
         />
       ))}
     </div>
@@ -288,7 +290,7 @@ if (!isPortfolioEmpty) {
   {skills.map((skill, index) => (
     <div key={index}>
       {/* Skill Name Input */}
-      <input
+      <input 
         type="text"
         placeholder="Skill Name"
         value={skill.skillName || ""}
@@ -361,6 +363,26 @@ if (!isPortfolioEmpty) {
   ))}
 </div>
 
+  {/* Projects Section */}
+  <div style={sectionStyle}>
+          <h3>Select Projects for Portfolio</h3>
+          {projects.map((project) => (
+            <div key={project.projectId}>
+              <label style={{ color: "black" }}>
+                <input
+                  type="checkbox"
+                  onChange={() => handleProjectSelection(project)}
+                  checked={selectedProjectIds.includes(project.projectId)}
+                />
+                {project.title}
+              </label>
+            </div>
+          ))}
+          <div>
+            <h4>Selected Projects:</h4>
+            <pre>{selectedProjectIds}</pre>
+          </div>
+        </div>
 
  {/* Certifications Section */}
 <div style={sectionStyle}>

@@ -175,6 +175,29 @@ const PortfolioPDF = ({ portfolioData }) => {
               ))}
             </View>
           )}
+
+          {/* Add Projects Section */}
+          {hasValidData(portfolioData.projects, ['title', 'description']) && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Projects</Text>
+              {portfolioData.projects.map((project, index) => (
+                <View key={index} style={styles.itemContainer}>
+                  {project.title && (
+                    <Text style={styles.itemTitle}>{project.title}</Text>
+                  )}
+                  {project.description && (
+                    <Text style={styles.text}>{project.description}</Text>
+                  )}
+                  {project.technologiesUsed && (
+                    <Text style={styles.text}>{`Technologies: ${project.technologiesUsed}`}</Text>
+                  )}
+                  {project.projectLink && (
+                    <Text style={styles.text}>{`Link: ${project.projectLink}`}</Text>
+                  )}
+                </View>
+              ))}
+            </View>
+          )}
         </Page>
       </Document>
     </PDFViewer>
