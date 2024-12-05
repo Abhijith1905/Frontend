@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-
+import "./App.css"
 import MainNavBar from "./Main/MainNavBar";
 import StudentNavBar from "./Student/StudentNavBar";
 import FacultyNavBar from "./Faculty/FacultyNavBar";
 import AdminNavbar from './Admin/AdminNavbar';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [isStudentLoggedIn, setIsStudentLoggedIn] = useState(false);
@@ -68,6 +69,7 @@ function App() {
           />
         )}
       </Router>
+      <ToastContainer />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function LogOutButton({ onLogout }) {
 
   return (
     <div>
-     <Navigation onLogout={onLogout} />
+   
     </div>
   );
 }

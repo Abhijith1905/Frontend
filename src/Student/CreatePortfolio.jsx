@@ -210,7 +210,7 @@ export default function CreatePortfolio() {
   const formStyle = {
     maxWidth: "800px",
     margin: "auto",
-    paddingTop: "2450px",
+    paddingTop: "50px",
     borderRadius: "10px",
   };
 

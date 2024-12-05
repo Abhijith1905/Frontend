@@ -24,6 +24,8 @@ import ViewFaculty from "./ViewFaculty";
 import AddFaculty from "./AddFaculty";
 import UpdateFaculty from "./UpdateFaculty";
 import ViewAllFeedback from './ViewAllFeedback';
+import AddStudentList from "./AddStudentList";
+import AddFacultyList from "./AddFacultyList";
 
 export default function AdminNavBar() {
   const navigate = useNavigate();
@@ -193,6 +195,16 @@ export default function AdminNavBar() {
         <Route
           path="admindashboard/student/add"
           element={<AddStudent />}
+          exact
+        />
+         <Route
+          path="admindashboard/student/addstudentlist"
+          element={<AddStudentList />}
+          exact
+        />
+         <Route
+          path="admindashboard/faculty/addfacultylist"
+          element={<AddFacultyList />}
           exact
         />
         <Route

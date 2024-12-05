@@ -1,5 +1,4 @@
-import React from 'react';
-import { Download, FileText, ImageIcon } from 'lucide-react';
+import React from "react";
 
 const ActionButtons = ({
   projectImage,
@@ -7,61 +6,43 @@ const ActionButtons = ({
   zipUrl,
   onImageClick,
   onFileClick,
-  projectData,
   onReportClick,
-  onGradeClick
+  onAcceptProject,
+  phase,
 }) => {
-
-  const showReportCard = projectData.percentage !== "ZERO";
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="flex flex-wrap space-x-4">
       {projectImage && (
         <button
+          className="btn-primary"
           onClick={() => onImageClick(projectImage, "image")}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          <ImageIcon className="h-5 w-5 mr-2" />
-          View Project Icon
+          View Image
         </button>
       )}
-
       {projectFile && (
         <button
-          onClick={() => onFileClick(projectFile, "text")}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="btn-primary"
+          onClick={() => onFileClick(projectFile, "file")}
         >
-          <FileText className="h-5 w-5 mr-2" />
-          View Description
+          View File
         </button>
       )}
-
       {zipUrl && (
-        <button
-          onClick={() => window.location.href = zipUrl}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          <Download className="h-5 w-5 mr-2" />
+        <a href={zipUrl} download className="btn-primary">
           Download ZIP
-        </button>
+        </a>
       )}
-
-
-   {showReportCard && (
-      <button
-        onClick={onReportClick}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-      >
-        <FileText className="h-5 w-5 mr-2" />
-        View Report
+      <button className="btn-secondary" onClick={onReportClick}>
+        Generate Report
       </button>
-   )}
-
-      <button
-        onClick={onGradeClick}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-      >
-        Grade Project
-      </button>
+      {phase === "NOT_STARTED" ? (
+        <button className="btn-success" onClick={onAcceptProject}>
+          Accept Project
+        </button>
+      ) : (
+        <button className="btn-secondary">Grade</button>
+      )}
     </div>
   );
 };

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AlertCircle } from 'lucide-react';
 
 export default function ViewStudentById() {
   const [studentData, setStudentData] = useState({});
@@ -13,6 +16,7 @@ export default function ViewStudentById() {
         setStudentData(response.data);
       } catch (error) {
         console.error(error.message);
+        toast.error('Error fetching student data.');
       }
     };
 
@@ -31,14 +35,37 @@ export default function ViewStudentById() {
   const handleSave = async () => {
     try {
       await axios.put(`http://localhost:2025/updatestudent`, studentData); // Assuming a PUT endpoint for updating
-      alert('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error.message);
+      toast.error('Error updating profile. Please try again.');
     }
   };
 
+  // if (error) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 px-4 py-16 sm:px-6 sm:py-24 md:grid md:place-items-center lg:px-8">
+  //       <div className="max-w-max mx-auto">
+  //         <main className="sm:flex">
+  //           <AlertCircle className="h-12 w-12 text-red-500" />
+  //           <div className="sm:ml-6">
+  //             <div className="sm:border-l sm:border-gray-200 sm:pl-6">
+  //               <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl">
+  //                 Error loading profile
+  //               </h1>
+  //               <p className="mt-1 text-base text-gray-500">{error}</p>
+  //             </div>
+  //           </div>
+  //         </main>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+
   return (
     <div>
+      <ToastContainer />
       <nav> </nav>
       <div style={{ paddingTop: "130px" }}>
         <h2 style={{ color: "black" }}>Student Profile</h2>
@@ -74,10 +101,10 @@ export default function ViewStudentById() {
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
                   <input
-                      type="text"
-                      value={studentData?.fullName || ''}
-                      onChange={(e) => handleInputChange(e, 'fullName')}
-                    />
+                    type="text"
+                    value={studentData?.fullName || ''}
+                    onChange={(e) => handleInputChange(e, 'fullName')}
+                  />
                 </td>
               </tr>
               <tr>
@@ -93,11 +120,11 @@ export default function ViewStudentById() {
                   <strong>Department:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                <input
-                      type="text"
-                      value={studentData?.department || ''}
-                      onChange={(e) => handleInputChange(e, 'department')}
-                    />
+                  <input
+                    type="text"
+                    value={studentData?.department || ''}
+                    onChange={(e) => handleInputChange(e, 'department')}
+                  />
                 </td>
               </tr>
               <tr>
@@ -105,11 +132,11 @@ export default function ViewStudentById() {
                   <strong>Program:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                <input
-                      type="text"
-                      value={studentData?.program || ''}
-                      onChange={(e) => handleInputChange(e, 'program')}
-                    />
+                  <input
+                    type="text"
+                    value={studentData?.program || ''}
+                    onChange={(e) => handleInputChange(e, 'program')}
+                  />
                 </td>
               </tr>
               <tr>
@@ -117,11 +144,11 @@ export default function ViewStudentById() {
                   <strong>Semester:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                <input
-                      type="text"
-                      value={studentData?.semester || ''}
-                      onChange={(e) => handleInputChange(e, 'semester')}
-                    />
+                  <input
+                    type="text"
+                    value={studentData?.semester || ''}
+                    onChange={(e) => handleInputChange(e, 'semester')}
+                  />
                 </td>
               </tr>
               <tr>
@@ -129,11 +156,11 @@ export default function ViewStudentById() {
                   <strong>Year:</strong>
                 </td>
                 <td style={{ border: "1px solid #ddd", color: "black", padding: "10px" }}>
-                <input
-                      type="text"
-                      value={studentData?.year || ''}
-                      onChange={(e) => handleInputChange(e, 'year')}
-                    />
+                  <input
+                    type="text"
+                    value={studentData?.year || ''}
+                    onChange={(e) => handleInputChange(e, 'year')}
+                  />
                 </td>
               </tr>
               <tr>

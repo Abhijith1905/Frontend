@@ -28,6 +28,7 @@ import {
   FaEdit,
 } from "react-icons/fa";
 import LogOutButton from "./LogOutButton";
+import TrackProject from "./TrackProject";
 
 
 
@@ -240,6 +241,8 @@ export default function StudentNavBar() {
         <Route path="/uploadmedia/:id" element={<UploadMedia />} exact />
         <Route path="/viewprojectfeedback" element={<ViewFeedback />} exact />
         <Route path="/deleteproject" element={<DeleteProject />} exact />
+        <Route path="/trackproject/:id" element= {<TrackProject/>} exact />
+        <Route path="*" element={<StudentHome />} />
     
       </Routes>
     </div>

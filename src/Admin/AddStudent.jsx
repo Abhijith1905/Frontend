@@ -51,7 +51,7 @@ export default function AddStudent() {
   return (
     <div>
       <nav> </nav>
-      <div className="content">
+      <div style={{paddingTop:"320px"}} className="content">
         {message && <p>{message}</p>}
         <h2 className='ul'>Add New Student</h2>
         <div className = 'design' >

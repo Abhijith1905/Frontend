@@ -11,7 +11,6 @@ const sections = [
   { key: 'testimonials', icon: <MessageSquare className="w-5 h-5" />, title: 'Testimonials', color: 'rose' },
   { key: 'projects', icon: <Rocket className="w-5 h-5" />, title: 'Projects', color: 'cyan' } // New Projects section
 ];
-
 export default function Navigation({ activeSection, setActiveSection, portfolioData, onLogout }) {
   const navigate = useNavigate();
   const [showPDF, setShowPDF] = useState(false);
@@ -19,9 +18,6 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
   const handleLogout = () => {
     onLogout();
     navigate('/login');
-    setTimeout(() => {
-      navigate('/login');
-    }, 200);
   };
 
   const handleBackFromPDF = () => {
@@ -62,7 +58,7 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300
                   ${activeSection === section.key
                     ? `bg-${section.color}-100 text-${section.color}-600 shadow-md scale-105`
-                    : 'hover:bg-gray-100'}`}
+                    : 'hover:bg-gray-200'}`} // Changed hover to gray-200 for better visibility
               >
                 {section.icon}
                 <span className="font-medium hidden md:inline">{section.title}</span>
@@ -82,7 +78,7 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
           <div className="flex items-center gap-4 ml-auto">
             {/* Logout Button */}
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-colors" // Changed text color to white
               onClick={handleLogout}
             >
               <LogOut className="w-5 h-5 inline-block mr-2" />

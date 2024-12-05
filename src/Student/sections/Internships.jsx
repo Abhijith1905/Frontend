@@ -1,26 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building2 } from 'lucide-react';
 
 export default function Internships({ internship }) {
+  useEffect(() => {
+    // Apply flexbox styling to the body
+    document.body.style.display = "flex";
+    document.body.style.flexDirection = "column";
+    document.body.style.justifyContent = "flex-start";
+    document.body.style.minHeight = "100vh";
+
+    // Cleanup function to reset styles when the component unmounts
+    return () => {
+      document.body.style.display = "";
+      document.body.style.flexDirection = "";
+      document.body.style.justifyContent = "";
+      document.body.style.minHeight = "";
+    };
+  }, []);
+
   if (!internship || internship.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
-        className="space-y-6"
+        className="flex flex-col justify-center items-center min-h-screen space-y-6"
       >
         <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
           Professional Experience
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
-        
-
-<p className="text-gray-700 font-medium">You don't have any internships listed yet. <br></br> <a href="/updateportfolio" className="text-blue-600 hover:underline">Add Professional Experience</a>. </p>
-
-
-
+          <p className="text-gray-700 font-medium">
+            You don't have any internships listed yet. <br />
+            <a href="/updateportfolio" className="text-blue-600 hover:underline">
+              Add Professional Experience
+            </a>.
+          </p>
         </div>
       </motion.div>
     );
@@ -28,15 +44,16 @@ export default function Internships({ internship }) {
 
   return (
     <motion.div
+  
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      className="space-y-6"
+      className="flex flex-col justify-center items-center min-h-screen space-y-6"
     >
-      <h2 style={{ paddingTop: "500px" }} className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+      <h2  className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
         Professional Experience
       </h2>
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-4xl w-full">
         {internship.map((internship, index) => (
           <motion.div
             key={index}
@@ -83,9 +100,11 @@ export default function Internships({ internship }) {
                   </ul>
                 </div>
                 <div className="mt-4 text-sm text-gray-600">
-                  <p><span className="font-medium">Location:</span> {internship.location}</p>
+                  <p>
+                    <span className="font-medium">Location:</span> {internship.location}
+                  </p>
                   <a href="/viewportfolio" className="text-green-600 hover:text-green-800 mt-2 inline-block">
-                    Learn more about me 
+                    Learn more about me
                   </a>
                 </div>
               </div>

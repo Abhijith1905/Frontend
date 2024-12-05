@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function Card({ children, className = '', ...props }) {
   return (
     <div>
-    <div style= {{paddingTop:"250px" }}className={`card ${className}`} {...props}>
+    <div style={{paddingTop:"100px"}} className={`card ${className}`} {...props}>
       {children}
     </div>
     </div>

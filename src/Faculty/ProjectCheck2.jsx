@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ProjectDetails from './ProjectDetails';
-import MediaGallery from './MediaGallery';
-import MediaModal from './MediaModal';
-import ActionButtons from './ActionButtons';
+import ProjectDetails from "./ProjectDetails";
+import MediaGallery from "./MediaGallery";
+import MediaModal from "./MediaModal";
+import ActionButtons from "./ActionButtons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProjectCheck2 = () => {
   const { id } = useParams();
@@ -30,13 +32,11 @@ const ProjectCheck2 = () => {
   };
 
   useEffect(() => {
-    // Adjust the body's layout on component mount
-    document.body.style.display = 'flex';
-    document.body.style.flexDirection = 'column';
-    document.body.style.justifyContent = 'flex-start'; // Adjust the alignment here
-    document.body.style.minHeight = '100vh'; // Ensure the body takes the full viewport height
+    document.body.style.display = "flex";
+    document.body.style.flexDirection = "column";
+    document.body.style.justifyContent = "flex-start";
+    document.body.style.minHeight = "100vh";
 
-    // Fetch the project data
     const fetchProjectData = async () => {
       try {
         const response = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
@@ -48,21 +48,22 @@ const ProjectCheck2 = () => {
     fetchProjectData();
 
     return () => {
-      // Clean up by resetting the body's style when the component unmounts
-      document.body.style = '';
+      document.body.style = "";
     };
   }, [id]);
 
   useEffect(() => {
     if (projectData) {
       Promise.all([
-        axios.get(`http://localhost:2025/displayprojectimage?projectId=${id}`, { responseType: "blob" })
-          .then(response => setProjectImage(URL.createObjectURL(response.data)))
-          .catch(error => console.error("Error fetching project image:", error)),
-        
-        axios.get(`http://localhost:2025/displayprojectfile?projectId=${id}`, { responseType: "blob" })
-          .then(response => setProjectFile(URL.createObjectURL(response.data)))
-          .catch(error => console.error("Error fetching project file:", error))
+        axios
+          .get(`http://localhost:2025/displayprojectimage?projectId=${id}`, { responseType: "blob" })
+          .then((response) => setProjectImage(URL.createObjectURL(response.data)))
+          .catch((error) => console.error("Error fetching project image:", error)),
+
+        axios
+          .get(`http://localhost:2025/displayprojectfile?projectId=${id}`, { responseType: "blob" })
+          .then((response) => setProjectFile(URL.createObjectURL(response.data)))
+          .catch((error) => console.error("Error fetching project file:", error)),
       ]);
     }
   }, [projectData, id]);
@@ -80,7 +81,7 @@ const ProjectCheck2 = () => {
               return {
                 mediaId: mediaItem.mediaId,
                 mediaUrl: URL.createObjectURL(response.data),
-                mediaType: mediaItem.mediaType
+                mediaType: mediaItem.mediaType,
               };
             } catch (error) {
               console.error("Error fetching media:", error);
@@ -115,6 +116,19 @@ const ProjectCheck2 = () => {
     window.open(`http://localhost:2025/viewreport?projectId=${id}`, "_blank");
   };
 
+  const handleAcceptProject = async (projectId) => {
+    try {
+      await axios.post(`http://localhost:2025/allowproject?projectId=${id}`);
+      toast.success("Project accepted successfully!");
+      setTimeout(() => {
+        navigate("/projectcheck"); // Redirect after toast
+      }, 3000); // Wait for 3 seconds before navigating
+    } catch (error) {
+      console.error("Error accepting project:", error.message);
+      toast.error("Failed to accept project.");
+    }
+  };
+
   const openModal = (mediaUrl, type) => {
     setModalMedia(mediaUrl);
     setModalType(type);
@@ -142,20 +156,19 @@ const ProjectCheck2 = () => {
 
   if (!projectData) {
     return (
-      <div className="min-h-screen  bg-white flex justify-center items-center">
+      <div className="min-h-screen bg-white flex justify-center items-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
-
-
   return (
-    <div style={{paddingTop:"50px"}}>
+    <div style={{ paddingTop: "50px" }}>
+      <ToastContainer />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="space-y-8">
           <ProjectDetails projectData={projectData} percentageEnum={percentageEnum} />
-          
+
           <ActionButtons
             projectImage={projectImage}
             projectFile={projectFile}
@@ -164,8 +177,8 @@ const ProjectCheck2 = () => {
             onFileClick={openModal}
             projectData={projectData}
             onReportClick={handleReportGeneration}
-            onGradeClick={() => navigate(`/review/${id}`)}
-            
+            onAcceptProject={() => handleAcceptProject(id)}
+            phase={projectData.phase}
           />
 
           {projectData.mediaList && (

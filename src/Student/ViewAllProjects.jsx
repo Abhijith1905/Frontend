@@ -7,16 +7,6 @@ export default function ViewAllProjects() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const percentageEnum = {
-    ZERO: 0,
-    TWENTY_FIVE: 25,
-    TWENTY_FIVE_TO_FIFTY: 37,
-    FIFTY: 50,
-    FIFTY_TO_SEVENTY_FIVE: 62,
-    SEVENTY_FIVE: 75,
-    SEVENTY_FIVE_TO_ONE_HUNDRED: 87,
-    ONE_HUNDRED: 100,
-  };
 
   const storedStudentData = JSON.parse(localStorage.getItem("student"));
 
@@ -72,7 +62,7 @@ export default function ViewAllProjects() {
                     <td>{project.description}</td>
                     <td>{project.phase}</td>
                     <td>
-                    {percentageEnum[project.percentage] || 0}%
+                    {project.phasePercentage}%
                     </td>
                     <td>
                       <button

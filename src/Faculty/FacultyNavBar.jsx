@@ -29,6 +29,7 @@ import {
   FaChalkboardTeacher,
   FaSignOutAlt,
 } from "react-icons/fa";
+import GradeProject from "./GradeProject";
 
 export default function FacultyNavBar() {
   const navigate = useNavigate();
@@ -213,8 +214,9 @@ export default function FacultyNavBar() {
         <Route path="/facultydashboard" element={<FacultyDashboard />} exact />
         <Route path="/portfoliocheck" element={<PortfolioCheck />} exact />
         <Route path="/projectscheck" element={<ProjectCheck />} exact />
-        <Route path="/portfoliocheck2" element={<PortfolioCheck2 />} exact />
+        <Route path="/portfoliocheck2" element={<PortfolioCheck2 onLogout={handleLogout}/>} exact />
         <Route path="/review/:id" element={<Review />} exact />
+        <Route path="/grade/:id" element={<GradeProject />} exact />
         <Route path="/viewmygivenreviews" element={<ViewMyGivenFeedback />} exact />
         {/* <Route path="facultydashboard/student/add" element={<AddStudent />} exact /> */}
         <Route path="facultydashboard/student/viewall" element={<ViewStudentsByFaculty />} exact /> 
@@ -222,7 +224,7 @@ export default function FacultyNavBar() {
         {/* <Route path="facultydashboard/student/update" element={<UpdateStudent />} exact /> */}
         <Route path="viewprojectbyfaculty/:id" element={<ProjectCheck2 />} />
         <Route path="viewstudentportfolio" element={<ViewStudentPortfolio />} />
-        <Route path="displayportfolio/:id" element={<StudentPortfolio />} />
+        <Route path="displayportfolio/:id" element={<StudentPortfolio onLogout={handleLogout} />} />
       </Routes>
     </div>
   );

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import axios from 'axios';
 
 function SProjectDetails({
   projectData,
   handleInputChange,
   handleCheckStatusChange,
-  handleUpdateProject,
   handleSubmitForReview,
   handleReportGeneration,
   navigateToUploadMedia,
@@ -15,24 +15,43 @@ function SProjectDetails({
   zipUrl,
   openModal,
 }) {
+  const [phaseDescription, setPhaseDescription] = useState('');
 
-  const showReportCard = projectData.percentage !== "ZERO";
+  // Update phase description whenever the phase or projectData changes
+  useEffect(() => {
+    const selectedPhase = projectData.phase;
+    if (selectedPhase && projectData.phaseDescriptions) {
+      setPhaseDescription(projectData.phaseDescriptions[selectedPhase] || ''); // Set description based on phase
+    }
+  }, [projectData.phase, projectData.phaseDescriptions]); // Trigger when phase or descriptions change
 
-  // Enum for mapping percentage keys to numeric values
-  const percentageEnum = {
-    ZERO: 0,
-    TWENTY_FIVE: 25,
-    TWENTY_FIVE_TO_FIFTY: 37,
-    FIFTY: 50,
-    FIFTY_TO_SEVENTY_FIVE: 62,
-    SEVENTY_FIVE: 75,
-    SEVENTY_FIVE_TO_ONE_HUNDRED: 87,
-    ONE_HUNDRED: 100,
+  const handlePhaseDescriptionChange = (e) => {
+    const description = e.target.value;
+    setPhaseDescription(description);
+    // Ensure the project data's phaseDescriptions are updated
+    projectData.phaseDescriptions[projectData.phase] = description; // Update the project data in memory
   };
 
-  
+  const handleUpdateProject = async () => {
+    // Update the projectData with the latest phaseDescriptions
+    const updatedProject = {
+      projectId: projectData.projectId,
+      title: projectData.title,
+      description: projectData.description,
+      phase: projectData.phase,
+      checkStatus: projectData.checkStatus,
+      phaseDescriptions: projectData.phaseDescriptions, // Use updated phase descriptions
+    };
 
-  
+    try {
+      const response = await axios.put('http://localhost:2025/updateproject', updatedProject);
+      console.log('Project updated successfully:', response.data);
+    } catch (error) {
+      console.error('Failed to update project:', error);
+    }
+  };
+
+  const showReportCard = projectData.percentage !== 'ZERO';
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
@@ -59,24 +78,6 @@ function SProjectDetails({
                 className="input mt-1 h-32 custom-textarea"
                 placeholder="Enter project description..."
               ></textarea>
-
-              <style>{`
-                .custom-textarea {
-                  background-color: #f0f0f0; /* Light grey background */
-                  border: 1px solid #ccc;   /* Optional: Add a border */
-                  border-radius: 8px;       /* Optional: Rounded corners */
-                  padding: 12px;            /* Add some padding for better spacing */
-                  color: #333;              /* Default text color */
-                  font-size: 16px;          /* Font size for the text */
-                  width: 100%;              /* Ensure it spans the parent width */
-                  resize: none;             /* Prevent resizing */
-                }
-
-                .custom-textarea::placeholder {
-                  color: #333;              /* Placeholder text color */
-                  font-size: 14px;          /* Optional: Adjust placeholder font size */
-                }
-              `}</style>
             </label>
 
             <label className="block">
@@ -87,20 +88,30 @@ function SProjectDetails({
                 className="input mt-1"
               >
                 <option value="NOT_STARTED">Not Started</option>
-                <option value="ACTIVE">Active</option>
+                <option value="IDEA">Idea Phase</option>
+                <option value="DESIGN">Design Phase</option>
+                <option value="BUILD">Build Phase</option>
+                <option value="TESTING">Testing Phase</option>
+                <option value="DEPLOYMENT">Deployment Phase</option>
                 <option value="COMPLETED">Completed</option>
               </select>
             </label>
+
+            {/* Description input for the selected phase */}
+            {projectData.phase && (
+              <label className="block">
+                <span className="text-gray-700 font-medium">Phase Description</span>
+                <textarea
+                  value={phaseDescription}
+                  onChange={handlePhaseDescriptionChange}
+                  className="input mt-1 h-32 custom-textarea"
+                  placeholder="Enter description for the selected phase..."
+                ></textarea>
+              </label>
+            )}
           </div>
 
           <div className="space-y-4">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <p className="text-gray-700 font-medium">Percentage Complete</p>
-              <p className="text-2xl font-bold text-indigo-600">
-                {percentageEnum[projectData.percentage] }%
-              </p>
-            </div>
-
             <div className="space-y-4">
               {projectImage && (
                 <Button
@@ -131,17 +142,16 @@ function SProjectDetails({
                   Download ZIP
                 </Button>
               )}
-             
-             
-             {showReportCard && (
-              <Button
-                variant="secondary"
-                onClick={handleReportGeneration}
-                className="w-full"
-              >
-                View Report
-              </Button>
-             )}
+
+              {showReportCard && (
+                <Button
+                  variant="secondary"
+                  onClick={handleReportGeneration}
+                  className="w-full"
+                >
+                  View Report
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -160,7 +170,11 @@ function SProjectDetails({
 
         <div className="flex flex-wrap gap-4">
           <Button onClick={handleUpdateProject}>Save Changes</Button>
-          <Button onClick={handleSubmitForReview}>Submit Review Choice</Button>
+          <Button onClick={handleSubmitForReview}>
+            {projectData.phase === 'NOT_STARTED'
+              ? 'Ask Permission to Start Project'
+              : 'Submit for Review'}
+          </Button>
           <Button onClick={navigateToUploadMedia}>Upload Media</Button>
         </div>
       </div>
@@ -172,7 +186,6 @@ SProjectDetails.propTypes = {
   projectData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleCheckStatusChange: PropTypes.func.isRequired,
-  handleUpdateProject: PropTypes.func.isRequired,
   handleSubmitForReview: PropTypes.func.isRequired,
   handleReportGeneration: PropTypes.func.isRequired,
   navigateToUploadMedia: PropTypes.func.isRequired,

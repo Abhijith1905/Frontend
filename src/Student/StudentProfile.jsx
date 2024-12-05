@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+import { AlertCircle } from "lucide-react";
+
 export default function StudentProfile() {
   const [studentData, setStudentData] = useState({
     id: "",
@@ -31,10 +36,16 @@ export default function StudentProfile() {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:2025/updatestudent`, studentData); // Assuming a PUT endpoint for updating
-      alert('Profile updated successfully!');
+      await axios.put(`http://localhost:2025/updatestudent`, studentData);
+      toast.success('Profile updated successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+      });
     } catch (error) {
-      console.error('Error updating profile:', error.message);
+      toast.error(`Error updating profile: ${error.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+      });
     }
   };
 
@@ -52,10 +63,29 @@ export default function StudentProfile() {
     }
   };
 
+  // if (error) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 px-4 py-16 sm:px-6 sm:py-24 md:grid md:place-items-center lg:px-8">
+  //       <div className="max-w-max mx-auto">
+  //         <main className="sm:flex">
+  //           <AlertCircle className="h-12 w-12 text-red-500" />
+  //           <div className="sm:ml-6">
+  //             <div className="sm:border-l sm:border-gray-200 sm:pl-6">
+  //               <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl">
+  //                 Error loading profile
+  //               </h1>
+  //               <p className="mt-1 text-base text-gray-500">{error}</p>
+  //             </div>
+  //           </div>
+  //         </main>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div>
       <div style={{ paddingTop: "200px" }}>
-        
         <div
           className="profile-card"
           style={{
@@ -66,44 +96,17 @@ export default function StudentProfile() {
             boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
           }}
         >
-          {/* Profile Picture Section */}
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-              
             }}
           >
-            <h2 style={{color: "#4a4a75" }}>My Profile</h2>
-            {/* <div>
-              <img
-                src={
-                  studentData.photo ||
-                  "https://via.placeholder.com/150?text=Upload+Photo"
-                }
-                alt="Profile"
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  objectFit: "cover",
-                }}
-                onClick={() => document.getElementById("photo-upload").click()}
-              />
-            </div>
-            <input
-              type="file"
-              id="photo-upload"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handlePhotoUpload}
-            /> */}
+            <h2 style={{ color: "#4a4a75" }}>My Profile</h2>
           </div>
 
-          {/* Profile Info Table */}
           <table
             style={{
               width: "100%",
@@ -147,13 +150,14 @@ export default function StudentProfile() {
               ))}
             </tbody>
           </table>
-              <center><button
-            onClick={handleSave}
-            style={{ marginTop: "20px", padding: "10px 20px" }}
-          >
-            Update
-          </button></center>
-          
+          <center>
+            <button
+              onClick={handleSave}
+              style={{ marginTop: "20px", padding: "10px 20px" }}
+            >
+              Update
+            </button>
+          </center>
         </div>
       </div>
     </div>

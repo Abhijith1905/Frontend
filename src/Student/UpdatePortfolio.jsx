@@ -216,7 +216,7 @@ export default function UpdatePortfolio() {
   const formStyle = {
     maxWidth: "800px",
     margin: "auto",
-    paddingTop: "6300px",
+    paddingTop: "50px",
     borderRadius: "10px",
   };
 

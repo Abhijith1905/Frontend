@@ -14,7 +14,7 @@ import Internships from "../Student/sections/Internships";
 import Testimonials from "../Student/sections/Testimonials";
 import { useParams } from 'react-router-dom';
 
-export default function StudentPortfolio() {
+export default function StudentPortfolio({ onLogout }) {
   const [portfolioData, setPortfolioData] = useState(null);
   const [activeSection, setActiveSection] = useState('education');
 
@@ -49,8 +49,14 @@ export default function StudentPortfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+     <Navigation
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
       
+        onLogout={onLogout}
+      />
+
+
       <main className="pt-24 px-4 pb-8">
         <div className="max-w-7xl mx-auto">
           <AnimatePresence mode="wait">

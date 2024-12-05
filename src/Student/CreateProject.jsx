@@ -6,6 +6,7 @@ export default function CreateProject() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    technologiesUsed:'',
     image: null,
     file: null,
   });
@@ -48,6 +49,7 @@ export default function CreateProject() {
       formDataToSend.append('studentId', studentId);
       formDataToSend.append('title', formData.title);
       formDataToSend.append('description', formData.description);
+      formDataToSend.append('technologiesUsed', formData.technologiesUsed);
       formDataToSend.append('image', formData.image);
       formDataToSend.append('file', formData.file);
 
@@ -60,6 +62,7 @@ export default function CreateProject() {
       setFormData({
         title: '',
         description: '',
+        technologiesUsed:'',
         image: null,
         file: null,
       });
@@ -97,6 +100,17 @@ export default function CreateProject() {
             <textarea
               id="description"
               value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Technologies you are going to use</label>
+            <input 
+              type="text"
+              id="technologiesUsed"
+              value={formData.technologiesUsed}
               onChange={handleChange}
               required
             />

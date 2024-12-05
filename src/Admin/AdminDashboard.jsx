@@ -113,6 +113,9 @@ const AdminDashboard = () => {
                     <Link to="student/add" style={styles.link}>
                       Add Student
                     </Link>
+                    <Link to="student/addstudentlist" style={styles.link}>
+                      Add Students List
+                    </Link>
                     <Link to="student/viewall" style={styles.link}>
                       View Students
                     </Link>
@@ -141,6 +144,9 @@ const AdminDashboard = () => {
                   <div style={styles.links}>
                     <Link to="faculty/add" style={styles.link}>
                       Add Faculty
+                    </Link>
+                    <Link to="faculty/addfacultylist" style={styles.link}>
+                      Add Faculty List
                     </Link>
                     <Link to="faculty/viewall" style={styles.link}>
                       View Faculty

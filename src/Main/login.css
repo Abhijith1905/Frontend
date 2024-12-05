@@ -10,8 +10,8 @@
   }
 body {
     display: flex;
-	/* background: #f6f5f7; */
-	justify-content: center;
+	background: #f6f5f7;
+	
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
@@ -379,8 +379,7 @@ input[type=checkbox] {
 }
 
 body {
-    background: #e6f7ff; /* Light blue background for a fresh look */
-    color: #4a4a75; /* Preferred text color */
+	background-color: #e6f7ff;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -409,13 +408,7 @@ button:hover, input[type=submit]:hover {
     background: linear-gradient(to right, #4aa3df, #4aa3df); /* Consistent blue gradient */
 }
 
-h1 {
-    color: #4a4a75; /* Keep preferred text color */
-}
 
-a, p, span {
-    color: #4a4a75; /* Matching the text color */
-}
 
 button, input[type=submit] {
     background-color: #4aa3df; /* Light blue button */

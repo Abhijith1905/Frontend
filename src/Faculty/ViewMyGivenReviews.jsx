@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, AlertCircle } from "lucide-react";
+import { Table} from "lucide-react";
 
 const ViewMyGivenReviews = () => {
   const [feedbacks, setFeedbacks] = useState([]);

@@ -170,12 +170,12 @@ export default function Login({onAdminLogin,onStudentLogin,onFacultyLogin}) {
 
   return (
     <div>
-      <div>
+      <div style={{paddingTop:"150px"}}>
         <div
           className={`SuperContainer ${containerClasses}`}
           id="SuperContainer"
         >
-          <div className="Formcontainer Admincontainer">
+          <div  className="Formcontainer Admincontainer">
             <form className="form" onSubmit={handleSubmit1}>
               <h1>Admin</h1>
               {message1 ? (

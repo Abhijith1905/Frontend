@@ -21,7 +21,10 @@ body {
   left: 0;
   width: 100%;
   height: 75px;
-  background:#2C3E50;
+  background: #333333; /* Slightly darker than the body background */
+  color: #fff; /* Preferred text color for contrast */
+  font-family: 'Montserrat', sans-serif;
+  border-bottom: 1px solid #DCCDC5; /* Optional: a subtle border for separation */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,6 +32,8 @@ body {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
+
+
 
 /* Navbar Logo */
 .navbar-logo {
