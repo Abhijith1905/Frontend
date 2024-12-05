@@ -39,7 +39,7 @@ const FacultyStudentMap = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "lightgrey", padding: "20px" }}>
+    <div style={{ backgroundColor: "lightgrey", padding: "220px" }}>
       <h2 align="center">Faculty-Student Mapping</h2>
 
       <h3 style={{ color: "red", textAlign: "center" }}>{message}</h3>

@@ -47,9 +47,12 @@ export default function StudentPortfolio({ onLogout }) {
     return <EmptyPortfolio />;
   }
 
+  console.log("ho",id);
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      
      <Navigation
+        studentId={id}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
       

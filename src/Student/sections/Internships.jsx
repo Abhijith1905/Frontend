@@ -15,12 +15,12 @@ export default function Internships({ internship }) {
           Professional Experience
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
-        
-
-<p className="text-gray-700 font-medium">You don't have any internships listed yet. <br></br> <a href="/updateportfolio" className="text-blue-600 hover:underline">Add Professional Experience</a>. </p>
-
-
-
+          <p className="text-gray-700 font-medium">
+            You don't have any internships listed yet. <br />
+            <a href="/updateportfolio" className="text-blue-600 hover:underline">
+              Add Professional Experience
+            </a>
+          </p>
         </div>
       </motion.div>
     );
@@ -33,10 +33,11 @@ export default function Internships({ internship }) {
       exit={{ opacity: 0 }}
       className="space-y-6"
     >
-      <h2 style={{ paddingTop: "500px" }} className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
         Professional Experience
       </h2>
-      <div className="space-y-6">
+      {/* Grid layout with two internships per row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
         {internship.map((internship, index) => (
           <motion.div
             key={index}
@@ -85,7 +86,7 @@ export default function Internships({ internship }) {
                 <div className="mt-4 text-sm text-gray-600">
                   <p><span className="font-medium">Location:</span> {internship.location}</p>
                   <a href="/viewportfolio" className="text-green-600 hover:text-green-800 mt-2 inline-block">
-                    Learn more about me 
+                    Learn more about me
                   </a>
                 </div>
               </div>

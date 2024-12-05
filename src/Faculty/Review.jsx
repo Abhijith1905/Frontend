@@ -4,15 +4,13 @@ import axios from "axios";
 import "./../Student/studentnavbar.css";
 
 const Review = () => {
-  const { id } = useParams();
+  const { studentId } = useParams();
   const [formData, setFormData] = useState({
     rating: "",
     comments: "",
     percentage: "",
   });
   const [message, setMessage] = useState("");
-  const [reportGenerated, setReportGenerated] = useState(false);
-  const [checkpoints, setCheckpoints] = useState([]); // State for dynamic checkpoints
 
   // Get facultyId from localStorage (session)
   const facultyData = JSON.parse(localStorage.getItem("faculty"));
@@ -21,20 +19,6 @@ const Review = () => {
   // Get current date (in YYYY-MM-DD format)
   const currentDate = new Date().toISOString().split('T')[0]; // Format to YYYY-MM-DD
 
-  useEffect(() => {
-    const fetchCheckpoints = async () => {
-      try {
-        const response = await axios.get("http://localhost:2025/checkpoints");
-        if (response.status === 200) {
-          setCheckpoints(response.data); // Assuming the response is an array of percentage values
-        }
-      } catch (error) {
-        console.error("Error fetching checkpoints:", error);
-      }
-    };
-
-    fetchCheckpoints();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,40 +35,20 @@ const Review = () => {
     const projectFeedback = {
       rating: parseInt(formData.rating),
       comments: formData.comments,
-      percentage: parseInt(formData.percentage),
-      facultyId: facultyId, // Faculty ID from session
-      dateSubmitted: currentDate, // Current date
-      projectid: id,
+      dateSubmitted: currentDate, 
+      facultyId: facultyId,
+      studentId: studentId
     };
 
     console.log(formData.percentage);
     try {
       const response = await axios.post(
-        "http://localhost:2025/gradeproject",
+        "http://localhost:2025/reviewportfolio",
         projectFeedback
       );
       if (response.status === 200) {
         setMessage("Feedback submitted successfully!");
 
-        const projectResponse = await axios.get(
-          `http://localhost:2025/displayproject?projectId=${id}`
-        );
-        if (projectResponse.status === 200 && projectResponse.data) {
-          const projectData = projectResponse.data;
-          projectData.percentage = formData.percentage;
-          projectData.checkStatus = false;
-
-          console.log(projectData);
-          const updateResponse = await axios.put(
-            "http://localhost:2025/updateproject",
-            projectData
-          );
-          if (updateResponse.status === 200) {
-            await generateReport(id);
-          } else {
-            setMessage("Failed to update the project.");
-          }
-        }
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
@@ -92,22 +56,7 @@ const Review = () => {
     }
   };
 
-  const generateReport = async (id) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:2025/generatereport?projectId=${id}`
-      );
-      if (response.status === 200) {
-        setReportGenerated(true);
-        setMessage("Report has been generated successfully!");
-      } else {
-        setMessage("Failed to generate the report.");
-      }
-    } catch (error) {
-      console.error("Error generating report:", error);
-      setMessage("Error generating report. Please try again.");
-    }
-  };
+  
 
   const styles = {
     card: {
@@ -197,29 +146,7 @@ const Review = () => {
             style={styles.textarea}
           ></textarea>
 
-          <label htmlFor="percentage" style={styles.label}>
-            Project Percentage
-          </label>
-          <select
-            id="percentage"
-            name="percentage"
-            value={formData.percentage}
-            onChange={handleChange}
-            style={styles.input}
-          >
-            <option value="" disabled>
-              Select a percentage
-            </option>
-            {checkpoints.length > 0 ? (
-              checkpoints.map((val) => (
-                <option key={val} value={val}>
-                  {val}%
-                </option>
-              ))
-            ) : (
-              <option disabled>Loading percentages...</option>
-            )}
-          </select>
+         
 
           <button
             type="submit"
@@ -237,22 +164,7 @@ const Review = () => {
           </button>
         </form>
 
-        {reportGenerated && (
-          <div>
-            <h3>Report has been generated successfully!</h3>
-            <button
-              onClick={() =>
-                window.open(
-                  `http://localhost:2025/viewreport?projectId=${id}`,
-                  "_blank"
-                )
-              }
-              style={styles.submitButton}
-            >
-              View Report
-            </button>
-          </div>
-        )}
+      
       </div>
     </div>
   );

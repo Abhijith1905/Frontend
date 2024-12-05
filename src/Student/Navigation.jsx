@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { GraduationCap, Award, Briefcase, Code2, MessageSquare, FileText, ArrowLeft, LogOut, Rocket } from 'lucide-react'; // Import Rocket icon
+import { useNavigate } from 'react-router-dom';
+import { GraduationCap, Award, Briefcase, Code2, MessageSquare, FileText, ArrowLeft, LogOut, Rocket, Star } from 'lucide-react'; // Import Star icon for Review button
 import PortfolioPDF from './PortfolioPDF';
 
 const sections = [
@@ -11,7 +11,8 @@ const sections = [
   { key: 'testimonials', icon: <MessageSquare className="w-5 h-5" />, title: 'Testimonials', color: 'rose' },
   { key: 'projects', icon: <Rocket className="w-5 h-5" />, title: 'Projects', color: 'cyan' } // New Projects section
 ];
-export default function Navigation({ activeSection, setActiveSection, portfolioData, onLogout }) {
+
+export default function Navigation({ studentId , activeSection, setActiveSection, portfolioData, onLogout }) {
   const navigate = useNavigate();
   const [showPDF, setShowPDF] = useState(false);
 
@@ -22,6 +23,17 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
 
   const handleBackFromPDF = () => {
     setShowPDF(false);
+  };
+
+  
+
+  const facultyData = JSON.parse(localStorage.getItem("faculty"));
+  const facultyId = facultyData?.id;
+
+  console.log(studentId)
+  const handleReview = () => {
+    // Navigate to review page using studentId
+    navigate(`/review/${studentId}`);
   };
 
   if (showPDF && portfolioData) {
@@ -74,11 +86,22 @@ export default function Navigation({ activeSection, setActiveSection, portfolioD
             </button>
           </div>
 
-          {/* Right-side: Logout */}
+          {/* Right-side: Grade & Review buttons */}
           <div className="flex items-center gap-4 ml-auto">
+            {/* Check for facultyId to show Review button */}
+            {facultyId && (
+              <button
+                onClick={handleReview}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 transition-colors"
+              >
+                <Star className="w-5 h-5" />
+                <span className="font-medium">Review</span>
+              </button>
+            )}
+
             {/* Logout Button */}
             <button
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-colors" // Changed text color to white
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-white hover:bg-red-600 transition-colors"
               onClick={handleLogout}
             >
               <LogOut className="w-5 h-5 inline-block mr-2" />
