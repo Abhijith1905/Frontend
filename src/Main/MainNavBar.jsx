@@ -11,7 +11,7 @@ export default function NavigationBar({ onStudentLogin, onFacultyLogin, onAdminL
     <div>
       
         <div className="navbar-container">
-          <h3 className="navbar-logo">EduSupport</h3>
+          <h3 style={{color:"black"}} className="navbar-logo">EduSupport</h3>
           <ul className="navbar-menu">
             <li className="navbar-item">
               <Link to="/">Home</Link>

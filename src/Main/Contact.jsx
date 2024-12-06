@@ -110,7 +110,7 @@ const Contact = () => {
   };
 
   return (
-    <div style={{paddingTop:"250px"}} className="content">
+    <div style={{paddingTop:"110px"}}>
      <h2 style={{ color: "#4a4a75" , fontWeight: "500" }}>Contact Us</h2>
     <div style={styles.container}>
       <div style={styles.innerContainer}>

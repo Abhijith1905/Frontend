@@ -14,7 +14,7 @@ export default function About() {
     };
   }, []);
   return (
-    <div className="content">
+    <div style={{paddingTop:"110px"}}>
       <h2 style={{ color: "#4a4a75" , fontWeight: "500" }}>About Us</h2>
 
       <center>
