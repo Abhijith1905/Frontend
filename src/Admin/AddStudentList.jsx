@@ -31,7 +31,7 @@ export default function AddStudentList() {
   };
 
   return (
-    <div>
+    <div s>
       <h2>Upload Students via CSV</h2>
       <form onSubmit={handleUpload}>
         <div className="form-group">

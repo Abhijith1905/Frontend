@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "./admin.module.css"
 
 const FacultyStudentMap = () => {
   const [facultyData, setFacultyData] = useState([]);
@@ -11,80 +12,99 @@ const FacultyStudentMap = () => {
   });
 
   useEffect(() => {
-    // Fetch faculty and student data
-    axios.get("http://localhost:2025/fstudentmapping")
-      .then((response) => {
-        console.log(response.data);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:2025/fstudentmapping");
         setFacultyData(response.data.facultydata);
         setStudentData(response.data.studentdata);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setMessage("Failed to load faculty and student data");
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:2025/fstudentmappinginsert", formData)
-      .then((response) => {
-        setMessage(response.data.message);
-      })
-      .catch((error) => console.error("Error submitting data:", error));
+    try {
+      const response = await axios.post("http://localhost:2025/fstudentmappinginsert", formData);
+      setMessage(response.data.message);
+      setFormData({ fid: "", sid: "" });
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      setMessage("Failed to map faculty and student");
+    }
+  };
+
+  const handleReset = () => {
+    setFormData({ fid: "", sid: "" });
+    setMessage("");
   };
 
   return (
-    <div style={{ backgroundColor: "lightgrey", padding: "220px" }}>
-      <h2 align="center">Faculty-Student Mapping</h2>
+    <div style={{paddingTop:"120px"}} className={styles.container}>
+      <h2 className={styles.title}>Faculty-Student Mapping</h2>
+      {message && <p className={styles.message}>{message}</p>}
 
-      <h3 style={{ color: "red", textAlign: "center" }}>{message}</h3>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Select Faculty</label>
+          <select
+            className={styles.select}
+            name="fid"
+            value={formData.fid}
+            onChange={handleChange}
+            required
+          >
+            <option value="">--Select--</option>
+            {facultyData.map((faculty) => (
+              <option key={faculty.id} value={faculty.id}>
+                {faculty.id} - {faculty.username}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <table align="center">
-          <tbody>
-            <tr>
-              <td><label>Select Faculty</label></td>
-              <td>
-                <select name="fid" onChange={handleChange} required>
-                  <option value="">--Select--</option>
-                  {facultyData.map((faculty) => (
-                    <option key={faculty.id} value={faculty.id}>
-                      {faculty.id} - {faculty.username}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Select Student</label></td>
-              <td>
-                <select name="sid" onChange={handleChange} required>
-                  <option value="">--Select--</option>
-                  {studentData.map((student) => (
-                    <option key={student.id} value={student.id}>
-                      {student.id} - {student.fullName}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>
-                <button type="submit" className="button">Submit</button>
-                &nbsp;
-                <button type="reset" className="button" onClick={() => setFormData({ fid: "", sid: "" })}>
-                  Clear
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Select Student</label>
+          <select
+            className={styles.select}
+            name="sid"
+            value={formData.sid}
+            onChange={handleChange}
+            required
+          >
+            <option value="">--Select--</option>
+            {studentData.map((student) => (
+              <option key={student.id} value={student.id}>
+                {student.id} - {student.fullName}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button type="submit" className={`${styles.button} ${styles.submitButton}`}>
+            Submit
+          </button>
+          <button
+            type="button"
+            className={`${styles.button} ${styles.resetButton}`}
+            onClick={handleReset}
+          >
+            Clear
+          </button>
+        </div>
       </form>
     </div>
   );

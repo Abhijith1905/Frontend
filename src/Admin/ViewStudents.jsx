@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from "./admin.module.css"
 
 export default function ViewStudents() {
   const [students, setStudents] = useState([]);
@@ -33,76 +34,71 @@ export default function ViewStudents() {
     fetchStudents();
   }, []);
 
-  const styles = {
-    tableContainer: {
-      maxHeight: '400px', // Adjust the height as per your requirement
-      overflowY: 'auto',
-      display: 'block', // Make the table container a block element so it can scroll
-    },
-    table: {
-      backgroundColor: 'white',
-      width: '100%',
-      borderCollapse: 'collapse', // Ensures borders are collapsed for the table
-    },
-    th: {
-      backgroundColor: '#f2f2f2', // Optional: To make the header stand out
-    },
-    td: {
-      padding: '8px',
-      border: '1px solid #ddd', // Border for better readability
-    },
-  };
-
   return (
-    <div>
-      <nav> </nav>
-      <div className="content">
-        <h2 className="ul">View Students</h2>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <h2 className={styles.title}>View Students</h2>
 
         {students.length > 0 ? (
-          <div style={styles.tableContainer}>
-            <table className="table" style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>ID</th>
-                  <th style={styles.th}>Full Name</th>
-                  <th style={styles.th}>Gender</th>
-                  <th style={styles.th}>Department</th>
-                  <th style={styles.th}>Program</th>
-                  <th style={styles.th}>Semester</th>
-                  <th style={styles.th}>Year</th>
-                  <th style={styles.th}>Date of Birth</th>
-                  <th style={styles.th}>Email</th>
-                  <th style={styles.th}>Contact</th>
-                  <th style={styles.th}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map((student) => (
-                  <tr key={student.id}>
-                    <td style={styles.td}>{student.id}</td>
-                    <td style={styles.td}>{student.fullName}</td>
-                    <td style={styles.td}>{student.gender}</td>
-                    <td style={styles.td}>{student.department}</td>
-                    <td style={styles.td}>{student.program}</td>
-                    <td style={styles.td}>{student.semester}</td>
-                    <td style={styles.td}>{student.year}</td>
-                    <td style={styles.td}>{new Date(student.dateOfBirth).toLocaleDateString()}</td>
-                    <td style={styles.td}>{student.email}</td>
-                    <td style={styles.td}>{student.contact}</td>
-                    <td style={styles.td}>
-                      <button onClick={() => displayStudent(student.id)}>View</button>
-                      <button onClick={() => deleteStudent(student.id)}>Delete</button>
-                    </td>
+          <div className={styles.tableContainer}>
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th className={styles.th}>ID</th>
+                    <th className={styles.th}>Full Name</th>
+                    <th className={styles.th}>Gender</th>
+                    <th className={styles.th}>Department</th>
+                    <th className={styles.th}>Program</th>
+                    <th className={styles.th}>Semester</th>
+                    <th className={styles.th}>Year</th>
+                    <th className={styles.th}>Date of Birth</th>
+                    <th className={styles.th}>Email</th>
+                    <th className={styles.th}>Contact</th>
+                    <th className={styles.th}>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {students.map((student) => (
+                    <tr key={student.id} className={styles.tr}>
+                      <td className={styles.td}>{student.id}</td>
+                      <td className={styles.td}>{student.fullName}</td>
+                      <td className={styles.td}>{student.gender}</td>
+                      <td className={styles.td}>{student.department}</td>
+                      <td className={styles.td}>{student.program}</td>
+                      <td className={styles.td}>{student.semester}</td>
+                      <td className={styles.td}>{student.year}</td>
+                      <td className={styles.td}>
+                        {new Date(student.dateOfBirth).toLocaleDateString()}
+                      </td>
+                      <td className={styles.td}>{student.email}</td>
+                      <td className={styles.td}>{student.contact}</td>
+                      <td className={styles.td}>
+                        <div className={styles.buttonGroup}>
+                          <button
+                            onClick={() => displayStudent(student.id)}
+                            className={`${styles.button} ${styles.viewButton}`}
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => deleteStudent(student.id)}
+                            className={`${styles.button} ${styles.deleteButton}`}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         ) : error ? (
-          <p>{error}</p>
+          <p className={`${styles.message} ${styles.error}`}>{error}</p>
         ) : (
-          <p>No students found</p>
+          <p className={styles.message}>No students found</p>
         )}
       </div>
     </div>

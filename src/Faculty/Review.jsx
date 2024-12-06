@@ -30,17 +30,16 @@ const Review = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Add facultyId and dateSubmitted to the projectFeedback
     const projectFeedback = {
       rating: parseInt(formData.rating),
       comments: formData.comments,
-      dateSubmitted: currentDate, 
+      dateSubmitted: currentDate,
       facultyId: facultyId,
-      studentId: studentId
+      studentId: studentId,
     };
-
-    console.log(formData.percentage);
+  
     try {
       const response = await axios.post(
         "http://localhost:2025/reviewportfolio",
@@ -48,13 +47,19 @@ const Review = () => {
       );
       if (response.status === 200) {
         setMessage("Feedback submitted successfully!");
-
+        // Reset form
+        setFormData({
+          rating: "",
+          comments: "",
+          percentage: "",
+        });
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);
       setMessage("Error submitting feedback. Please try again.");
     }
   };
+  
 
   
 

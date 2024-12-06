@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-
-
+import styles from "./admin.module.css";
 
 export default function AddStudent() {
   const [student, setStudent] = useState({
@@ -14,9 +13,9 @@ export default function AddStudent() {
     dateOfBirth: '',
     password: '',
     email: '',
-    contact: ''
+    contact: '',
   });
-  
+
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
@@ -24,7 +23,7 @@ export default function AddStudent() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // to avoid page reloading
+    e.preventDefault();
     try {
       const response = await axios.post('http://localhost:2025/addstudent', student);
       if (response.status === 200) {
@@ -39,158 +38,164 @@ export default function AddStudent() {
           dateOfBirth: '',
           password: '',
           email: '',
-          contact: ''
+          contact: '',
         });
       }
     } catch (error) {
-      console.log(error.message); // for debugging purpose
+      console.log(error.message);
       setMessage(error.message);
     }
   };
 
   return (
-    <div>
-      <nav> </nav>
-      <div style={{paddingTop:"320px"}} className="content">
-        {message && <p>{message}</p>}
-        <h2 className='ul'>Add New Student</h2>
-        <div className = 'design' >
-          <form onSubmit={handleSubmit}>
-            {/* Full Name */}
-            <div className="form-group">
-              <input
-                type="text"
-                name="fullName"
-                value={student.fullName}
-                onChange={handleChange}
-                placeholder="Enter Full Name"
-                required
-              />
-            </div>
-            
-            {/* Gender */}
-            <div className="form-group">
-              <select
-                name="gender"
-                value={student.gender}
-                onChange={handleChange}
-                required
-              >
-                <option value="">---Select Gender---</option>
-                <option value="MALE">Male</option>
-                <option value="FEMALE">Female</option>
-                <option value="OTHERS">Others</option>
-              </select>
-            </div>
+    <div style={{ paddingTop: "120px" }} className={styles.container}>
+      <div className={styles.content}>
+        {message && <p className={`${styles.message} ${message.includes('error') ? styles.error : styles.success}`}>{message}</p>}
+       
+        <form className={styles.form} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Add New Student</h2>
+          {/* Full Name */}
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="fullName"
+              value={student.fullName}
+              onChange={handleChange}
+              placeholder="Enter Full Name"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Department */}
-            <div className="form-group">
-              <select
-                name="department"
-                value={student.department}
-                onChange={handleChange}
-                required
-              >
-                <option value="">---Select Department---</option>
-                <option value="CSE">CSE</option>
-                <option value="ECE">ECE</option>
-                <option value="CSIT">CS&IT</option>
-              </select>
-            </div>
+          {/* Gender */}
+          <div className={styles.formGroup}>
+            <select
+              name="gender"
+              value={student.gender}
+              onChange={handleChange}
+              className={styles.select}
+              required
+            >
+              <option value="">---Select Gender---</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHERS">Others</option>
+            </select>
+          </div>
 
-            {/* Program */}
-            <div className="form-group">
-              <input
-                type="text"
-                name="program"
-                value={student.program}
-                onChange={handleChange}
-                placeholder="Enter Program"
-                required
-              />
-            </div>
+          {/* Department */}
+          <div className={styles.formGroup}>
+            <select
+              name="department"
+              value={student.department}
+              onChange={handleChange}
+              className={styles.select}
+              required
+            >
+              <option value="">---Select Department---</option>
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+              <option value="CSIT">CS&IT</option>
+            </select>
+          </div>
 
-            {/* Semester */}
-            <div className="form-group">
-              <input
-                type="text"
-                name="semester"
-                value={student.semester}
-                onChange={handleChange}
-                placeholder="Enter Semester"
-                required
-              />
-            </div>
+          {/* Program */}
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="program"
+              value={student.program}
+              onChange={handleChange}
+              placeholder="Enter Program"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Year */}
-            <div className="form-group">
-              <input
-                type="number"
-                name="year"
-                value={student.year}
-                onChange={handleChange}
-                placeholder="Enter Year"
-                required
-              />
-            </div>
+          {/* Semester */}
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="semester"
+              value={student.semester}
+              onChange={handleChange}
+              placeholder="Enter Semester"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Date of Birth */}
-            <div className="form-group">
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={student.dateOfBirth}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          {/* Year */}
+          <div className={styles.formGroup}>
+            <input
+              type="number"
+              name="year"
+              value={student.year}
+              onChange={handleChange}
+              placeholder="Enter Year"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Password */}
-            <div className="form-group">
-              <input
-                type="password"
-                name="password"
-                value={student.password}
-                onChange={handleChange}
-                placeholder="Enter Password"
-                required
-              />
-            </div>
+          {/* Date of Birth */}
+          <div className={styles.formGroup}>
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={student.dateOfBirth}
+              onChange={handleChange}
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Email */}
-            <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                value={student.email}
-                onChange={handleChange}
-                placeholder="Enter Email"
-                required
-              />
-            </div>
+          {/* Password */}
+          <div className={styles.formGroup}>
+            <input
+              type="password"
+              name="password"
+              value={student.password}
+              onChange={handleChange}
+              placeholder="Enter Password"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Contact */}
-            <div className="form-group">
-              <input
-                type="text"
-                name="contact"
-                value={student.contact}
-                onChange={handleChange}
-                placeholder="Enter Contact Number"
-                required
-              />
-            </div>
+          {/* Email */}
+          <div className={styles.formGroup}>
+            <input
+              type="email"
+              name="email"
+              value={student.email}
+              onChange={handleChange}
+              placeholder="Enter Email"
+              className={styles.input}
+              required
+            />
+          </div>
 
-            {/* Submit and Reset Buttons */}
-            <div className="button-group">
-              <button type="submit">Add Student</button>
-              <button type="reset">Clear</button>
-            </div>
-          </form>
-        </div>
+          {/* Contact */}
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="contact"
+              value={student.contact}
+              onChange={handleChange}
+              placeholder="Enter Contact Number"
+              className={styles.input}
+              required
+            />
+          </div>
+
+          {/* Submit and Reset Buttons */}
+          <div className={styles.buttonGroup}>
+            <button type="submit" className={`${styles.button} ${styles.submitButton}`}>Add Student</button>
+            <button type="reset" className={`${styles.button} ${styles.resetButton}`}>Clear</button>
+          </div>
+        </form>
       </div>
-
-     
     </div>
   );
 }
