@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-  
 import "./facultynavbar.css";
 
 const FacultyDashboard = () => {
@@ -30,7 +29,7 @@ const FacultyDashboard = () => {
     outerContainer: {
       marginTop: "40px", // Added margin to push the outer container down
       width: "100%", // Full width
-      maxWidth: "800px", // Max width for the outer container
+      maxWidth: "900px", // Max width for the outer container
     },
     main: {
       backgroundColor: "#ffffff", // White background for the main container
@@ -41,7 +40,7 @@ const FacultyDashboard = () => {
     },
     managementOptions: {
       display: "flex",
-      justifyContent: "space-around",
+      justifyContent: "space-between", // Use space between to add space between inner containers
       marginTop: "20px",
     },
     option: {
@@ -49,8 +48,9 @@ const FacultyDashboard = () => {
       borderRadius: "8px",
       boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
       padding: "30px", // Increased padding for inner containers
-      width: "30%",
+      width: "50%", // Increased width from 45% to 50%
       minHeight: "200px", // Increased minimum height for inner containers
+      marginRight: "20px", // Add space between containers
     },
     highlighted: {
       backgroundColor: "#0073e6", // Light Blue for highlighted option
@@ -88,7 +88,6 @@ const FacultyDashboard = () => {
 
   return (
     <div>
-   
       <div style={styles.body}>
         <div style={styles.outerContainer}>
           <main style={styles.main}>
@@ -111,7 +110,6 @@ const FacultyDashboard = () => {
                   <button style={styles.button}>Enter</button>
                   {showLinks && (
                     <div style={styles.links}>
-
                       <Link to="student/viewall" style={styles.link}>View Students</Link>
                     </div>
                   )}
@@ -145,8 +143,6 @@ const FacultyDashboard = () => {
           </main>
         </div>
       </div>
-
-    
     </div>
   );
 };

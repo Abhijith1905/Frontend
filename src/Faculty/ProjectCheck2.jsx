@@ -115,7 +115,6 @@ const ProjectCheck2 = () => {
   const handleReportGeneration = () => {
     window.open(`http://localhost:2025/viewreport?projectId=${id}`, "_blank");
   };
-
   const handleAcceptProject = async (projectId) => {
     try {
       await axios.post(`http://localhost:2025/allowproject?projectId=${id}`);
@@ -170,12 +169,12 @@ const ProjectCheck2 = () => {
           <ProjectDetails projectData={projectData} percentageEnum={percentageEnum} />
 
           <ActionButtons
+            projectData={projectData}
             projectImage={projectImage}
             projectFile={projectFile}
             zipUrl={zipUrl}
             onImageClick={openModal}
             onFileClick={openModal}
-            projectData={projectData}
             onReportClick={handleReportGeneration}
             onAcceptProject={() => handleAcceptProject(id)}
             phase={projectData.phase}

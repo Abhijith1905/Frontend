@@ -59,7 +59,7 @@ function TrackProject() {
     "COMPLETED"
   ];
 
-  const phasesToDisplay = projectData.phase === "NOT_STARTED" 
+  const phasesToDisplay = projectData.phase === "NOT_STARTED"
     ? ["NOT_STARTED"]
     : phaseOrder.filter(phase => phase !== "NOT_STARTED");
 
@@ -77,7 +77,7 @@ function TrackProject() {
   };
 
   const formatPhaseTitle = (phase) => {
-    return phase.split('_').map(word => 
+    return phase.split('_').map(word =>
       word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     ).join(' ');
   };
@@ -95,9 +95,7 @@ function TrackProject() {
           <p className="text-gray-600">Your project adventure awaits. Begin now to track your progress!</p>
         </div>
       );
-    }
-
-    if (phase === "COMPLETED") {
+    }if (phase === "COMPLETED") {
       if (projectData.phase === "COMPLETED") {
         return (
           <div className="space-y-4">
@@ -128,41 +126,6 @@ function TrackProject() {
           </div>
         );
       }
-    }
-
-    if (phase === projectData.phase) {
-      return (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-gray-500">Description</p>
-              <p className="mt-1 text-gray-900">
-                {projectData.phaseDescriptions[phase] || "No description provided"}
-              </p>
-            </div>
-            <div className="w-1/3 ml-4">
-              <p className="text-sm font-medium text-gray-500">Current Grade</p>
-              <p className="mt-1 text-gray-900 font-semibold">
-                {projectData.phaseGrades[phase] || "Not graded yet"}
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-gray-500">Phase Progress</p>
-            <div className="mt-2">
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div
-                  className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
-                  style={{ width: `${projectData.phasePercentages[phase]}%` }}
-                />
-              </div>
-              <p className="mt-1 text-sm text-gray-600 text-right">
-                {projectData.phasePercentages[phase]}%
-              </p>
-            </div>
-          </div>
-        </div>
-      );
     }
 
     return (
@@ -200,40 +163,38 @@ function TrackProject() {
   };
 
   return (
-    <div style={{paddingTop:"1000px"}}> {/* Increased the width here */}
-      <div className="max-w-7xl mx-auto"> {/* Increased the max width here */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Project Progress Tracker
-          </h1>
-          <p className="text-xl text-gray-600">
-            Current Phase: {projectData.phase}
-          </p>
-        </div>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="text-center mb-12">
+        <h1 style={{paddingTop:"60px"}} className="text-4xl font-bold text-gray-900 mb-4">
+          Project Progress Tracker
+        </h1>
+        <p className="text-xl text-gray-600">
+          Current Phase: {projectData.phase}
+        </p>
+      </div>
 
-        <div className="space-y-6">
-          {phasesToDisplay.map((phase) => (
-            <div
-              key={phase}
-              className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-101 ${
-                projectData.phase === phase ? 'ring-2 ring-indigo-500' : ''
-              }`}
-            >
-              <div className={`h-2 ${getPhaseColor(phase)} bg-gradient-to-r from-current to-current`} />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center justify-between">
-                  {phase}
-                  {projectData.phase === phase && (
-                    <span className="text-sm bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">
-                      Current Phase
-                    </span>
-                  )}
-                </h3>
-                {renderPhaseContent(phase)}
-              </div>
+      <div className="space-y-6">
+        {phasesToDisplay.map((phase) => (
+          <div
+            key={phase}
+            className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-101 ${
+              projectData.phase === phase ? 'ring-2 ring-indigo-500' : ''
+            }`}
+          >
+            <div className={`h-2 ${getPhaseColor(phase)} bg-gradient-to-r from-current to-current`} />
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center justify-between">
+                {formatPhaseTitle(phase)}
+                {projectData.phase === phase && (
+                  <span className="text-sm bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">
+                    Current Phase
+                  </span>
+                )}
+              </h3>
+              {renderPhaseContent(phase)}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

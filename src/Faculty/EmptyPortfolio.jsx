@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function EmptyPortfolio() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Did not designed Portfolio Yet!</h2>
         {/* message him or mail him to design his portfolio */}

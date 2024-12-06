@@ -2,30 +2,55 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 
-export default function Testimonials({data}) {
+export default function Testimonials({ data }) {
+  // Get student and faculty data from localStorage
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
+  const studentId = storedStudentData ? storedStudentData.id : "";
 
-  // Static Data
-// const data = [
-//   {
-//     testimonialText: "This service has truly transformed my business operations. The level of efficiency we've gained is incredible.",
-//     giverName: "Alice Johnson",
-//     giverRole: "CEO",
-//     giverCompany: "Tech Innovations",
-//   },
-//   {
-//     testimonialText: "I can't imagine working without this tool anymore. It has streamlined our workflows and increased productivity significantly.",
-//     giverName: "Mark Smith",
-//     giverRole: "Lead Developer",
-//     giverCompany: "Dev Masters",
-//   },
-//   {
-//     testimonialText: "A must-have for any business looking to optimize their processes. The results speak for themselves!",
-//     giverName: "Emily Davis",
-//     giverRole: "Operations Manager",
-//     giverCompany: "Solutions Corp",
-//   },
-// ];
+  const storedFacultyData = JSON.parse(localStorage.getItem("faculty"));
+  const facultyId = storedFacultyData ? storedFacultyData.id : "";
 
+  if (!data || data.length === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        className="space-y-6"
+      >
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+          References
+        </h2>
+        <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
+          {studentId ? (
+            // Show this message if a student is logged in
+            <p className="text-gray-700 font-medium">
+              You don't have any references listed yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Add References
+              </a>
+            </p>
+          ) : facultyId ? (
+            // Show this message if a faculty is logged in
+            <p className="text-gray-700 font-medium">
+              The student has not added any references yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Request Student to Add References
+              </a>
+            </p>
+          ) : (
+            // Show a generic message if neither is logged in
+            <p className="text-gray-700 font-medium">
+              You don't have any references listed yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Add References
+              </a>
+            </p>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div

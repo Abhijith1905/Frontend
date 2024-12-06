@@ -3,6 +3,18 @@ import { motion } from 'framer-motion';
 import { Building2 } from 'lucide-react';
 
 export default function Internships({ internship }) {
+  // Retrieve stored data for student and faculty
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
+  const studentId = storedStudentData ? storedStudentData.id : "";
+
+  const storedFacultyData = JSON.parse(localStorage.getItem("faculty"));
+  const facultyId = storedFacultyData ? storedFacultyData.id : "";
+
+  // Check if student or faculty is logged in
+  const isStudent = studentId !== "";
+  const isFaculty = facultyId !== "";
+
+  // Check if internship data is available
   if (!internship || internship.length === 0) {
     return (
       <motion.div
@@ -16,10 +28,22 @@ export default function Internships({ internship }) {
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
           <p className="text-gray-700 font-medium">
-            You don't have any internships listed yet. <br />
-            <a href="/updateportfolio" className="text-blue-600 hover:underline">
-              Add Professional Experience
-            </a>
+            {isStudent ? (
+              <>
+                You don't have any internships listed yet. <br />
+                <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                  Add Professional Experience
+                </a>
+              </>
+            ) : isFaculty ? (
+              <>
+                The student has not added any internships yet.
+              </>
+            ) : (
+              <>
+                Please log in to see your internships.
+              </>
+            )}
           </p>
         </div>
       </motion.div>

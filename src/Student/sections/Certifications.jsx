@@ -3,6 +3,53 @@ import { motion } from "framer-motion"; // Import motion from framer-motion
 import { Award } from "lucide-react";
 
 export default function Certifications({ data }) {
+  // Retrieve stored data for student and faculty
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
+  const studentId = storedStudentData ? storedStudentData.id : "";
+
+  const storedFacultyData = JSON.parse(localStorage.getItem("faculty"));
+  const facultyId = storedFacultyData ? storedFacultyData.id : "";
+
+  // Check if student or faculty is logged in
+  const isStudent = studentId !== "";
+  const isFaculty = facultyId !== "";
+
+  // Check if data is available
+  if (!data || data.length === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        className="space-y-6"
+      >
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+          Certifications 
+        </h2>
+        <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
+          <p className="text-gray-700 font-medium">
+            {isStudent ? (
+              <>
+                You don't have any certifications listed yet. <br />
+                <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                  Add Certifications 
+                </a>
+              </>
+            ) : isFaculty ? (
+              <>
+                The student has not added any certifications yet.
+              </>
+            ) : (
+              <>
+                Please log in to see your certifications.
+              </>
+            )}
+          </p>
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

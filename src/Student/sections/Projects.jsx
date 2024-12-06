@@ -3,6 +3,56 @@ import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 
 export default function Projects({ data }) {
+  // Get student and faculty data from localStorage
+  const storedStudentData = JSON.parse(localStorage.getItem("student"));
+  const studentId = storedStudentData ? storedStudentData.id : "";
+
+  const storedFacultyData = JSON.parse(localStorage.getItem("faculty"));
+  const facultyId = storedFacultyData ? storedFacultyData.id : "";
+
+  // Check if data exists or not
+  if (!data || data.length === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        className="space-y-6"
+      >
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+          Projects
+        </h2>
+        <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
+          {studentId ? (
+            // Show this message if a student is logged in
+            <p className="text-gray-700 font-medium">
+              You don't have any projects listed yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Add Projects
+              </a>
+            </p>
+          ) : facultyId ? (
+            // Show this message if a faculty is logged in
+            <p className="text-gray-700 font-medium">
+              The student has not added any projects yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Request Student to Add Projects
+              </a>
+            </p>
+          ) : (
+            // Show a generic message if neither is logged in
+            <p className="text-gray-700 font-medium">
+              You don't have any projects listed yet. <br />
+              <a href="/updateportfolio" className="text-blue-600 hover:underline">
+                Add Projects
+              </a>
+            </p>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -34,14 +84,9 @@ export default function Projects({ data }) {
                 <p className="text-blue-600 mt-1 text-sm">{project.description}</p>
                 <div className="mt-4 space-y-1">
                   <div className="flex items-center text-sm text-gray-600">
-                    <span className="font-medium min-w-20">Phase:</span>
-                    <span className="ml-2">{project.phase}</span>
+                    <span className="font-medium min-w-20">Technologies Used:</span>
+                    <span className="ml-2">{project.technologiesUsed}</span>
                   </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <span className="font-medium min-w-20">Progress:</span>
-                    <span className="ml-2">{project.percentage}</span>
-                  </div>
-                 
                 </div>
               </div>
             </div>

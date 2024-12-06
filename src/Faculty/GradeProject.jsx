@@ -88,7 +88,7 @@ function GradeProject() {
   }
 
   return (
-    <div>
+    <div style={{paddingTop:"120px"}}>
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-6 border-b border-gray-200">
@@ -97,7 +97,6 @@ function GradeProject() {
               Current Phase: {projectData?.phase} {/* Display the current phase */}
             </p>
           </div>
-
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">

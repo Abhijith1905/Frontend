@@ -106,7 +106,7 @@ export default function ViewAllProjects() {
         .page-container {
           margin: 0;
           padding: 0;
-          background-color: #f9f9fc;
+          
           min-height: 100vh;
         }
 

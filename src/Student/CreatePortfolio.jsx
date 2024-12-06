@@ -242,7 +242,7 @@ export default function CreatePortfolio() {
     cursor: "pointer",
   };
 
-  if (!portfolioData) {
+  if (portfolioData) {
     return <UpdateState />;
   }
 

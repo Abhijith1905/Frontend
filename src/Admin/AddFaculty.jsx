@@ -37,8 +37,9 @@ export default function AddFaculty() {
     <div style={{paddingTop:"120px"}} className={styles.container}>
       <div className={styles.content}>
         {message && <p className={`${styles.message} ${message.includes('error') ? styles.error : styles.success}`}>{message}</p>}
-        <h2 className={styles.title}>Add New Faculty</h2>
+  
         <form className={styles.form} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Add New Faculty</h2>
           <div className={styles.formGroup}>
             <input
               type="text"

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import styles from "./admin.module.css"; // Assuming you're using the same CSS file
 
 export default function UpdateFaculty() {
   const [faculty, setFaculty] = useState({
@@ -34,68 +35,80 @@ export default function UpdateFaculty() {
   };
 
   return (
-    <div>
-      <nav> </nav>
-      {message && (
-        <p style={{ color: 'red', fontWeight: 'bolder' }}>{message}</p>
-      )}
-      <h2 style={{ paddingTop: '120px' }} className="ul">Update Faculty</h2>
-      <div className="design">
-        <form onSubmit={handleSubmit}>
-          {/* Faculty ID */}
-          <div>
-            <input
-              type="number"
-              name="id"
-              value={faculty.id}
-              onChange={handleChange}
-              placeholder="Faculty ID"
-              required
-            />
-          </div>
+    <div className={styles.container}>
+      <div className={styles.content}>
+       
+        
+        {message && (
+          <p className={`${styles.message} ${styles.error}`}>{message}</p>
+        )}
 
-          {/* Username */}
-          <div>
-            <input
-              type="text"
-              name="username"
-              value={faculty.username}
-              onChange={handleChange}
-              placeholder="Username"
-              required
-            />
-          </div>
+        <div style={{paddingTop:"60px"}} className={styles.formWrapper}>
+          <form onSubmit={handleSubmit} className={styles.form}>
+          <h2  className={styles.title}>Update Faculty</h2>
+            {/* Faculty ID */}
+            <div className={styles.inputGroup}>
+              <input
+                type="number"
+                name="id"
+                value={faculty.id}
+                onChange={handleChange}
+                placeholder="Faculty ID"
+                className={styles.input}
+                required
+              />
+            </div>
 
-          {/* Password */}
-          <div>
-            <input
-              type="password"
-              name="password"
-              value={faculty.password}
-              onChange={handleChange}
-              placeholder="Password"
-              required
-            />
-          </div>
+            {/* Username */}
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                name="username"
+                value={faculty.username}
+                onChange={handleChange}
+                placeholder="Username"
+                className={styles.input}
+                required
+              />
+            </div>
 
-          {/* Email */}
-          <div>
-            <input
-              type="email"
-              name="email"
-              value={faculty.email}
-              onChange={handleChange}
-              placeholder="Email"
-              required
-            />
-          </div>
+            {/* Password */}
+            <div className={styles.inputGroup}>
+              <input
+                type="password"
+                name="password"
+                value={faculty.password}
+                onChange={handleChange}
+                placeholder="Password"
+                className={styles.input}
+                required
+              />
+            </div>
 
-          {/* Submit and Reset Buttons */}
-          <div className="button-group">
-            <button type="submit">Update Faculty</button>
-            <button type="reset">Clear</button>
-          </div>
-        </form>
+            {/* Email */}
+            <div className={styles.inputGroup}>
+              <input
+                type="email"
+                name="email"
+                value={faculty.email}
+                onChange={handleChange}
+                placeholder="Email"
+                className={styles.input}
+                required
+              />
+            </div>
+
+            {/* Submit and Reset Buttons */}
+            <div className={styles.buttonGroup}>
+              <button type="submit" className={`${styles.button} ${styles.submitButton}`}>
+                Update Faculty
+              </button>
+              <button type="reset" className={`${styles.button} ${styles.clearButton}`}>
+                Clear
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

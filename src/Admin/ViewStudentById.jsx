@@ -67,7 +67,7 @@ export default function ViewStudentById() {
     <div>
       <ToastContainer />
       <nav> </nav>
-      <div style={{ paddingTop: "130px" }}>
+      <div style={{ paddingTop: "95px" }}>
         <h2 style={{ color: "black" }}>Student Profile</h2>
         <div
           className="profile-card"

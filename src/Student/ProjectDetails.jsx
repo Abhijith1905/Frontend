@@ -95,9 +95,7 @@ function SProjectDetails({
                 <option value="DEPLOYMENT">Deployment Phase</option>
                 <option value="COMPLETED">Completed</option>
               </select>
-            </label>
-
-            {/* Description input for the selected phase */}
+            </label>{/* Description input for the selected phase */}
             {projectData.phase && (
               <label className="block">
                 <span className="text-gray-700 font-medium">Phase Description</span>

@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ActionButtons = ({
+  projectData,
   projectImage,
   projectFile,
   zipUrl,
@@ -9,7 +11,14 @@ const ActionButtons = ({
   onReportClick,
   onAcceptProject,
   phase,
+ 
 }) => {
+  const navigate = useNavigate();
+
+  const handleGradeNavigation = () => {
+    navigate(`/grade/${projectData.projectId}`);
+  };
+
   return (
     <div className="flex flex-wrap space-x-4">
       {projectImage && (
@@ -41,7 +50,9 @@ const ActionButtons = ({
           Accept Project
         </button>
       ) : (
-        <button className="btn-secondary">Grade</button>
+        <button className="btn-secondary" onClick={handleGradeNavigation}>
+          Grade
+        </button>
       )}
     </div>
   );

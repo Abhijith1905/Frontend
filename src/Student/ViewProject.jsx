@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ProjectMedia from './ProjectMedia';
 import MediaModal from './MediaModal';
 import SProjectDetails from './ProjectDetails';
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function ViewProject() {
   const { id } = useParams();
@@ -106,7 +106,6 @@ function ViewProject() {
       });
     }
   };
-
   const handleSubmitForReview = async () => {
     try {
       await axios.put(`http://localhost:2025/updateproject`, projectData);
@@ -150,7 +149,12 @@ function ViewProject() {
         zipUrl={zipUrl}
         openModal={openModal}
       />
-    
+      <button
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        onClick={() => navigate(`/trackproject/${id}`)}
+      >
+        Track
+      </button>
     </div>
   );
 }

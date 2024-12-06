@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function EmptyState() {
   return (
-    <div >
+    <div style={{paddingTop:"150px"}} >
       <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md mx-auto">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Your Portfolio Awaits!</h2>
         <p className="text-gray-600 mb-6">Start building your professional portfolio to showcase your achievements.</p>

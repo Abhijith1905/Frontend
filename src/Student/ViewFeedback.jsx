@@ -45,7 +45,7 @@ const ViewFeedback = () => {
           setFeedbackData(feedbacks);
           setMessage(""); // Clear the message if feedback is found
         } else {
-          setMessage("No feedback found for this student.");
+          setMessage("No feedback found");
         }
       } catch (error) {
         console.error("Error fetching feedback data:", error);
@@ -70,7 +70,7 @@ const ViewFeedback = () => {
       alignItems: "center",
       width: "100%",
       height: "100vh",
-      backgroundColor: "#f7f7f7",
+   
       paddingTop: "80px",
     },
     container: {

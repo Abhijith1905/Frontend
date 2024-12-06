@@ -1,33 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import {
-  FaHome,
-  FaUser,
-  FaFolderOpen,
-  FaProjectDiagram,
-  FaSignOutAlt,
-  FaClipboardList,
-  FaUserPlus,
-  FaEye,
-  FaEdit,
-} from "react-icons/fa";
+  Home,
+  User,
+  FolderOpen,
+  ClipboardList,
+  FilePlus,
+  List,
+  Edit,
+  Trash2,
+  LogOut,
+} from "lucide-react"; // Icon set
+
 import AdminHome from "./AdminHome";
-import FacultyStudentMap from "./FacultyStudentMap";
-import ViewMapping from "./ViewMapping";
-import AdminDashboard from "./AdminDashboard";
 import AddStudent from "./AddStudent";
+import AddStudentList from "./AddStudentList";
 import ViewStudents from "./ViewStudents";
 import UpdateStudent from "./UpdateStudents";
-import ViewStudentById from "./ViewStudentById";
-import ViewFaculty from "./ViewFaculty";
-
 import AddFaculty from "./AddFaculty";
-import UpdateFaculty from "./UpdateFaculty";
-import ViewAllFeedback from './ViewAllFeedback';
-import AddStudentList from "./AddStudentList";
 import AddFacultyList from "./AddFacultyList";
+import ViewFaculty from "./ViewFaculty";
+import UpdateFaculty from "./UpdateFaculty";
+import ATopNavbar from "./ATopNavBar";
+import ViewStudentById from './ViewStudentById';
+import FacultyStudentMap from './FacultyStudentMap';
+import ViewMapping from './ViewMapping';
 
-export default function AdminNavBar() {
+const AdminNavBar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -39,204 +38,208 @@ export default function AdminNavBar() {
 
   return (
     <div>
-      <nav> </nav>
-      <style>
-        {`
-          .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 260px;
-            background: #f8fafc;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-          }
-
-          .sidebar:hover {
-            width: 260px;
-          }
-
-          .sidebar:not(:hover) {
-            width: 80px;
-          }
-
-          .sidebar-header {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #e2e8f0;
-          }
-
-          .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-          }
-
-          .logo-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #334155;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-          }
-
-          .sidebar:not(:hover) .logo-text {
-            opacity: 0;
-            width: 0;
-          }
-
-          .sidebar-menu {
-            padding: 20px 10px;
-            flex: 1;
-            overflow-y: auto;
-          }
-
-          .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: #64748b;
-            text-decoration: none;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            transition: all 0.2s ease;
-            gap: 12px;
-            position: relative;
-          }
-
-          .menu-item:hover {
-            background: #e2e8f0;
-            color: #6A8EAE;
-          }
-
-          .menu-item .icon {
-            min-width: 24px;
-            color: #6A8EAE;
-          }
-
-          .menu-item .text {
-            white-space: nowrap;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-          }
-
-          .sidebar:not(:hover) .menu-item .text {
-            opacity: 0;
-            width: 0;
-          }
-
-          .logout-btn {
-            margin-top: 320px;
-            padding: 12px;
-            background: #fee2e2;
-            color: #ef4444;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.2s ease;
-          }
-
-          .logout-btn:hover {
-            background: #fecaca;
-          }
-
-          .sidebar:not(:hover) .logout-btn span {
-            opacity: 0;
-            width: 0;
-          }
-        `}
-      </style>
-
+       <ATopNavbar onLogout={handleLogout} />
       <div className="sidebar">
-        <div className="sidebar-header">
-          <div className="logo-container">
+      <div className="logo-container">
             <i className="logo-icon">Logo</i>
             <span className="logo-text">EduSupport</span>
           </div>
-        </div>
-        <div className="sidebar-menu">
-          <Link to="/adminhome" className="menu-item">
-            <FaHome className="icon" /> <span className="text">Home</span>
-          </Link>
-          <Link to="/admindashboard" className="menu-item">
-            <FaClipboardList className="icon" />{" "}
-            <span className="text">Dashboard</span>
-          </Link>
+        <div className="sidebar-container">
+          <div className="menu-section">
+            <Link style={{paddingTop:"40px"}} to="/adminhome" className="menu-item">
+              <Home className="icon" />
+              <span>Home</span>
+            </Link>
+           
+          </div>
 
-          <Link to="/facultystudentmapper" className="menu-item">
-            <FaFolderOpen className="icon" />{" "}
-            <span className="text">Map Faculty-Student</span>
-          </Link>
-          <Link to="/viewfacultystudentmapping" className="menu-item">
-            <FaProjectDiagram className="icon" />{" "}
-            <span className="text">View Faculty-Student</span>
-          </Link>
-          <Link to="/viewreviews" className="menu-item">
-            <FaUser className="icon" />{" "}
-            <span className="text">My Feedback</span>
-          </Link>
-          <button className="logout-btn" onClick={handleLogout}>
-            <FaSignOutAlt className="icon" /> <span>Logout</span>
-          </button>
+          {/* Student Management Section */}
+          <div className="menu-section">
+            <div className="section-heading">Student Management</div>
+            <Link to="admindashboard/student/add" className="menu-item">
+              <FilePlus className="icon" />
+              <span>Add Student</span>
+            </Link>
+            <Link to="admindashboard/student/addstudentlist" className="menu-item">
+              <List className="icon" />
+              <span>Add Student List</span>
+            </Link>
+            <Link to="admindashboard/student/viewall" className="menu-item">
+              <User className="icon" />
+              <span>View Students</span>
+            </Link>
+            <Link to="admindashboard/student/update" className="menu-item">
+              <Edit className="icon" />
+              <span>Update Student</span>
+            </Link>
+            <Link to="admindashboard/student/viewall" className="menu-item">
+              <Trash2 className="icon" />
+              <span>Delete Student</span>
+            </Link>
+          </div>
+
+          {/* Faculty Management Section */}
+          <div className="menu-section">
+            <div className="section-heading">Faculty Management</div>
+            <Link to="admindashboard/faculty/add" className="menu-item">
+              <FilePlus className="icon" />
+              <span>Add Faculty</span>
+            </Link>
+            <Link to="admindashboard/faculty/addfacultylist" className="menu-item">
+              <List className="icon" />
+              <span>Add Faculty List</span>
+            </Link>
+            <Link to="admindashboard/faculty/viewall" className="menu-item">
+              <User className="icon" />
+              <span>View Faculty</span>
+            </Link>
+            <Link to="admindashboard/faculty/update" className="menu-item">
+              <Edit className="icon" />
+              <span>Update Faculty</span>
+            </Link>
+            <Link to="admindashboard/faculty/viewall" className="menu-item">
+              <Trash2 className="icon" />
+              <span>Delete Faculty</span>
+            </Link>
+          </div>
+
+          <div className="menu-section">
+            <div className="section-heading">Student Faculty Mapping</div>
+            <Link to="/facultystudentmapper" className="menu-item">
+              <FilePlus className="icon" />
+              <span>Map Student-Faculty</span>
+            </Link>
+            <Link to="/viewfacultystudentmapping" className="menu-item">
+              <List className="icon" />
+              <span>View Student-Faculty Mapping</span>
+            </Link>
+            
+          </div>
+
+
+
+          {/* Logout Button */}
+          {/* <div>
+            <button className="logout-btn" onClick={handleLogout}>
+              <LogOut className="icon" />
+              <span>Logout</span>
+            </button>
+          </div> */}
         </div>
       </div>
 
-      <Routes>
-        <Route path="/adminhome" element={<AdminHome />} />
-        <Route path="/facultystudentmapper" element={<FacultyStudentMap />} />
-        <Route path="/viewfacultystudentmapping" element={<ViewMapping />} />
-        <Route path="/admindashboard" element={<AdminDashboard />} />
-        <Route
-          path="admindashboard/student/add"
-          element={<AddStudent />}
-          exact
-        />
-         <Route
-          path="admindashboard/student/addstudentlist"
-          element={<AddStudentList />}
-          exact
-        />
-         <Route
-          path="admindashboard/faculty/addfacultylist"
-          element={<AddFacultyList />}
-          exact
-        />
-        <Route
-          path="admindashboard/student/viewall"
-          element={<ViewStudents />}
-          exact
-        />
-        <Route
-          path="admindashboard/student/update"
-          element={<UpdateStudent />}
-          exact
-        />
-         <Route path="displaystudentbyid/:id" element={<ViewStudentById/>} />
+      {/* Routes */}
+      <div className="content">
+        <Routes>
+          <Route path="/adminhome" element={<AdminHome />} />
+          <Route path="admindashboard/student/add" element={<AddStudent />} />
+          <Route path="admindashboard/student/addstudentlist" element={<AddStudentList />} />
+          <Route path="admindashboard/student/viewall" element={<ViewStudents />} />
+          <Route path="admindashboard/student/update" element={<UpdateStudent />} />
+          <Route path="admindashboard/faculty/add" element={<AddFaculty />} />
+          <Route path="admindashboard/faculty/addfacultylist" element={<AddFacultyList />} />
+          <Route path="admindashboard/faculty/viewall" element={<ViewFaculty />} />
+          <Route path="admindashboard/faculty/update" element={<UpdateFaculty />} />
 
-         <Route
-          path="admindashboard/faculty/add"
-          element={<AddFaculty />}
-          exact
-        />
-        <Route
-          path="admindashboard/faculty/viewall"
-          element={<ViewFaculty />}
-          exact
-        />
-        <Route
-          path="admindashboard/faculty/update"
-          element={<UpdateFaculty />}
-          exact
-        />
+          <Route path="displaystudentbyid/:id" element={<ViewStudentById/>} />
 
-        <Route path="/viewreviews" element={<ViewAllFeedback />} />
-      </Routes>
+          <Route path="/facultystudentmapper" element={<FacultyStudentMap />} />
+          <Route path="/viewfacultystudentmapping" element={<ViewMapping />} />
+
+          
+        </Routes>
+      </div>
+
+      {/* Styles */}
+      <style>{`
+        .sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 250px;
+          background: #ffffff;
+          box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+          overflow-y: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .sidebar-container {
+          flex: 1;
+          overflow-y: auto;
+          padding: 10px;
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        .sidebar-container::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, and Opera */
+        }
+
+        .sidebar-header {
+          display: flex;
+          align-items: center;
+          padding: 10px;
+        }
+
+        .logo {
+          width: 40px;
+          height: 40px;
+        }
+
+        .title {
+          margin-left: 10px;
+          font-size: 18px;
+          font-weight: bold;
+        }
+
+        .menu-section {
+          margin-top: 20px;
+        }
+
+        .menu-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 12px;
+          border-radius: 5px;
+          color: #333;
+          text-decoration: none;
+          transition: background-color 0.2s;
+        }
+
+        .menu-item:hover {
+          background: #e2e6ea;
+        }
+
+        .section-heading {
+          font-weight: bold;
+          margin: 10px 0;
+          color: #64748b;
+        }
+
+        .logout-btn {
+          margin-top: auto;
+          padding: 8px;
+          background: #ffeded;
+          color: #d32f2f;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .logout-btn:hover {
+          background: #ffcccc;
+        }
+
+        .content {
+          margin-left: 250px;
+          padding: 20px;
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default AdminNavBar;

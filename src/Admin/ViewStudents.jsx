@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styles from "./admin.module.css"
+import styles from './admin.module.css'; // Assuming this is your external CSS file
 
 export default function ViewStudents() {
   const [students, setStudents] = useState([]);
@@ -35,7 +35,7 @@ export default function ViewStudents() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div style={{ paddingTop: '90px' }} className={styles.container}>
       <div className={styles.content}>
         <h2 className={styles.title}>View Students</h2>
 
@@ -47,14 +47,14 @@ export default function ViewStudents() {
                   <tr>
                     <th className={styles.th}>ID</th>
                     <th className={styles.th}>Full Name</th>
-                    <th className={styles.th}>Gender</th>
+              
                     <th className={styles.th}>Department</th>
                     <th className={styles.th}>Program</th>
                     <th className={styles.th}>Semester</th>
                     <th className={styles.th}>Year</th>
-                    <th className={styles.th}>Date of Birth</th>
+                
                     <th className={styles.th}>Email</th>
-                    <th className={styles.th}>Contact</th>
+                   
                     <th className={styles.th}>Action</th>
                   </tr>
                 </thead>
@@ -63,16 +63,14 @@ export default function ViewStudents() {
                     <tr key={student.id} className={styles.tr}>
                       <td className={styles.td}>{student.id}</td>
                       <td className={styles.td}>{student.fullName}</td>
-                      <td className={styles.td}>{student.gender}</td>
+                
                       <td className={styles.td}>{student.department}</td>
                       <td className={styles.td}>{student.program}</td>
                       <td className={styles.td}>{student.semester}</td>
                       <td className={styles.td}>{student.year}</td>
-                      <td className={styles.td}>
-                        {new Date(student.dateOfBirth).toLocaleDateString()}
-                      </td>
+                  
                       <td className={styles.td}>{student.email}</td>
-                      <td className={styles.td}>{student.contact}</td>
+                  
                       <td className={styles.td}>
                         <div className={styles.buttonGroup}>
                           <button

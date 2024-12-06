@@ -5,6 +5,18 @@ export default function AddFacultyList() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
 
+  React.useEffect(() => {
+    // Disable the scrollbars globally
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "auto"; // Re-enable scrollbars
+      document.documentElement.style.overflow = "auto";
+    };
+  }, []);
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -84,7 +96,7 @@ export default function AddFacultyList() {
     <div style={{ paddingTop: "120px", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh"}}>
       <div style={styles.container}>
         {message && <p style={styles.message}>{message}</p>}
-        <h2 style={styles.title}>Add Faculty from CSV</h2>
+        <h2 style={styles.title}>Add Faculty List</h2>
         <form onSubmit={handleSubmit} style={styles.form}>
           <input
             type="file"

@@ -60,7 +60,7 @@ function App() {
         ) : isFacultyLoggedIn ? (
           <FacultyNavBar onLogout={handleLogout}  />
         ): isAdminLoggedIn ? (
-          <AdminNavbar />
+          <AdminNavbar onLogout = {handleLogout} />
         ): (
           <MainNavBar
             onStudentLogin={onStudentLogin}
