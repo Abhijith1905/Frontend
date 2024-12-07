@@ -13,7 +13,7 @@ export default function DeleteProject() {
   const fetchProjects = async (studentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:2025/viewallprojects?studentId=${studentId}`
+        `${config.url}/viewallprojects?studentId=${studentId}`
       );
       console.log(response.data);
       setProjects(response.data);
@@ -25,7 +25,7 @@ export default function DeleteProject() {
   // Delete a project by ID
   const deleteProject = async (id) => {
     try {
-      await axios.delete(`http://localhost:2025/deleteproject?id=${id}`);
+      await axios.delete(`${config.url}/deleteproject?id=${id}`);
       fetchProjects(storedStudentData.id); // Refresh project list after deletion
     } catch (error) {
       setError(error.message);
