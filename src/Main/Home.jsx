@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import * as React,{useState,useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import "./../App.css"; // Ensure the correct path to your CSS file
+
 
 export default function Home() {
   const [counts, setCounts] = useState({
