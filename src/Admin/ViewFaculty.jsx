@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from "./admin.module.css"; // Use the same CSS file for styling
+import config from '../config';
 
 export default function ViewFaculty() {
   const [Faculty, setFaculty] = useState([]);
@@ -10,7 +11,7 @@ export default function ViewFaculty() {
 
   const fetchFaculty = async () => {
     try {
-      const response = await axios.get('http://localhost:2025/viewallfaculty');
+      const response = await axios.get(`${config.url}/viewallfaculty`);
       setFaculty(response.data);
     } catch (error) {
       setError(error.message);
@@ -19,7 +20,7 @@ export default function ViewFaculty() {
 
   const deleteFaculty = async (id) => {
     try {
-      await axios.delete(`http://localhost:2025/deletefaculty?id=${id}`);
+      await axios.delete(`${config.url}/deletefaculty?id=${id}`);
       fetchFaculty();
     } catch (error) {
       setError(error.message);
