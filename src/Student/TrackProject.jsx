@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import config from "../config";
 
 function TrackProject() {
   const { id } = useParams();
@@ -10,7 +11,7 @@ function TrackProject() {
   useEffect(() => {
     const fetchProjectData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
+        const response = await axios.get(`${config.url}/displayproject?projectId=${id}`);
         setProjectData(response.data);
       } catch (error) {
         setError(error.message);
