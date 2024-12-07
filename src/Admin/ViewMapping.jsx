@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from '../config';
 
 const ViewMapping = () => {
   const [mappingData, setMappingData] = useState([]);
@@ -9,7 +10,7 @@ const ViewMapping = () => {
   useEffect(() => {
     const fetchMappingData = async () => {
       try {
-        const response = await axios.get("http://localhost:2025/viewfstudentmapping");
+        const response = await axios.get(`${config.url}/viewfstudentmapping`);
         setMappingData(response.data);
         setLoading(false);
       } catch (error) {
