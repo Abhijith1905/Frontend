@@ -61,7 +61,7 @@ function ViewProject() {
           const mediaPromises = projectData.mediaList.map(async (mediaItem) => {
             try {
               const response = await axios.get(
-           `${config.url}/displaymedia?id=${mediaItem.mediaId}`,
+                `${config.url}/displaymedia?id=${mediaItem.mediaId}`,
                 { responseType: 'blob' }
               );
               const mediaUrl = URL.createObjectURL(response.data);
@@ -85,7 +85,7 @@ function ViewProject() {
           );
           if (zipFile) {
             const zipResponse = await axios.get(
-        `${config.url}/displaymedia?id=${zipFile.mediaId}`,
+              `${config.url}/displaymedia?id=${zipFile.mediaId}`,
               { responseType: 'blob' }
             );
             setZipUrl(URL.createObjectURL(zipResponse.data));
@@ -107,6 +107,7 @@ function ViewProject() {
       });
     }
   };
+
   const handleSubmitForReview = async () => {
     try {
       await axios.put(`${config.url}/updateproject`, projectData);
@@ -136,11 +137,9 @@ function ViewProject() {
       <SProjectDetails
         projectData={projectData}
         handleInputChange={(e, field) =>
-          setProjectData((prev) => ({ ...prev, [field]: e.target.value }))
-        }
+          setProjectData((prev) => ({ ...prev, [field]: e.target.value }))}
         handleCheckStatusChange={() =>
-          setProjectData((prev) => ({ ...prev, checkStatus: !prev.checkStatus }))
-        }
+          setProjectData((prev) => ({ ...prev, checkStatus: !prev.checkStatus }))}
         handleUpdateProject={handleUpdateProject}
         handleSubmitForReview={handleSubmitForReview}
         handleReportGeneration={handleReportGeneration}
@@ -150,6 +149,20 @@ function ViewProject() {
         zipUrl={zipUrl}
         openModal={openModal}
       />
+      
+      {/* Phase Title and Description Section */}
+      <div className="mt-4">
+        <div className="phase-container flex items-center justify-start space-x-4">
+          <div className="phase-title font-bold text-lg">Phase 1</div>
+          <div className="phase-description text-gray-700">This is the description for Phase 1.</div>
+        </div>
+        <div className="phase-container flex items-center justify-start space-x-4">
+          <div className="phase-title font-bold text-lg">Phase 2</div>
+          <div className="phase-description text-gray-700">This is the description for Phase 2.</div>
+        </div>
+        {/* Add more phases as needed */}
+      </div>
+
       <button
         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         onClick={() => navigate(`/trackproject/${id}`)}

@@ -48,7 +48,7 @@ export default function ViewAllProjects() {
                 <th>Title</th>
                 <th>Description</th>
                 <th>Phase</th>
-                <th>Percentage</th>
+              
                 <th>Actions</th>
                 <th>Report Card</th>
               </tr>
@@ -62,9 +62,7 @@ export default function ViewAllProjects() {
                     <td>{project.title}</td>
                     <td>{project.description}</td>
                     <td>{project.phase}</td>
-                    <td>
-                    {project.phasePercentage}%
-                    </td>
+                  
                     <td>
                       <button
                         className="view-button"

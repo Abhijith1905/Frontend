@@ -80,33 +80,23 @@ function SProjectDetails({
               ></textarea>
             </label>
 
+            {/* Phase and Phase Description */}
             <label className="block">
               <span className="text-gray-700 font-medium">Phase</span>
-              <select
-                value={projectData.phase || ''}
-                onChange={(e) => handleInputChange(e, 'phase')}
-                className="input mt-1"
-              >
-                <option value="NOT_STARTED">Not Started</option>
-                <option value="IDEA">Idea Phase</option>
-                <option value="DESIGN">Design Phase</option>
-                <option value="BUILD">Build Phase</option>
-                <option value="TESTING">Testing Phase</option>
-                <option value="DEPLOYMENT">Deployment Phase</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
-            </label>{/* Description input for the selected phase */}
-            {projectData.phase && (
-              <label className="block">
-                <span className="text-gray-700 font-medium">Phase Description</span>
-                <textarea
-                  value={phaseDescription}
-                  onChange={handlePhaseDescriptionChange}
-                  className="input mt-1 h-32 custom-textarea"
-                  placeholder="Enter description for the selected phase..."
-                ></textarea>
-              </label>
-            )}
+              <div className="flex items-center mt-1">
+                <div className="input bg-gray-100 text-gray-700 cursor-not-allowed w-1/3">
+                  {projectData.phase || 'N/A'}
+                </div>
+                {projectData.phase && (
+                  <textarea
+                    value={phaseDescription}
+                    onChange={handlePhaseDescriptionChange}
+                    className="input ml-4 h-24 w-2/3 custom-textarea"
+                    placeholder="Enter description for the selected phase..."
+                  ></textarea>
+                )}
+              </div>
+            </label>
           </div>
 
           <div className="space-y-4">

@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProjectCount from './ProjectCount';
 import WelcomeSection from './WelcomeSection';
 import Footer from './Footer';
+import config from "../config";
 
 function StudentHome() {
 

@@ -7,6 +7,7 @@ import MediaModal from "./MediaModal";
 import ActionButtons from "./ActionButtons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import config from "../config";
 
 const ProjectCheck2 = () => {
   const { id } = useParams();

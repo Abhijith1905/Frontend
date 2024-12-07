@@ -66,8 +66,26 @@ export default function AddFacultyList() {
       textAlign: "center",
       transition: "background-color 0.3s ease",
     },
-    buttonHover: {
-      backgroundColor: "#2980b9",
+    tableWrapper: {
+      padding: "2rem",
+      maxWidth: "600px",
+      margin: "0 auto",
+      textAlign: "left", // Aligns the table content to the left
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+    },
+    th: {
+      border: "1px solid #ddd",
+      padding: "0.8rem",
+      backgroundColor: "#f8f9fa",
+      textAlign: "left",
+      fontWeight: "bold",
+    },
+    td: {
+      border: "1px solid #ddd",
+      padding: "0.8rem",
     },
   };
 
@@ -94,7 +112,22 @@ export default function AddFacultyList() {
   };
 
   return (
-    <div style={{ paddingTop: "120px", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh"}}>
+    <div style={{ paddingTop: "120px", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", flexDirection: "column" }}>
+      {/* CSV Format Table - Above the Form */}
+      <div style={styles.tableWrapper}>
+        <h3 style={styles.title}>CSV Format</h3>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>Username</th>
+              <th style={styles.th}>Email</th>
+              <th style={styles.th}>Password</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      {/* Upload Form Container */}
       <div style={styles.container}>
         {message && <p style={styles.message}>{message}</p>}
         <h2 style={styles.title}>Add Faculty List</h2>

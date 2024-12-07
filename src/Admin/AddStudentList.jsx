@@ -1,4 +1,4 @@
-import { useState,useEffect,React } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import config from '../config';
 
@@ -10,17 +10,15 @@ export default function AddStudentList() {
     setFile(e.target.files[0]);
   };
 
-    useEffect(() => {
-    // Disable the scrollbars globally
+  useEffect(() => {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
-
-    // Cleanup on unmount
     return () => {
-      document.body.style.overflow = "auto"; // Re-enable scrollbars
+      document.body.style.overflow = "auto";
       document.documentElement.style.overflow = "auto";
     };
   }, []);
+
   const styles = {
     container: {
       padding: "2rem",
@@ -65,8 +63,26 @@ export default function AddStudentList() {
       textAlign: "center",
       transition: "background-color 0.3s ease",
     },
-    buttonHover: {
-      backgroundColor: "#2980b9",
+    tableWrapper: {
+      padding: "2rem",
+      maxWidth: "600px",
+      margin: "0 auto",
+      textAlign: "left", // Aligns the table content to the left
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+    },
+    th: {
+      border: "1px solid #ddd",
+      padding: "0.8rem",
+      backgroundColor: "#f8f9fa",
+      textAlign: "left",
+      fontWeight: "bold",
+    },
+    td: {
+      border: "1px solid #ddd",
+      padding: "0.8rem",
     },
   };
 
@@ -82,7 +98,7 @@ export default function AddStudentList() {
 
     try {
       await axios.post(
-       `${config.url}/addstudentlist`,
+        `${config.url}/addstudentlist`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -102,8 +118,32 @@ export default function AddStudentList() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
+        flexDirection: "column", // To stack the table and form vertically
       }}
     >
+      {/* CSV Format Table - Above the Form */}
+      <div style={styles.tableWrapper}>
+        <h3 style={styles.title}>CSV Format</h3>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+           
+              <th style={styles.th}>Full Name</th>
+              <th style={styles.th}>Gender</th>
+              <th style={styles.th}>Department</th>
+              <th style={styles.th}>Program</th>
+              <th style={styles.th}>Semester</th>
+              <th style={styles.th}>Year</th>
+              <th style={styles.th}>Date of Birth</th>
+              <th style={styles.th}>Password</th>
+              <th style={styles.th}>Email</th>
+              <th style={styles.th}>Contact</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      {/* Upload Form Container */}
       <div style={styles.container}>
         {message && <p style={styles.message}>{message}</p>}
         <h2 style={styles.title}>Add Student List</h2>

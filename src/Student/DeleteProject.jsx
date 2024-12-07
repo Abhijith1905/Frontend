@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
-
+import config from "../config";
 export default function DeleteProject() {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");

@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import config from "../config";
-
 export default function UploadMedia() {
   const { id } = useParams(); // Get projectId from the URL
   const [mediaFile, setMediaFile] = useState(null);
@@ -82,19 +81,87 @@ export default function UploadMedia() {
     }
   };
 
+  // Inline CSS styles
+  const styles = {
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh",
+      backgroundColor: "#f4f4f9",
+    },
+    card: {
+      background: "#ffffff",
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+      maxWidth: "400px",
+      width: "100%",
+    },
+    title: {
+      textAlign: "center",
+      color: "#4a4a75",
+      fontSize: "24px",
+      marginBottom: "20px",
+    },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "15px",
+    },
+    formGroup: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    label: {
+      marginBottom: "5px",
+      fontSize: "14px",
+      color: "#333",
+    },
+    select: {
+      padding: "10px",
+      borderRadius: "5px",
+      border: "1px solid #ccc",
+    },
+    input: {
+      padding: "10px",
+      borderRadius: "5px",
+      border: "1px solid #ccc",
+    },
+    errorMessage: {
+      color: "red",
+      fontSize: "14px",
+      textAlign: "center",
+    },
+    button: {
+      backgroundColor: "#4a4a75",
+      color: "white",
+      padding: "10px",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      fontSize: "16px",
+    },
+    buttonHover: {
+      backgroundColor: "#363657",
+    },
+  };
+
   return (
-    <div className="upload-container">
-      <div className="upload-card">
-        <h2 className="title">Upload Media for Project {id}</h2>
-        <form onSubmit={handleSubmit} className="form">
-          <div className="form-group">
-            <label htmlFor="mediaType" className="form-label">Media Type:</label>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h2 style={styles.title}>Upload Media for Project {id}</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.formGroup}>
+            <label htmlFor="mediaType" style={styles.label}>
+              Media Type:
+            </label>
             <select
               id="mediaType"
               value={mediaType}
               onChange={handleTypeChange}
               required
-              className="form-select"
+              style={styles.select}
             >
               <option value="">Select a Media Type</option>
               <option value="image">Image</option>
@@ -104,29 +171,26 @@ export default function UploadMedia() {
               <option value="video">Video</option>
             </select>
           </div>
-          <div className="form-group">
-            <label htmlFor="mediaFile" className="form-label">Choose Media File:</label>
+          <div style={styles.formGroup}>
+            <label htmlFor="mediaFile" style={styles.label}>
+              Choose Media File:
+            </label>
             <input
               type="file"
               id="mediaFile"
               onChange={handleFileChange}
               required
-              className="form-input"
+              style={styles.input}
             />
           </div>
           {errorMessage && (
-            <div className="error-message">{errorMessage}</div>
+            <div style={styles.errorMessage}>{errorMessage}</div>
           )}
-          <button
-            style={{ backgroundColor: "#4a4a75", color: "white" }}
-            type="submit"
-            className="submit-button"
-          >
+          <button type="submit" style={styles.button}>
             Upload Media
           </button>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 }

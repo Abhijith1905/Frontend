@@ -105,19 +105,7 @@ export default function ProjectCheck() {
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                             {project.phase}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                            <div className="flex items-center">
-                              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                <div
-                                  className="bg-blue-600 h-2.5 rounded-full"
-                                  style={{ width: `${percentageEnum[project.percentage] || 0}%` }}
-                                ></div>
-                              </div>
-                              <span className="ml-2">
-                                {percentageEnum[project.percentage] || 0}%
-                              </span>
-                            </div>
-                          </td>
+                         
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
                             <button
                               onClick={() => viewProject(project.projectId)}
