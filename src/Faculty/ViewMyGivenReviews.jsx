@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table} from "lucide-react";
+import config from '../config';
 
 const ViewMyGivenReviews = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -26,7 +27,7 @@ const ViewMyGivenReviews = () => {
 
       try {
         const feedbackResponse = await axios.get(
-          `http://localhost:2025/viewallfeedback?fid=${fid}`
+         `${config.url}/viewallfeedback?fid=${fid}`
         );
 
         if (feedbackResponse.status === 200 && feedbackResponse.data) {
