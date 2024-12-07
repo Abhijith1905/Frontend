@@ -1,112 +1,251 @@
 import { useState } from 'react';
 import axios from 'axios';
-import styles from "./admin.module.css"; // Assuming you're using the same CSS file
 
-export default function UpdateFaculty() {
-  const [faculty, setFaculty] = useState({
+import config from '../config';
+
+export default function UpdateStudent() {
+  const [student, setStudent] = useState({
     id: '',
-    username: '',
-    password: '',
+    name: '',
+    gender: '',
+    department: '',
+    program: '',
+    semester: '',
+    year: '',
+    dob: '',
     email: '',
+    contact: ''
   });
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    setFaculty({ ...faculty, [e.target.name]: e.target.value });
+    setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload on form submit
+    e.preventDefault(); // to avoid page reloading
     try {
-      const response = await axios.put('http://localhost:2025/updatefaculty', faculty);
-      if (response.status === 200) {
-        setMessage(response.data);  // Show success message
-        setFaculty({
+      const response = await axios.put(`${config.url}/updatestudent`, student);
+      if (response.status === 200) { // if successfully updated
+        setMessage(response.data);
+        setStudent({
           id: '',
-          username: '',
-          password: '',
+          name: '',
+          gender: '',
+          department: '',
+          program: '',
+          semester: '',
+          year: '',
+          dob: '',
           email: '',
-        });  // Clear form after successful update
+          contact: ''
+        });
       }
     } catch (error) {
-      console.log(error.message);  // Debugging
-      setMessage(error.message);  // Show error message
+      console.log(error.message); // for debugging purpose
+      setMessage(error.message);
     }
   };
 
+  const styles = {
+    container: {
+      padding: "2rem",
+      maxWidth: "600px",
+      margin: "0 auto",
+      backgroundColor: "white",
+      borderRadius: "8px",
+      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+    },
+    title: {
+      color: "#2c3e50",
+      textAlign: "center",
+      marginBottom: "1.5rem",
+      fontSize: "1.8rem",
+      fontWeight: "600",
+    },
+    message: {
+      textAlign: "center",
+      padding: "1rem",
+      color: "#666",
+      fontSize: "1.1rem",
+    },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "1rem",
+    },
+    inputField: {
+      padding: "0.8rem",
+      border: "1px solid #ddd",
+      borderRadius: "4px",
+      fontSize: "1rem",
+    },
+    selectField: {
+      padding: "0.8rem",
+      border: "1px solid #ddd",
+      borderRadius: "4px",
+      fontSize: "1rem",
+    },
+    button: {
+      padding: "0.8rem 1.5rem",
+      backgroundColor: "#333333",
+      color: "white",
+      border: "none",
+      borderRadius: "4px",
+      fontSize: "1rem",
+      cursor: "pointer",
+      textAlign: "center",
+      transition: "background-color 0.3s ease",
+    },
+    buttonContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      gap: "1rem",  // Add space between buttons
+    },
+    buttonHover: {
+      backgroundColor: "#2980b9",
+    },
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-       
-        
-        {message && (
-          <p className={`${styles.message} ${styles.error}`}>{message}</p>
-        )}
-
-        <div style={{paddingTop:"60px"}} className={styles.formWrapper}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-          <h2  className={styles.title}>Update Faculty</h2>
-            {/* Faculty ID */}
-            <div className={styles.inputGroup}>
-              <input
-                type="number"
-                name="id"
-                value={faculty.id}
-                onChange={handleChange}
-                placeholder="Faculty ID"
-                className={styles.input}
-                required
-              />
-            </div>
-
-            {/* Username */}
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
-                name="username"
-                value={faculty.username}
-                onChange={handleChange}
-                placeholder="Username"
-                className={styles.input}
-                required
-              />
-            </div>
-
-            {/* Password */}
-            <div className={styles.inputGroup}>
-              <input
-                type="password"
-                name="password"
-                value={faculty.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className={styles.input}
-                required
-              />
-            </div>
-
-            {/* Email */}
-            <div className={styles.inputGroup}>
-              <input
-                type="email"
-                name="email"
-                value={faculty.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className={styles.input}
-                required
-              />
-            </div>
-
-            {/* Submit and Reset Buttons */}
-            <center>
-              <button type="submit" className={`${styles.button} ${styles.submitButton}`}>
-                Update Faculty
-              </button>
-             
-            </center>
-          </form>
-        </div>
+    <div
+      style={{
+        paddingTop: "120px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <div style={styles.container}>
+        {message && <p style={styles.message}>{message}</p>}
+        <h2 style={styles.title}>Update Student</h2>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div>
+            <input
+              type="number"
+              name="id"
+              value={student.id}
+              onChange={handleChange}
+              placeholder="ID"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="name"
+              value={student.name}
+              onChange={handleChange}
+              placeholder="Full Name"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <select
+              name="gender"
+              value={student.gender}
+              onChange={handleChange}
+              style={styles.selectField}
+              required
+            >
+              <option value="">---Select Gender---</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHERS">Others</option>
+            </select>
+          </div>
+          <div>
+            <select
+              name="department"
+              value={student.department}
+              onChange={handleChange}
+              style={styles.selectField}
+              required
+            >
+              <option value="">---Select Department---</option>
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+              <option value="CS&I">CS&IT</option>
+            </select>
+          </div>
+          <div>
+            <input
+              type="text"
+              name="program"
+              value={student.program}
+              onChange={handleChange}
+              placeholder="Program"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="semester"
+              value={student.semester}
+              onChange={handleChange}
+              placeholder="Semester"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="year"
+              value={student.year}
+              onChange={handleChange}
+              placeholder="Year"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="date"
+              name="dob"
+              value={student.dob}
+              onChange={handleChange}
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
+              value={student.email}
+              onChange={handleChange}
+              placeholder="Email"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="number"
+              name="contact"
+              value={student.contact}
+              onChange={handleChange}
+              placeholder="Contact"
+              style={styles.inputField}
+              required
+            />
+          </div>
+          
+          <div style={styles.buttonContainer}>
+            <button type="submit" style={styles.button}>
+              Update
+            </button>
+            <button type="reset" style={styles.button}>
+              Clear
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
