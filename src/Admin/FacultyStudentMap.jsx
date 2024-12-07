@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./admin.module.css"
+import config from '../config';
 
 const FacultyStudentMap = () => {
   const [facultyData, setFacultyData] = useState([]);
@@ -14,7 +15,7 @@ const FacultyStudentMap = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:2025/fstudentmapping");
+        const response = await axios.get(`${config.url}/fstudentmapping`);
         setFacultyData(response.data.facultydata);
         setStudentData(response.data.studentdata);
       } catch (error) {
@@ -37,7 +38,7 @@ const FacultyStudentMap = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:2025/fstudentmappinginsert", formData);
+      const response = await axios.post(`${config.url}/fstudentmappinginsert`, formData);
       setMessage(response.data.message);
       setFormData({ fid: "", sid: "" });
     } catch (error) {
