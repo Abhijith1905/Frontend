@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import config from "../config";
 
 import ProjectMedia from './ProjectMedia';
 import MediaModal from './MediaModal';
@@ -28,7 +29,7 @@ function ViewProject() {
 
     const fetchProjectData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
+        const response = await axios.get(`${config.url}/displayproject?projectId=${id}`);
         setProjectData(response.data);
       } catch (error) {
         setError(error.message);
@@ -47,11 +48,11 @@ function ViewProject() {
 
   useEffect(() => {
     if (projectData) {
-      axios.get(`http://localhost:2025/displayprojectimage?projectId=${id}`, { responseType: 'blob' })
+      axios.get(`${config.url}/displayprojectimage?projectId=${id}`, { responseType: 'blob' })
         .then((response) => setProjectImage(URL.createObjectURL(response.data)))
         .catch((error) => console.error('Error fetching project image:', error));
 
-      axios.get(`http://localhost:2025/displayprojectfile?projectId=${id}`, { responseType: 'blob' })
+      axios.get(`${config.url}/displayprojectfile?projectId=${id}`, { responseType: 'blob' })
         .then((response) => setProjectFile(URL.createObjectURL(response.data)))
         .catch((error) => console.error('Error fetching project file:', error));
 
@@ -60,7 +61,7 @@ function ViewProject() {
           const mediaPromises = projectData.mediaList.map(async (mediaItem) => {
             try {
               const response = await axios.get(
-                `http://localhost:2025/displaymedia?id=${mediaItem.mediaId}`,
+           `${config.url}/displaymedia?id=${mediaItem.mediaId}`,
                 { responseType: 'blob' }
               );
               const mediaUrl = URL.createObjectURL(response.data);
@@ -84,7 +85,7 @@ function ViewProject() {
           );
           if (zipFile) {
             const zipResponse = await axios.get(
-              `http://localhost:2025/displaymedia?id=${zipFile.mediaId}`,
+        `${config.url}/displaymedia?id=${zipFile.mediaId}`,
               { responseType: 'blob' }
             );
             setZipUrl(URL.createObjectURL(zipResponse.data));
@@ -97,7 +98,7 @@ function ViewProject() {
 
   const handleUpdateProject = async () => {
     try {
-      await axios.put(`http://localhost:2025/updateproject`, projectData);
+      await axios.put(`${config.url}/updateproject`, projectData);
       toast.success("Project updated successfully!", { position: "top-center", autoClose: 3000 });
     } catch (error) {
       toast.error(`Error updating project: ${error.message}`, {
@@ -108,7 +109,7 @@ function ViewProject() {
   };
   const handleSubmitForReview = async () => {
     try {
-      await axios.put(`http://localhost:2025/updateproject`, projectData);
+      await axios.put(`${config.url}/updateproject`, projectData);
       toast.success("Project submitted for review!", { position: "top-center", autoClose: 3000 });
     } catch (error) {
       toast.error(`Error submitting project: ${error.message}`, {
@@ -119,7 +120,7 @@ function ViewProject() {
   };
 
   const handleReportGeneration = () => {
-    window.open(`http://localhost:2025/viewreport?projectId=${id}`, '_blank');
+    window.open(`${config.url}/viewreport?projectId=${id}`, '_blank');
   };
 
   const openModal = (mediaUrl, type) => {
