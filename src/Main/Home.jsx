@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import config from "../config"; // Ensure this has the correct API URL
+import config from "../config";
 
 export default function Home() {
   const [counts, setCounts] = useState({
