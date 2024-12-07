@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./../App.css"; // Ensure the correct path to your CSS file
-
+import axios from "axios";
+import config from "../config";
 
 export default function Home() {
   const [counts, setCounts] = useState({
