@@ -53,7 +53,7 @@ export default function CreateProject() {
       formDataToSend.append('image', formData.image);
       formDataToSend.append('file', formData.file);
 
-      const response = await axios.post(`http://localhost:2025/createproject`, formDataToSend, {
+      const response = await axios.post(`${config.url}/createproject`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
