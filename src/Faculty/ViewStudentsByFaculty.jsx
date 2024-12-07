@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import config from '../config';
 export default function ViewStudents() {
   const [students, setStudents] = useState([]);
   const [error, setError] = useState("");
@@ -12,7 +12,7 @@ export default function ViewStudents() {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`http://localhost:2025/viewstudentsbyfaculty?fid=${fid}`);
+      const response = await axios.get(`${config.url}/viewstudentsbyfaculty?fid=${fid}`);
       setStudents(response.data);
     } catch (error) {
       setError(error.message);
