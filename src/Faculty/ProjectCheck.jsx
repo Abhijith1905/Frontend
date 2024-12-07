@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Table, Eye } from "lucide-react";
+import config from '../config';
 
 export default function ProjectCheck() {
   const [projects, setProjects] = useState([]);
@@ -30,7 +31,7 @@ export default function ProjectCheck() {
 
     try {
       const response = await axios.get(
-        `http://localhost:2025/viewallprojectsbyfaculty?facultyId=${facultyId}`
+        `${config.url}/viewallprojectsbyfaculty?facultyId=${facultyId}`
       );
       const filteredProjects = response.data.filter(
         (project) => project.checkStatus === true
