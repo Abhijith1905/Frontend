@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import config from "../config";
 
 const ViewFeedback = () => {
   const [projectData, setProjectData] = useState(null);
@@ -24,13 +25,13 @@ const ViewFeedback = () => {
         }
 
         const feedbackResponse = await axios.get(
-          `http://localhost:2025/viewmyfeedback?sid=${studentId}`
+        `${config.url}/viewmyfeedback?sid=${studentId}`
         );
 
         if (feedbackResponse.status === 200 && feedbackResponse.data.length > 0) {
           const feedbacks = feedbackResponse.data;
           const projectRequests = feedbacks.map((feedback) =>
-            axios.get(`http://localhost:2025/displayproject?projectId=${feedback.projectid}`)
+            axios.get(`${config.url}/displayproject?projectId=${feedback.projectid}`)
           );
 
           const projectResponses = await Promise.all(projectRequests);

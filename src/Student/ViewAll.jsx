@@ -11,6 +11,7 @@ import Testimonials from "./sections/Testimonials";
 import AnimatedBackground from "./components/AnimatedBackground";
 import ContentSection from "./components/ContentSection";
 import "./styles/animations.css";
+import config from "../config";
 
 export default function ViewAll() {
   const [portfolioData, setPortfolioData] = useState(null);
@@ -23,7 +24,7 @@ export default function ViewAll() {
     const fetchPortfolioData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/displayportfolio?studentId=${studentId}`
+         `${config.url}/displayportfolio?studentId=${studentId}`
         );
         setPortfolioData(response.data);
       } catch (error) {

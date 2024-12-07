@@ -12,6 +12,7 @@ import Projects from "./sections/Projects"; // Import the new Projects section
 import AnimatedBackground from "./AnimatedBackground";
 import ContentSection from "./ContentSection";
 import "./animations.css";
+import config from "../config";
 
 export default function ViewAll({ onLogout }) {
   const [portfolioData, setPortfolioData] = useState(null);
@@ -24,7 +25,7 @@ export default function ViewAll({ onLogout }) {
     const fetchPortfolioData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/displayportfolio?studentId=${studentId}`
+        `${config.url}/displayportfolio?studentId=${studentId}`
         );
         setPortfolioData(response.data);
       } catch (error) {

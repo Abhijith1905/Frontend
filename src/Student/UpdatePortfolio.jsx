@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EmptyState from "./EmptyState";
+import config from "../config";
 
 export default function UpdatePortfolio() {
   const storedStudentData = JSON.parse(localStorage.getItem("student"));
@@ -72,7 +73,7 @@ export default function UpdatePortfolio() {
     const fetchPortfolioData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/displayportfolio?studentId=${studentId}`
+          `${config.url}/displayportfolio?studentId=${studentId}`
         );
         const data = response.data;
         
@@ -163,7 +164,7 @@ export default function UpdatePortfolio() {
 
     try {
       const response = await axios.put(
-        `http://localhost:2025/updateportfolio?sid=${studentId}`,
+      `${config.url}/updateportfolio?sid=${studentId}`,
         {
           certifications: filteredCertifications,
           education: filteredEducation,

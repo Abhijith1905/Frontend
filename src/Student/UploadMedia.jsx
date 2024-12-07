@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import config from "../config";
 
 export default function UploadMedia() {
   const { id } = useParams(); // Get projectId from the URL
@@ -59,7 +60,7 @@ export default function UploadMedia() {
     formData.append("media", mediaFile);
 
     try {
-      await axios.post(`http://localhost:2025/addmedia`, formData, {
+      await axios.post(`${config.url}/addmedia`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

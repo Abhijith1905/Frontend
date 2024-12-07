@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import config from "../config";
 
 export default function ViewAllProjects() {
   const [projects, setProjects] = useState([]);
@@ -13,7 +14,7 @@ export default function ViewAllProjects() {
   const fetchProjects = async (studentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:2025/viewallprojects?studentId=${studentId}`
+     `${config.url}/viewallprojects?studentId=${studentId}`
       );
       console.log(response.data);
       setProjects(response.data);
@@ -80,7 +81,7 @@ export default function ViewAllProjects() {
                           className="view-button"
                           onClick={() =>
                             window.open(
-                              `http://localhost:2025/viewreport?projectId=${project.projectId}`,
+                             `${config.url}/viewreport?projectId=${project.projectId}`,
                               "_blank"
                             )
                           }
