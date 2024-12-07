@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./../Student/studentnavbar.css";
+import config from '../config';
 
 const Review = () => {
   const { studentId } = useParams();
@@ -42,7 +43,7 @@ const Review = () => {
   
     try {
       const response = await axios.post(
-        "http://localhost:2025/reviewportfolio",
+       `${config.url}/reviewportfolio`,
         projectFeedback
       );
       if (response.status === 200) {
