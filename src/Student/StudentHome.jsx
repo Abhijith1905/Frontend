@@ -26,7 +26,7 @@ function StudentHome() {
   const fetchCount = async (studentId) => {
     try {
       const response = await axios.get(
-        `http://localhost:2025/sprojectcount?studentId=${studentId}`
+       `${config.url}/sprojectcount?studentId=${studentId}`
       );
       setCount(response.data);
     } catch (error) {
