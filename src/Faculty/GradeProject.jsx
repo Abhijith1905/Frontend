@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Assuming react-toastify is being used
 import 'react-toastify/dist/ReactToastify.css';
+import config from '../config';
 
 function GradeProject() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ function GradeProject() {
 
   const fetchProjectData = async () => {
     try {
-      const response = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
+      const response = await axios.get(`${config.url}/displayproject?projectId=${id}`);
       setProjectData(response.data);
       setLoading(false);
     } catch (err) {
@@ -48,7 +49,7 @@ function GradeProject() {
       if (grade) gradeProjectPayload.grade = grade;
       if (feedback) gradeProjectPayload.feedback = feedback;
 
-      await axios.post('http://localhost:2025/gradeproject', gradeProjectPayload);
+      await axios.post(`${config.url}/gradeproject`, gradeProjectPayload);
 
       // Show toast notification
       toast.success('Grade and feedback submitted successfully.');
