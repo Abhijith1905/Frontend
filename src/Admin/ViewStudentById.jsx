@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AlertCircle } from 'lucide-react';
+import config from '../config';
 
 export default function ViewStudentById() {
   const [studentData, setStudentData] = useState({});
@@ -12,7 +13,7 @@ export default function ViewStudentById() {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2025/displaystudentbyid?id=${id}`);
+        const response = await axios.get(`${config.url}/displaystudentbyid?id=${id}`);
         setStudentData(response.data);
       } catch (error) {
         console.error(error.message);
@@ -34,7 +35,7 @@ export default function ViewStudentById() {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:2025/updatestudent`, studentData); // Assuming a PUT endpoint for updating
+      await axios.put(`${config.url}/updatestudent`, studentData); // Assuming a PUT endpoint for updating
       toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error.message);
