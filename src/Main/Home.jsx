@@ -44,11 +44,11 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Total Students: {counts.students}</p>
-      <p>Total Faculty: {counts.faculty}</p>
-      <p>Total Projects: {counts.projects}</p>
-    </div>
+   
+      <>
+        {counts.faculty}
+      </>
+    
+    
   );
 }
