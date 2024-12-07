@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styles from "./admin.module.css"
+import config from '../config';
 const ViewAllFeedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [projects, setProjects] = useState({});
@@ -12,7 +13,7 @@ const ViewAllFeedback = () => {
   useEffect(() => {
     const fetchFeedbacksAndDetails = async () => {
       try {
-        const feedbackResponse = await axios.get("http://localhost:2025/viewfeedback");
+        const feedbackResponse = await axios.get(`${config.url}/viewfeedback`);
 
         if (feedbackResponse.status === 200 && feedbackResponse.data) {
           const feedbackData = feedbackResponse.data;
@@ -29,7 +30,7 @@ const ViewAllFeedback = () => {
           }
 
           const projectRequests = validFeedbacks.map((feedback) =>
-            axios.get(`http://localhost:2025/displayproject?projectId=${feedback.projectid}`)
+            axios.get(`${config.url}/displayproject?projectId=${feedback.projectid}`)
           );
           const projectResponses = await Promise.all(projectRequests);
 
@@ -46,7 +47,7 @@ const ViewAllFeedback = () => {
           setProjects(projectMap);
 
           const facultyRequests = validFeedbacks.map((feedback) =>
-            axios.get(`http://localhost:2025/displayfacultybyid?id=${feedback.facultyId}`)
+            axios.get(`${config.url}/displayfacultybyid?id=${feedback.facultyId}`)
           );
           const facultyResponses = await Promise.all(facultyRequests);
 
@@ -62,7 +63,7 @@ const ViewAllFeedback = () => {
           setFacultyNames(facultyMap);
 
           const studentRequests = projectResponses.map((projectRes) =>
-            axios.get(`http://localhost:2025/displaystudentbyid?id=${projectRes.data.studentId}`)
+            axios.get(`${config.url}/displaystudentbyid?id=${projectRes.data.studentId}`)
           );
           const studentResponses = await Promise.all(studentRequests);
 
