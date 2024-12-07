@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { AlertCircle } from "lucide-react";
+import config from "../config";
 
 export default function StudentProfile() {
   const [studentData, setStudentData] = useState({
@@ -36,7 +37,7 @@ export default function StudentProfile() {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:2025/updatestudent`, studentData);
+      await axios.put(`${config.url}/updatestudent`, studentData);
       toast.success('Profile updated successfully!', {
         position: "top-center",
         autoClose: 3000,
