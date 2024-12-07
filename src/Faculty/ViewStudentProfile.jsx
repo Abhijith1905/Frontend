@@ -12,7 +12,7 @@ export default function ViewStudentProfile() {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2025/displaystudentbyid?id=${id}`);
+        const response = await axios.get(`${config.url}/displaystudentbyid?id=${id}`);
         setStudentData(response.data);
       } catch (error) {
         setError(error.message);
@@ -33,7 +33,7 @@ export default function ViewStudentProfile() {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:2025/updatestudent`, studentData);
+      await axios.put(`${config.url}/updatestudent`, studentData);
       setSuccessMessage('Profile updated successfully!');
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
