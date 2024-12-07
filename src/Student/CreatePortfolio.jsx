@@ -76,7 +76,7 @@ export default function CreatePortfolio() {
     const fetchPortfolioData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/displayportfolio?studentId=${studentId}`
+         `${config.url}/displayportfolio?studentId=${studentId}`
         );
         setPortfolioData(response.data);
       } catch (error) {
@@ -88,7 +88,7 @@ export default function CreatePortfolio() {
     const fetchProjects = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/viewallprojects?studentId=${studentId}`
+         `${config.url}/viewallprojects?studentId=${studentId}`
         );
         setProjects(response.data); // Save fetched projects to state
       } catch (error) {
