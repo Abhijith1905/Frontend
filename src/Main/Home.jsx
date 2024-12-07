@@ -1,60 +1,202 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
+import * as React,{useState,useEffect} from "react";
 import "./../App.css"; // Ensure the correct path to your CSS file
 
 export default function Home() {
+  const [counts, setCounts] = useState({
+    students: 0,
+    faculty: 0,
+    projects: 0,
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const styles = {
-    content: {
-      paddingTop: "100px",
-      margin: 0, // Ensure no margin is applied to the body or content
-      paddingBottom: 0, // Ensure no bottom padding is applied
-      height: "100vh", // Ensure content stretches the full height of the viewport
+    root: {
+      maxWidth: "1280px",
+      margin: "0 auto",
+      padding: "2rem",
+    },
+    dashboardContainer: {
+      padding: "2rem",
+      background: "#f8f9fa",
+      borderRadius: "15px",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    },
+    dashboardTitle: {
+      color: "#2c3e50",
+      textAlign: "center",
+      marginBottom: "2rem",
+      fontSize: "2.5rem",
+      fontWeight: 700,
+    },
+    statsGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+      gap: "2rem",
+    },
+    statCard: {
+      background: "white",
+      padding: "1.5rem",
+      borderRadius: "12px",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
+      transition: "transform 0.3s ease",
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+      cursor: "pointer",
+    },
+    statCardHover: {
+      transform: "translateY(-5px)",
+    },
+    statIcon: (color) => ({
+      fontSize: "2rem",
+      padding: "1rem",
+      background: color,
+      borderRadius: "50%",
+      width: "60px",
+      height: "60px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }),
+    statContent: {
+      flexGrow: 1,
+    },
+    statTitle: {
+      color: "#6c757d",
+      fontSize: "0.9rem",
+      margin: 0,
+      marginBottom: "0.5rem",
+    },
+    statValue: {
+      fontSize: "2rem",
+      fontWeight: 700,
+      color: "#2c3e50",
+    },
+    dashboardFooter: {
+      textAlign: "center",
+      color: "#6c757d",
+      fontSize: "0.9rem",
+      marginTop: "2rem",
+      paddingTop: "1rem",
+      borderTop: "1px solid #dee2e6",
+    },
+    loadingContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100vh",
+      color: "#6c757d",
+    },
+    loadingSpinner: {
+      width: "50px",
+      height: "50px",
+      border: "5px solid #f3f3f3",
+      borderTop: "5px solid #3498db",
+      borderRadius: "50%",
+      animation: "spin 1s linear infinite",
+      marginBottom: "1rem",
+    },
+    errorContainer: {
+      textAlign: "center",
+      color: "#dc3545",
+      padding: "2rem",
     },
   };
 
-  React.useEffect(() => {
-    // Disable the scrollbars globally
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [studentsRes, facultyRes, projectsRes] = await Promise.all([
+          axios.get(`${config.url}/studentcount`),
+          axios.get(`${config.url}/facultycount`),
+          axios.get(`${config.url}/projectcount`),
+        ]);
 
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = "auto"; // Re-enable scrollbars
-      document.documentElement.style.overflow = "auto";
+        setCounts({
+          students: studentsRes.data,
+          faculty: facultyRes.data,
+          projects: projectsRes.data,
+        });
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch data");
+        setLoading(false);
+      }
     };
+
+    fetchCounts();
   }, []);
 
-  return (
-    <div style={styles.content}>
-      <div className="content-container" style={{ marginBottom: 0 }}>
-        <div className="text-content">
-          <h2 style={{ color: "#4a4a75" }}>A GOAL</h2>
-          <h2 style={{ color: "#4a4a75" }}>WITHOUT A PLAN</h2>
-          <h2 style={{ color: "#4a4a75" }}>IS JUST A WISH</h2>
-          <p style={{ color: "#4d4d4d" }}>
-            EduSupport is a Portfolio and Project Management System which will
-            enhance the academic experience of students by enabling them to
-            showcase their projects and portfolios. The platform allows students
-            to upload projects, including detailed descriptions and media. This
-            makes it easier for students to present their work and achievements
-            in an organized manner.
-          </p>
-          <center>
-            <button className="get-started">Get Started</button>
-          </center>
-        </div>
-        <img src="now.png" alt="Illustration" className="illustration1" style={{ marginBottom: "0" }} />
+  if (loading) {
+    return (
+      <div style={styles.loadingContainer}>
+        <div style={styles.loadingSpinner} />
+        <p>Loading dashboard data...</p>
       </div>
+    );
+  }
 
-      <footer className="footer" style={{ marginTop: 0, paddingTop: 0 }}>
-        <div className="footer-content">
-          <span>© 2024 EduSupport. All rights reserved.</span>
-          <div className="footer-links">
-            <span className="footer-link">Privacy Policy</span>
-            <span className="footer-link">Terms of Service</span>
-            <span className="footer-link">Contact Us</span>
-          </div>
+  if (error) {
+    return (
+      <div style={styles.errorContainer}>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.root}>
+      <div style={styles.dashboardContainer}>
+        <br></br>
+        <h1 style={styles.dashboardTitle}>Admin Dashboard</h1>
+        <div style={styles.statsGrid}>
+          {[
+            {
+              title: "Total Students",
+              value: counts.students,
+              color: "#e3f2fd",
+              icon: "👥",
+            },
+            {
+              title: "Total Faculty",
+              value: counts.faculty,
+              color: "#f3e5f5",
+              icon: "👨‍🏫",
+            },
+            {
+              title: "Total Projects",
+              value: counts.projects,
+              color: "#e8f5e9",
+              icon: "📚",
+            },
+          ].map((stat, index) => (
+            <div
+              key={index}
+              style={styles.statCard}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "translateY(-5px)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "translateY(0)")
+              }
+            >
+              <div style={styles.statIcon(stat.color)}>{stat.icon}</div>
+              <div style={styles.statContent}>
+                <h3 style={styles.statTitle}>{stat.title}</h3>
+                <div style={styles.statValue}>{stat.value}</div>
+              </div>
+            </div>
+          ))}
         </div>
-      </footer>
+
+        <div style={styles.dashboardFooter}>
+          <p>Last updated: {new Date().toLocaleString()}</p>
+        </div>
+      </div>
     </div>
   );
 }
