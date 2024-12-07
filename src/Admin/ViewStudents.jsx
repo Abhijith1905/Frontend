@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './admin.module.css'; // Assuming this is your external CSS file
+import config from '../config';
 
 export default function ViewStudents() {
   const [students, setStudents] = useState([]);
@@ -10,7 +11,7 @@ export default function ViewStudents() {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:2025/viewallstudents');
+      const response = await axios.get(`${config.url}/viewallstudents`);
       setStudents(response.data);
     } catch (error) {
       setError(error.message);
@@ -19,7 +20,7 @@ export default function ViewStudents() {
 
   const deleteStudent = async (id) => {
     try {
-      await axios.delete(`http://localhost:2025/deletestudent?id=${id}`);
+      await axios.delete(`${config.url}/deletestudent?id=${id}`);
       fetchStudents();
     } catch (error) {
       setError(error.message);
