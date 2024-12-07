@@ -110,9 +110,9 @@ export default function AdminHome() {
     const fetchCounts = async () => {
       try {
         const [studentsRes, facultyRes, projectsRes] = await Promise.all([
-          axios.get("http://localhost:2025/studentcount"),
-          axios.get("http://localhost:2025/facultycount"),
-          axios.get("http://localhost:2025/projectcount"),
+          axios.get(`${config.url}/studentcount`),
+          axios.get(`${config.url}/facultycount`),
+          axios.get(`${config.url}/projectcount`),
         ]);
 
         setCounts({
@@ -152,7 +152,6 @@ export default function AdminHome() {
       <div style={styles.dashboardContainer}>
         <br></br>
         <h1 style={styles.dashboardTitle}>Admin Dashboard</h1>
-
         <div style={styles.statsGrid}>
           {[
             {
