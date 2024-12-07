@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
 import Navigation from "../Student/Navigation";
-
+import config from '../config';
 import EmptyPortfolio from "./EmptyPortfolio";
 
 import Education from "../Student/sections/Education";
@@ -26,7 +26,7 @@ export default function StudentPortfolio({ onLogout }) {
     const fetchPortfolioData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2025/displaystudentportfolio?studentId=${id}`
+        `${config.url}/displaystudentportfolio?studentId=${id}`
         );
         setPortfolioData(response.data);
         console.log(response.data);
