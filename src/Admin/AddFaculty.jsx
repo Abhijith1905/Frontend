@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from "./admin.module.css"
+import config from '../config';
 
 export default function AddFaculty() {
   const [faculty, setFaculty] = useState({
@@ -18,7 +19,7 @@ export default function AddFaculty() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:2025/addfaculty', faculty);
+      const response = await axios.post(`${config.url}/addfaculty`, faculty);
       if (response.status === 200) {
         setMessage(response.data);
         setFaculty({
