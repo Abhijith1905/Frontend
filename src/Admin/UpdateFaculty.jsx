@@ -99,14 +99,12 @@ export default function UpdateFaculty() {
             </div>
 
             {/* Submit and Reset Buttons */}
-            <div className={styles.buttonGroup}>
+            <center>
               <button type="submit" className={`${styles.button} ${styles.submitButton}`}>
                 Update Faculty
               </button>
-              <button type="reset" className={`${styles.button} ${styles.clearButton}`}>
-                Clear
-              </button>
-            </div>
+             
+            </center>
           </form>
         </div>
       </div>

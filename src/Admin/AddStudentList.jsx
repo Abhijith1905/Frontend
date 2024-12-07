@@ -70,6 +70,7 @@ export default function AddStudentList() {
   };
 
   const handleUpload = async (e) => {
+    setMessage("Students added successfully!");
     e.preventDefault();
     if (!file) {
       setMessage("Please select a CSV file.");
@@ -87,7 +88,7 @@ export default function AddStudentList() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      setMessage("Students added successfully!");
+     
     } catch (error) {
       setMessage(error.response?.data?.message || error.message);
     }

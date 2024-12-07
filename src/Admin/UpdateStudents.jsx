@@ -235,14 +235,12 @@ export default function UpdateStudent() {
             />
           </div>
           
-          <div style={styles.buttonContainer}>
+          <center>
             <button type="submit" style={styles.button}>
               Update
             </button>
-            <button type="reset" style={styles.button}>
-              Clear
-            </button>
-          </div>
+          
+          </center>
         </form>
       </div>
     </div>

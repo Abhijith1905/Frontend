@@ -178,22 +178,25 @@ export default function AddStudent() {
 
           {/* Contact */}
           <div className={styles.formGroup}>
-            <input
-              type="text"
-              name="contact"
-              value={student.contact}
-              onChange={handleChange}
-              placeholder="Enter Contact Number"
-              className={styles.input}
-              required
-            />
-          </div>
+  <input
+    type="text"
+    name="contact"
+    value={student.contact}
+    onChange={handleChange}
+    placeholder="Enter Contact Number"
+    className={styles.input}
+    pattern="^[6-9]\d{9}$"
+    title="Please enter a valid 10-digit phone number starting with 6-9."
+    required
+  />
+  </div>
 
           {/* Submit and Reset Buttons */}
-          <div className={styles.buttonGroup}>
+          <center> >
             <button type="submit" className={`${styles.button} ${styles.submitButton}`}>Add Student</button>
-            <button type="reset" className={`${styles.button} ${styles.resetButton}`}>Clear</button>
-          </div>
+           
+         </center>
+         
         </form>
       </div>
     </div>

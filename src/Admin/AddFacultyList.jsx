@@ -71,6 +71,7 @@ export default function AddFacultyList() {
   };
 
   const handleSubmit = async (e) => {
+    setMessage("Faculty added successfully!");
     e.preventDefault();
     if (!file) {
       setMessage("Please select a CSV file.");
@@ -86,7 +87,7 @@ export default function AddFacultyList() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage("Faculty added successfully!");
+   
     } catch (error) {
       setMessage(error.response?.data?.message || error.message);
     }
