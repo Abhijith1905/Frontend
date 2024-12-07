@@ -36,7 +36,7 @@ const ViewMyGivenReviews = () => {
 
           const projectRequests = feedbackData.map((feedback) =>
             axios.get(
-              `http://localhost:2025/displayproject?projectId=${feedback.projectid}`
+             `${config.url}/displayproject?projectId=${feedback.projectid}`
             )
           );
           const projectResponses = await Promise.all(projectRequests);
