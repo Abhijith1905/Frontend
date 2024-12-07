@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from '../config';
 
 export default function AddFacultyList() {
   const [file, setFile] = useState(null);
@@ -71,7 +72,6 @@ export default function AddFacultyList() {
   };
 
   const handleSubmit = async (e) => {
-    setMessage("Faculty added successfully!");
     e.preventDefault();
     if (!file) {
       setMessage("Please select a CSV file.");
@@ -82,12 +82,12 @@ export default function AddFacultyList() {
     formData.append("file", file);
 
     try {
-      await axios.post('http://localhost:2025/addfacultylist', formData, {
+      await axios.post(`${config.url}//addfacultylist`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-   
+      setMessage("Faculty added successfully!");
     } catch (error) {
       setMessage(error.response?.data?.message || error.message);
     }
