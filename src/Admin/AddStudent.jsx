@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import styles from "./admin.module.css";
+import config from '../config';
 
 export default function AddStudent() {
   const [student, setStudent] = useState({
@@ -25,7 +26,7 @@ export default function AddStudent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:2025/addstudent', student);
+      const response = await axios.post(`${config.url}/addstudent`, student);
       if (response.status === 200) {
         setMessage(response.data);
         setStudent({
@@ -178,25 +179,22 @@ export default function AddStudent() {
 
           {/* Contact */}
           <div className={styles.formGroup}>
-  <input
-    type="text"
-    name="contact"
-    value={student.contact}
-    onChange={handleChange}
-    placeholder="Enter Contact Number"
-    className={styles.input}
-    pattern="^[6-9]\d{9}$"
-    title="Please enter a valid 10-digit phone number starting with 6-9."
-    required
-  />
-  </div>
+            <input
+              type="text"
+              name="contact"
+              value={student.contact}
+              onChange={handleChange}
+              placeholder="Enter Contact Number"
+              className={styles.input}
+              required
+            />
+          </div>
 
           {/* Submit and Reset Buttons */}
-          <center> >
+          <div className={styles.buttonGroup}>
             <button type="submit" className={`${styles.button} ${styles.submitButton}`}>Add Student</button>
-           
-         </center>
-         
+            <button type="reset" className={`${styles.button} ${styles.resetButton}`}>Clear</button>
+          </div>
         </form>
       </div>
     </div>
