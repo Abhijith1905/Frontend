@@ -44,7 +44,7 @@ function SProjectDetails({
     };
 
     try {
-      const response = await axios.put('http://localhost:2025/updateproject', updatedProject);
+      const response = await axios.put(`${config.url}/updateproject`, updatedProject);
       console.log('Project updated successfully:', response.data);
     } catch (error) {
       console.error('Failed to update project:', error);
