@@ -39,7 +39,7 @@ const ProjectCheck2 = () => {
 
     const fetchProjectData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2025/displayproject?projectId=${id}`);
+        const response = await axios.get(`${config.url}/displayproject?projectId=${id}`);
         setProjectData(response.data);
       } catch (error) {
         setError(error.message);
@@ -56,12 +56,12 @@ const ProjectCheck2 = () => {
     if (projectData) {
       Promise.all([
         axios
-          .get(`http://localhost:2025/displayprojectimage?projectId=${id}`, { responseType: "blob" })
+          .get(`${config.url}/displayprojectimage?projectId=${id}`, { responseType: "blob" })
           .then((response) => setProjectImage(URL.createObjectURL(response.data)))
           .catch((error) => console.error("Error fetching project image:", error)),
 
         axios
-          .get(`http://localhost:2025/displayprojectfile?projectId=${id}`, { responseType: "blob" })
+          .get(`${config.url}/displayprojectfile?projectId=${id}`, { responseType: "blob" })
           .then((response) => setProjectFile(URL.createObjectURL(response.data)))
           .catch((error) => console.error("Error fetching project file:", error)),
       ]);
@@ -75,7 +75,7 @@ const ProjectCheck2 = () => {
           projectData.mediaList.map(async (mediaItem) => {
             try {
               const response = await axios.get(
-                `http://localhost:2025/displaymedia?id=${mediaItem.mediaId}`,
+               `${config.url}/displaymedia?id=${mediaItem.mediaId}`,
                 { responseType: "blob" }
               );
               return {
@@ -102,7 +102,7 @@ const ProjectCheck2 = () => {
         );
         if (zipFile) {
           const zipResponse = await axios.get(
-            `http://localhost:2025/displaymedia?id=${zipFile.mediaId}`,
+           `${config.url}/displaymedia?id=${zipFile.mediaId}`,
             { responseType: "blob" }
           );
           setZipUrl(URL.createObjectURL(zipResponse.data));
@@ -113,11 +113,11 @@ const ProjectCheck2 = () => {
   }, [projectData]);
 
   const handleReportGeneration = () => {
-    window.open(`http://localhost:2025/viewreport?projectId=${id}`, "_blank");
+    window.open(`${config.url}/viewreport?projectId=${id}`, "_blank");
   };
   const handleAcceptProject = async (projectId) => {
     try {
-      await axios.post(`http://localhost:2025/allowproject?projectId=${id}`);
+      await axios.post(`${config.url}/allowproject?projectId=${id}`);
       toast.success("Project accepted successfully!");
       setTimeout(() => {
         navigate("/projectcheck"); // Redirect after toast
