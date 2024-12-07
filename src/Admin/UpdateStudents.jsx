@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+import config from '../config';
+
 export default function UpdateStudent() {
   const [student, setStudent] = useState({
     id: '',
@@ -23,7 +25,7 @@ export default function UpdateStudent() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // to avoid page reloading
     try {
-      const response = await axios.put('http://localhost:2025/updatestudent', student);
+      const response = await axios.put(`${config.url}/updatestudent`, student);
       if (response.status === 200) { // if successfully updated
         setMessage(response.data);
         setStudent({
@@ -235,12 +237,14 @@ export default function UpdateStudent() {
             />
           </div>
           
-          <center>
+          <div style={styles.buttonContainer}>
             <button type="submit" style={styles.button}>
               Update
             </button>
-          
-          </center>
+            <button type="reset" style={styles.button}>
+              Clear
+            </button>
+          </div>
         </form>
       </div>
     </div>
