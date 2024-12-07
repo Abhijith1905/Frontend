@@ -15,9 +15,9 @@ export default function Home() {
     const fetchCounts = async () => {
       try {
         const [studentsRes, facultyRes, projectsRes] = await Promise.all([
-          axios.get(`${config.url}/studentcount`),
-          axios.get(`${config.url}/facultycount`),
-          axios.get(`${config.url}/projectcount`),
+          axios.get(`${config.url}/studentcount`, { withCredentials: true }),
+          axios.get(`${config.url}/facultycount`, { withCredentials: true }),
+          axios.get(`${config.url}/projectcount`, { withCredentials: true }),
         ]);
 
         setCounts({
@@ -44,11 +44,10 @@ export default function Home() {
   }
 
   return (
-   
-      <>
-        {counts.faculty}
-      </>
-    
-    
+    <>
+      <p>Students: {counts.students}</p>
+      <p>Faculty: {counts.faculty}</p>
+      <p>Projects: {counts.projects}</p>
+    </>
   );
 }
