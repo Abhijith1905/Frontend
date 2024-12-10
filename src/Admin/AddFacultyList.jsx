@@ -113,19 +113,7 @@ export default function AddFacultyList() {
 
   return (
     <div style={{ paddingTop: "120px", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", flexDirection: "column" }}>
-      {/* CSV Format Table - Above the Form */}
-      <div style={styles.tableWrapper}>
-        <h3 style={styles.title}>CSV Format</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th style={styles.th}>Username</th>
-              <th style={styles.th}>Email</th>
-              <th style={styles.th}>Password</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
+   
 
       {/* Upload Form Container */}
       <div style={styles.container}>
