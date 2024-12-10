@@ -102,7 +102,7 @@ export default function AdminHome() {
     errorContainer: {
       textAlign: "center",
       color: "#dc3545",
-      padding: "2rem",
+      paddingTop: "220px",
     },
   };
 
@@ -141,7 +141,7 @@ export default function AdminHome() {
 
   if (error) {
     return (
-      <div style={styles.errorContainer}>
+      <div  style={styles.errorContainer}>
         <p>{error}</p>
       </div>
     );
