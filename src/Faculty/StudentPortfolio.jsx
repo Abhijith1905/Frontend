@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import AnimatedBackground from "../Student/AnimatedBackground";
 import ContentSection from "../Student/ContentSection";
 import "../Student/animations.css";
+import Projects from "../Student/sections/Projects";
 
 export default function StudentPortfolio({ onLogout }) {
   const [portfolioData, setPortfolioData] = useState(null);
@@ -80,6 +81,9 @@ export default function StudentPortfolio({ onLogout }) {
                 )}
                 {activeSection === "internships" && (
                   <Internships internship={portfolioData.internships} />
+                )}
+                 {activeSection === "projects" && (
+                  <Projects data={portfolioData.projects} />
                 )}
                 {activeSection === "testimonials" && (
                   <Testimonials data={portfolioData.testimonials} />

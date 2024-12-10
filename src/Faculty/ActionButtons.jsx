@@ -42,9 +42,7 @@ const ActionButtons = ({
           Download ZIP
         </a>
       )}
-      <button className="btn-secondary" onClick={onReportClick}>
-        Generate Report
-      </button>
+     
       {phase === "NOT_STARTED" ? (
         <button className="btn-success" onClick={onAcceptProject}>
           Accept Project

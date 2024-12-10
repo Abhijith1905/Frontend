@@ -24,7 +24,7 @@ export default function Certifications({ data }) {
         className="space-y-6"
       >
         <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
-          Certifications 
+          Certifications
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
           <p className="text-gray-700 font-medium">
@@ -32,7 +32,7 @@ export default function Certifications({ data }) {
               <>
                 You don't have any certifications listed yet. <br />
                 <a href="/updateportfolio" className="text-blue-600 hover:underline">
-                  Add Certifications 
+                  Add Certifications
                 </a>
               </>
             ) : isFaculty ? (
@@ -108,13 +108,17 @@ export default function Certifications({ data }) {
                   {cert.certificationDate && (
                     <div className="flex items-center text-sm text-gray-600 mt-2">
                       <span className="font-medium min-w-20">Certification Date:</span>
-                      <span className="ml-2">{new Date(cert.certificationDate).toLocaleDateString()}</span>
+                      <span className="ml-2">
+                        {new Date(cert.certificationDate).toLocaleDateString()}
+                      </span>
                     </div>
                   )}
                   {cert.expirationDate && (
                     <div className="flex items-center text-sm text-gray-600 mt-2">
                       <span className="font-medium min-w-20">Expiration Date:</span>
-                      <span className="ml-2">{new Date(cert.expirationDate).toLocaleDateString()}</span>
+                      <span className="ml-2">
+                        {new Date(cert.expirationDate).toLocaleDateString()}
+                      </span>
                     </div>
                   )}
                 </div>

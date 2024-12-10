@@ -18,7 +18,7 @@ export default function Testimonials({ data }) {
         exit={{ opacity: 0 }}
         className="space-y-6"
       >
-        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent">
           References
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
@@ -34,9 +34,7 @@ export default function Testimonials({ data }) {
             // Show this message if a faculty is logged in
             <p className="text-gray-700 font-medium">
               The student has not added any references yet. <br />
-              <a href="/updateportfolio" className="text-blue-600 hover:underline">
-                Request Student to Add References
-              </a>
+             
             </p>
           ) : (
             // Show a generic message if neither is logged in
@@ -59,7 +57,7 @@ export default function Testimonials({ data }) {
       exit={{ opacity: 0 }}
       className="space-y-6"
     >
-      <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-rose-600 to-rose-400 bg-clip-text text-transparent mb-8">
         What People Say
       </h2>
       <div className="flex flex-col gap-6">

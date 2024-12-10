@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import axios from 'axios';
+import config from '../config';
 
 function SProjectDetails({
   projectData,
@@ -51,39 +52,37 @@ function SProjectDetails({
     }
   };
 
-  const showReportCard = projectData.percentage !== 'ZERO';
-
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 className="text-2xl font-bold text-indigo-900 mb-6">Project Details</h2>
+    <div className="bg-white rounded-xl shadow-lg p-6 mb-8 w-full max-w-full">
+      <h2 className="text-2xl font-bold text-indigo-900 mb-6 w-full">Project Details</h2>
 
       <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <label className="block">
+        <div>
+          <div className="space-y-4 w-full">
+            <label className="block w-full">
               <span className="text-gray-700 font-medium">Title</span>
               <input
                 type="text"
                 value={projectData.title || ''}
                 onChange={(e) => handleInputChange(e, 'title')}
-                className="input mt-1"
+                className="input mt-1 w-full"
               />
             </label>
 
-            <label className="block">
+            <label className="block w-full">
               <span className="text-gray-700 font-medium">Idea of Project</span>
               <textarea
                 value={projectData.description || ''}
                 onChange={(e) => handleInputChange(e, 'description')}
-                className="input mt-1 h-32 custom-textarea"
+                className="input mt-1 h-32 custom-textarea w-full"
                 placeholder="Enter project description..."
               ></textarea>
             </label>
 
             {/* Phase and Phase Description */}
-            <label className="block">
+            <label className="block w-full">
               <span className="text-gray-700 font-medium">Phase</span>
-              <div className="flex items-center mt-1">
+              <div className="flex items-center mt-1 w-full">
                 <div className="input bg-gray-100 text-gray-700 cursor-not-allowed w-1/3">
                   {projectData.phase || 'N/A'}
                 </div>
@@ -91,61 +90,17 @@ function SProjectDetails({
                   <textarea
                     value={phaseDescription}
                     onChange={handlePhaseDescriptionChange}
-                    className="input ml-4 h-24 w-2/3 custom-textarea"
+                    className="input ml-4 h-24 w-2/3 custom-textarea w-full"
                     placeholder="Enter description for the selected phase..."
                   ></textarea>
                 )}
               </div>
             </label>
           </div>
-
-          <div className="space-y-4">
-            <div className="space-y-4">
-              {projectImage && (
-                <Button
-                  variant="secondary"
-                  onClick={() => openModal(projectImage, 'image')}
-                  className="w-full"
-                >
-                  View Project Icon
-                </Button>
-              )}
-
-              {projectFile && (
-                <Button
-                  variant="secondary"
-                  onClick={() => openModal(projectFile, 'text')}
-                  className="w-full"
-                >
-                  View Description
-                </Button>
-              )}
-
-              {zipUrl && (
-                <Button
-                  variant="secondary"
-                  onClick={() => (window.location.href = zipUrl)}
-                  className="w-full"
-                >
-                  Download ZIP
-                </Button>
-              )}
-
-              {showReportCard && (
-                <Button
-                  variant="secondary"
-                  onClick={handleReportGeneration}
-                  className="w-full"
-                >
-                  View Report
-                </Button>
-              )}
-            </div>
-          </div>
         </div>
 
-        <div className="border-t pt-6">
-          <label className="flex items-center space-x-3">
+        <div className="border-t pt-6 w-full">
+          <label className="flex items-center space-x-3 w-full">
             <input
               type="checkbox"
               checked={projectData.checkStatus}
@@ -156,7 +111,7 @@ function SProjectDetails({
           </label>
         </div>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 w-full">
           <Button onClick={handleUpdateProject}>Save Changes</Button>
           <Button onClick={handleSubmitForReview}>
             {projectData.phase === 'NOT_STARTED'

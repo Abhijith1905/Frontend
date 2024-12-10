@@ -50,12 +50,12 @@ export default function ViewAllProjects() {
                 <th>Phase</th>
               
                 <th>Actions</th>
-                <th>Report Card</th>
+              
               </tr>
             </thead>
             <tbody>
               {projects.map((project) => {
-                const isNotGraded = project.percentage === "ZERO"; // Check if percentage is ZERO
+              
                 return (
                   <tr key={project.projectId}>
                     <td>{project.projectId}</td>
@@ -71,23 +71,7 @@ export default function ViewAllProjects() {
                         View
                       </button>
                     </td>
-                    <td>
-                      {isNotGraded ? (
-                        "Not Graded" // Display "Not Graded" if percentage is ZERO
-                      ) : (
-                        <button
-                          className="view-button"
-                          onClick={() =>
-                            window.open(
-                             `${config.url}/viewreport?projectId=${project.projectId}`,
-                              "_blank"
-                            )
-                          }
-                        >
-                          View Report
-                        </button>
-                      )}
-                    </td>
+                  
                   </tr>
                 );
               })}

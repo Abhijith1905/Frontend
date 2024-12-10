@@ -9,6 +9,19 @@ import ProjectMedia from './ProjectMedia';
 import MediaModal from './MediaModal';
 import SProjectDetails from './ProjectDetails';
 
+const Button = ({ label, onClick }) => {
+  // Only render button if it's not "Generate Report" or "Grade"
+  if (label === "Generate Report" || label === "Grade") {
+    return null; // Do not render the button
+  }
+
+  return (
+    <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onClick}>
+      {label}
+    </button>
+  );
+};
+
 function ViewProject() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -137,9 +150,9 @@ function ViewProject() {
       <SProjectDetails
         projectData={projectData}
         handleInputChange={(e, field) =>
-          setProjectData((prev) => ({ ...prev, [field]: e.target.value }))}
+          setProjectData((prev) => ({ ...prev, [field]: e.target.value })) }
         handleCheckStatusChange={() =>
-          setProjectData((prev) => ({ ...prev, checkStatus: !prev.checkStatus }))}
+          setProjectData((prev) => ({ ...prev, checkStatus: !prev.checkStatus })) }
         handleUpdateProject={handleUpdateProject}
         handleSubmitForReview={handleSubmitForReview}
         handleReportGeneration={handleReportGeneration}
@@ -149,26 +162,10 @@ function ViewProject() {
         zipUrl={zipUrl}
         openModal={openModal}
       />
-      
-      {/* Phase Title and Description Section */}
-      <div className="mt-4">
-        <div className="phase-container flex items-center justify-start space-x-4">
-          <div className="phase-title font-bold text-lg">Phase 1</div>
-          <div className="phase-description text-gray-700">This is the description for Phase 1.</div>
-        </div>
-        <div className="phase-container flex items-center justify-start space-x-4">
-          <div className="phase-title font-bold text-lg">Phase 2</div>
-          <div className="phase-description text-gray-700">This is the description for Phase 2.</div>
-        </div>
-        {/* Add more phases as needed */}
-      </div>
 
-      <button
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        onClick={() => navigate(`/trackproject/${id}`)}
-      >
-        Track
-      </button>
+      <Button label="Generate Report" onClick={handleReportGeneration} />
+      <Button label="Track" onClick={() => navigate(`/trackproject/${id}`)} />
+      <Button label="Grade" onClick={() => console.log("Grading project")} />
     </div>
   );
 }

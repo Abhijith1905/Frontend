@@ -36,13 +36,9 @@ export default function Internships({ internship }) {
                 </a>
               </>
             ) : isFaculty ? (
-              <>
-                The student has not added any internships yet.
-              </>
+              <>The student has not added any internships yet.</>
             ) : (
-              <>
-                Please log in to see your internships.
-              </>
+              <>Please log in to see your internships.</>
             )}
           </p>
         </div>
@@ -60,9 +56,9 @@ export default function Internships({ internship }) {
       <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
         Professional Experience
       </h2>
-      {/* Grid layout with two internships per row */}
+      {/* Grid layout with internships */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-        {internship.map((internship, index) => (
+        {internship.map((intern, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, x: -20 }}
@@ -75,44 +71,61 @@ export default function Internships({ internship }) {
                 <Building2 className="w-6 h-6 text-green-600" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-green-800">{internship.companyName}</h3>
-                <p className="text-green-600 font-medium mt-1">{internship.role}</p>
+                <h3 className="text-xl font-bold text-green-800">{intern.companyName}</h3>
+                <p className="text-green-600 font-medium mt-1">{intern.role}</p>
                 <div className="mt-4 flex items-center text-sm text-gray-600">
-                  <span>{internship.startDate}</span>
+                  <span>{new Date(intern.startDate).toLocaleDateString()}</span>
                   <span className="mx-2">→</span>
-                  <span>{internship.endDate}</span>
+                  <span>{new Date(intern.endDate).toLocaleDateString()}</span>
                 </div>
-                <p className="mt-3 text-gray-700 text-sm">{internship.about}</p>
-                <div className="mt-4 text-sm">
-                  <p className="font-medium text-gray-600">Technologies Used:</p>
-                  <ul className="list-disc pl-6 text-gray-600">
-                    {(internship.technologiesUsed?.split(",") || []).map((tech, idx) => (
-                      <li key={idx}>{tech.trim()}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-4 text-sm">
-                  <p className="font-medium text-gray-600">Achievements:</p>
-                  <ul className="list-disc pl-6 text-gray-600">
-                    {(internship.achievements?.split(",") || []).map((achievement, idx) => (
-                      <li key={idx}>{achievement.trim()}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-4 text-sm">
-                  <p className="font-medium text-gray-600">Skills Gained:</p>
-                  <ul className="list-disc pl-6 text-gray-600">
-                    {(internship.skillsGained?.split(",") || []).map((skill, idx) => (
-                      <li key={idx}>{skill.trim()}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-4 text-sm text-gray-600">
-                  <p><span className="font-medium">Location:</span> {internship.location}</p>
-                  <a href="/viewportfolio" className="text-green-600 hover:text-green-800 mt-2 inline-block">
-                    Learn more about me
-                  </a>
-                </div>
+                <p className="mt-3 text-gray-700 text-sm">{intern.about}</p>
+                {/* Technologies Used */}
+                {intern.technologiesUsed && (
+                  <div className="mt-4 text-sm">
+                    <p className="font-medium text-gray-600">Technologies Used:</p>
+                    <ul className="list-disc pl-6 text-gray-600">
+                      {intern.technologiesUsed.split(",").map((tech, idx) => (
+                        <li key={idx}>{tech.trim()}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Achievements */}
+                {intern.achievements && (
+                  <div className="mt-4 text-sm">
+                    <p className="font-medium text-gray-600">Achievements:</p>
+                    <ul className="list-disc pl-6 text-gray-600">
+                      {intern.achievements.split(",").map((achievement, idx) => (
+                        <li key={idx}>{achievement.trim()}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Skills Gained */}
+                {intern.skillsGained && (
+                  <div className="mt-4 text-sm">
+                    <p className="font-medium text-gray-600">Skills Gained:</p>
+                    <ul className="list-disc pl-6 text-gray-600">
+                      {intern.skillsGained.split(",").map((skill, idx) => (
+                        <li key={idx}>{skill.trim()}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Location */}
+                {intern.location && (
+                  <div className="mt-4 text-sm text-gray-600">
+                    <p>
+                      <span className="font-medium">Location:</span> {intern.location}
+                    </p>
+                  </div>
+                )}
+                <a
+                  href="/viewportfolio"
+                  className="text-green-600 hover:text-green-800 mt-2 inline-block"
+                >
+                  Learn more about me
+                </a>
               </div>
             </div>
           </motion.div>

@@ -29,6 +29,7 @@ import {
 } from "react-icons/fa";
 import LogOutButton from "./LogOutButton";
 import TrackProject from "./TrackProject";
+import ViewPortfolioFeedback from "./PortfolioFeedback";
 
 
 
@@ -207,6 +208,9 @@ export default function StudentNavBar() {
               <SidebarNavLink to="/updateportfolio" icon={FaEdit} className="sidebar-navlink">
                 Update Portfolio
               </SidebarNavLink>
+              <SidebarNavLink to="/viewportfoliofeedback" icon={FaUserPlus} className="sidebar-navlink">
+                Portfolio Feedback
+              </SidebarNavLink>
             </SidebarSection>
 
             <SidebarSection>
@@ -240,6 +244,7 @@ export default function StudentNavBar() {
         <Route path="/viewproject/:id" element={<ViewProject />} exact />
         <Route path="/uploadmedia/:id" element={<UploadMedia />} exact />
         <Route path="/viewprojectfeedback" element={<ViewFeedback />} exact />
+        <Route path="/viewportfoliofeedback" element={<ViewPortfolioFeedback />} exact />
         <Route path="/deleteproject" element={<DeleteProject />} exact />
         <Route path="/trackproject/:id" element= {<TrackProject/>} exact />
         <Route path="*" element={<StudentHome />} />

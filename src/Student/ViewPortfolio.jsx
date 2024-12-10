@@ -54,6 +54,7 @@ export default function ViewAll({ onLogout }) {
     transition: { duration: 0.3 },
   };
 
+  console.log(portfolioData)
   return (
     <div>
       <Navigation

@@ -67,7 +67,7 @@ export default function AddStudentList() {
       padding: "2rem",
       maxWidth: "600px",
       margin: "0 auto",
-      textAlign: "left", // Aligns the table content to the left
+      textAlign: "center", // Ensures the entire table is centered
     },
     table: {
       width: "100%",
@@ -77,12 +77,13 @@ export default function AddStudentList() {
       border: "1px solid #ddd",
       padding: "0.8rem",
       backgroundColor: "#f8f9fa",
-      textAlign: "left",
+      textAlign: "center", // Aligns headers to the center
       fontWeight: "bold",
     },
     td: {
       border: "1px solid #ddd",
       padding: "0.8rem",
+      textAlign: "center", // Aligns data to the center
     },
   };
 
@@ -118,7 +119,7 @@ export default function AddStudentList() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        flexDirection: "column", // To stack the table and form vertically
+        flexDirection: "column", // Stacks table and form vertically
       }}
     >
       {/* CSV Format Table - Above the Form */}
@@ -127,7 +128,6 @@ export default function AddStudentList() {
         <table style={styles.table}>
           <thead>
             <tr>
-           
               <th style={styles.th}>Full Name</th>
               <th style={styles.th}>Gender</th>
               <th style={styles.th}>Department</th>

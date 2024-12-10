@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function Education({ mydata }) {
-  const { education, portfolios } = mydata;
+  const { education, portfolios } = mydata || {};
 
   // Retrieve stored data for student and faculty
   const storedStudentData = JSON.parse(localStorage.getItem("student"));
@@ -16,7 +16,7 @@ export default function Education({ mydata }) {
   const isFaculty = facultyId !== "";
 
   // Check if data is available
-  if (!mydata || mydata.length === 0) {
+  if (!mydata || !education || education.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export default function Education({ mydata }) {
               </>
             ) : (
               <>
-                Please log in to see your education details.
+                Please log in to see education details.
               </>
             )}
           </p>
@@ -66,22 +66,24 @@ export default function Education({ mydata }) {
       </h2>
 
       {/* Portfolio Summary Box with Full Width */}
-      <motion.div
-        key="portfolio"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: education.length * 0.1 }}
-        className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow w-full mt-6" // Full width
-      >
-        <h3 className="text-xl font-bold text-blue-800">About Me</h3>
-        {portfolios.map((portfolio) => (
-          <div key={portfolio.portfolioId} className="mt-2">
-            <p>{portfolio.summary}</p>
-          </div>
-        ))}
-      </motion.div>
+      {portfolios && portfolios.length > 0 && (
+        <motion.div
+          key="portfolio"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: education.length * 0.1 }}
+          className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow w-full mt-6"
+        >
+          <h3 className="text-xl font-bold text-blue-800">About Me</h3>
+          {portfolios.map((portfolio) => (
+            <div key={portfolio.portfolioId} className="mt-2">
+              <p>{portfolio.summary}</p>
+            </div>
+          ))}
+        </motion.div>
+      )}
 
-      {/* Education Boxes in a Row (2 per row) */}
+      {/* Education Boxes in a Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-6">
         {education.map((edu, index) => (
           <motion.div

@@ -24,7 +24,7 @@ export default function Skills({ data }) {
         exit={{ opacity: 0 }}
         className="space-y-6"
       >
-        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
           Skills
         </h2>
         <div className="mt-8 p-6 bg-gray-100 rounded-lg text-center">
@@ -40,9 +40,7 @@ export default function Skills({ data }) {
             // Show this message if a faculty is logged in
             <p className="text-gray-700 font-medium">
               The student has not added any skills yet. <br />
-              <a href="/updateportfolio" className="text-blue-600 hover:underline">
-                Request Student to Add Skills
-              </a>
+            
             </p>
           ) : (
             // Show a generic message if neither is logged in
@@ -65,7 +63,7 @@ export default function Skills({ data }) {
       exit={{ opacity: 0 }}
       className="space-y-6"
     >
-      <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent mb-8">
         Technical Skills
       </h2>
 

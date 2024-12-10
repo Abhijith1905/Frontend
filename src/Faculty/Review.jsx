@@ -5,7 +5,8 @@ import "./../Student/studentnavbar.css";
 import config from '../config';
 
 const Review = () => {
-  const { studentId } = useParams();
+  const { id } = useParams();
+  console.log(id)
   const [formData, setFormData] = useState({
     rating: "",
     comments: "",
@@ -38,7 +39,7 @@ const Review = () => {
       comments: formData.comments,
       dateSubmitted: currentDate,
       facultyId: facultyId,
-      studentId: studentId,
+      studentId: id,
     };
   
     try {
@@ -116,8 +117,8 @@ const Review = () => {
 
   return (
     <div>
-
-      <h2 style={{ paddingTop: "110px" }}>Project Feedback</h2>
+   
+      <h2 style={{ paddingTop: "110px" }}>Project Feedback  for Student ID {id}</h2>
       <div style={styles.card}>
         <form onSubmit={handleSubmit}>
           <label htmlFor="rating" style={styles.label}>

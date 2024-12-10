@@ -96,7 +96,9 @@ function TrackProject() {
           <p className="text-gray-600">Your project adventure awaits. Begin now to track your progress!</p>
         </div>
       );
-    }if (phase === "COMPLETED") {
+    }
+    
+    if (phase === "COMPLETED") {
       if (projectData.phase === "COMPLETED") {
         return (
           <div className="space-y-4">
@@ -129,6 +131,7 @@ function TrackProject() {
       }
     }
 
+    // For other phases, render the phase description and grade
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -145,20 +148,24 @@ function TrackProject() {
             </p>
           </div>
         </div>
-        <div>
-          <p className="text-sm font-medium text-gray-500">Completion</p>
-          <div className="mt-2">
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div
-                className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
-                style={{ width: `${projectData.phasePercentages[phase]}%` }}
-              />
+
+        {/* Render progress bar only for completed phases */}
+        {projectData.phasePercentages[phase] && projectData.phasePercentages[phase] !== 0 && (
+          <div>
+            <p className="text-sm font-medium text-gray-500">Completion</p>
+            <div className="mt-2">
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
+                  style={{ width: `${projectData.phasePercentages[phase]}%` }}
+                />
+              </div>
+              <p className="mt-1 text-sm text-gray-600 text-right">
+                {projectData.phasePercentages[phase]}%
+              </p>
             </div>
-            <p className="mt-1 text-sm text-gray-600 text-right">
-              {projectData.phasePercentages[phase]}%
-            </p>
           </div>
-        </div>
+        )}
       </div>
     );
   };

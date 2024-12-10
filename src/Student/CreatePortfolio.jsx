@@ -366,7 +366,7 @@ export default function CreatePortfolio() {
 
   {/* Projects Section */}
   <div style={sectionStyle}>
-          <h3>Select Projects for Portfolio</h3>
+  <h2 style={{ color: "black" }}>Skills</h2>
           {projects.map((project) => (
             <div key={project.projectId}>
               <label style={{ color: "black" }}>
@@ -379,10 +379,7 @@ export default function CreatePortfolio() {
               </label>
             </div>
           ))}
-          <div>
-            <h4>Selected Projects:</h4>
-            <pre>{selectedProjectIds}</pre>
-          </div>
+         
         </div>
 
  {/* Certifications Section */}
